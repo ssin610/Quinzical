@@ -20,50 +20,97 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 
 public class PracticeAnswerController implements Initializable{
 	
 	@FXML
-	Button start_prac_button;
+	Button submit_button;
+	@FXML
+	Button back_button;
+	@FXML
+	Button audio_replay_button;
 	
 	@FXML
 	Label question_label;
-	
 	@FXML
 	Label chance_left;
+	@FXML
+	Label hint_label;
+
+	
+	@FXML
+	TextField user_input;
 	
 	static String _question;
 	static String _answer;
+	static String _hint;
+	static String _bracket;
 	private int _chance=3;
 
 	
 	
+	
+	
    
     public void submit(ActionEvent event){
-    	_chance--;
-    	chance_left.setText(Integer.toString(_chance));
-    	if (_chance<=0) {
-    		start_prac_button.setDisable(true);
+    	String input = user_input.getText();
+    	if (input.trim().equalsIgnoreCase(_question.trim()) || input.trim().equalsIgnoreCase(_bracket +_question.trim()) || input.trim().equalsIgnoreCase(_bracket +" "+_question.trim())) {
+			hint_label.setVisible(true);
+			hint_label.setText("Correct! The question is " + _bracket+ " " + _question);
+			
+			submit_button.setDisable(true);
+    		audio_replay_button.setDisable(true);
+    		back_button.setDisable(false);
+    		back_button.setVisible(true);
+
+    	}else {
+    		//IF input is not correct
+    		_chance=_chance-1;
+    		System.out.println(_chance);
+    		chance_left.setText(Integer.toString(_chance));
+    		hint_label.setVisible(true);
+    		hint_label.setText("Sorry, incorrect!");
+    		
+    		//Compare the chance to see whether finished or show hint
+    		if (_chance==0) { 											//Game over
+        		hint_label.setVisible(true);
+        		hint_label.setText("Sorry, The question is " + _bracket +" "+ _question);
+        		
+        		submit_button.setDisable(true);
+        		audio_replay_button.setDisable(true);
+        		back_button.setDisable(false);
+        		back_button.setVisible(true);
+        	}else if (_chance == 1) {									//Show hint
+        		hint_label.setVisible(true);
+        		hint_label.setText(_hint);
+        	}
     	}
+   
     }
     
     public   void setQuestion(String question) {
     	_question=question;
 	}
-    public   void setAnswer(String answer) {
+    public   void setStrings(String answer, String question, String bracket) {
     	_answer=answer;
+    	_question=question;
+    	_bracket=bracket;
+    	System.out.println(_bracket);
+    	_hint=_question.substring(0, 1);
+    	System.out.println(_hint);
 	}
 
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		back_button.setDisable(true);
 		// TODO Auto-generated method stub
-		System.out.println("0");
-		question_label.setText(_question);
-		System.out.println(_answer);
+		question_label.setText(_answer);
 		chance_left.setText(Integer.toString(_chance));
+		user_input.setPromptText(_bracket);
 		
 	}
     

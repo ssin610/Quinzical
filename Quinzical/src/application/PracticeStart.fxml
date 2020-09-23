@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1000.0" style="-fx-background-color: #1f1f1f; -fx-border-width: 8; -fx-border-color: #ffa31a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PracStartController">
    <children>
-      <Text fill="#d8dbdc" layoutX="248.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Practise">
+      <Text fill="#d8dbdc" layoutX="227.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Practise">
          <font>
             <Font name="Comic Sans MS Bold" size="80.0" />
          </font>
@@ -20,7 +20,7 @@
             <Font name="Comic Sans MS Bold" size="28.0" />
          </font>
       </Label>
-      <Text fill="#ffa31a" layoutX="591.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mode">
+     <Text fill="#ffa31a" layoutX="561.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mode">
          <font>
             <Font name="Comic Sans MS Bold" size="80.0" />
          </font>
@@ -30,8 +30,8 @@
             <Font name="Comic Sans MS Bold Italic" size="33.0" />
          </font>
       </Button>
-      <Line endX="100.0" layoutX="129.0" layoutY="93.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
-      <Line endX="100.0" layoutX="795.0" layoutY="94.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
-      <ChoiceBox  fx:id="cat_choice" layoutX="546.0" layoutY="232.0" prefWidth="150.0" />
+      <Line endX="100.0" layoutX="113.0" layoutY="94.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
+      <Line endX="100.0" layoutX="781.0" layoutY="94.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
+      <ChoiceBox fx:id="cat_choice" layoutX="546.0" layoutY="232.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

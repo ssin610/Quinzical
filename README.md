@@ -2,7 +2,7 @@
 
 Quinzical ----- backup/		(All question files as backup)
  	   ----  bin/
- 	   ----- cat/ 			(All question files might be modified)
+ 	   ----- cat/ 			(All question files ,might be modified)
  	   ----- src/
  	   	---- application/     	(Currently contains all files)
  	   

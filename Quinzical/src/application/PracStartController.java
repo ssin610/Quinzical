@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -41,10 +42,38 @@ public class PracStartController implements Initializable {
 	ChoiceBox cat_choice;
 	
 	
+//	String quest="This native bird lays the largest egg in relation to their body size of any species of bird in the world, (What is) the Kiwi";
+	String showtext;
+	String answer;
+	String bracket;
+	Alert a = new Alert(AlertType.NONE);
+	
+	/**
+	 * Split the string into 3 parts
+	 * @param question
+	 */
+	public void trimString(String question) {
+		try {
+			String temp[] = question.split("\\(");
+			showtext=temp[0].substring(0, temp[0].length()-2);;
+			String temp2[] = temp[1].split("\\)");
+			bracket="( "+temp2[0].trim()+" )";
+			answer=temp2[1].trim();
+		
+		}catch (Exception e) {
+			
+			 a.setAlertType(AlertType.ERROR); 
+	            // show the dialog 
+	            a.show(); 
+	            a.setHeaderText("Question Reading Error");
+	            a.setContentText("Please check the question format");
+		}
+	}
+	
 	
 	public void initialize(URL url, ResourceBundle rb) {
 		// create a alert 
-        Alert a = new Alert(AlertType.NONE); 
+     
         cats.clear();
         _questionsselected.clear();
 		
@@ -78,17 +107,21 @@ public class PracStartController implements Initializable {
         } 
         return filename; 
     }
-	public void readSelectedfile() {
+	/**
+	 * Read lines in the selected cat
+	 * @throws IOException
+	 */
+	public void readSelectedfile() throws IOException {
 		//Get the choice from the choicebox
     	String selected_cat = (String) cat_choice.getSelectionModel().getSelectedItem();
 		System.out.println(selected_cat);
 		String currentpath=System.getProperty("user.dir");
+		
 //		System.out.println(currentpath); 
 		File file = new File(currentpath+"/cat/"+selected_cat); 
 		 int index=0;
 	        if(file.exists()){  
-	            try {  
-	                FileReader fileReader = new FileReader(file);  
+	        	 FileReader fileReader = new FileReader(file);  
 	                BufferedReader br = new BufferedReader(fileReader);  
 	                String lineContent = null;  
 	                while((lineContent = br.readLine())!=null){  
@@ -98,14 +131,10 @@ public class PracStartController implements Initializable {
 	                }  
 	                br.close();  
 	                fileReader.close();  
-	            } catch (FileNotFoundException e) {  
-//	                System.out.println("no this file");  
-	                e.printStackTrace();  
-	            } catch (IOException e) {  
-//	                System.out.println("io exception");  
-	                e.printStackTrace();  
-	            }  
-	        }  
+	        } 
+	        
+	        Collections.shuffle(_questionsselected); //Shuffle the list
+	        trimString(_questionsselected.get(0)); //Process the line after shuffle
 	}
 	
 	/**
@@ -127,72 +156,74 @@ public class PracStartController implements Initializable {
             
           } 
       } 
-      System.out.println(cats);
+      
       catArray=cats.toArray(new String[cats.size()]);
   } 
 	
-	 /**
-	  * Read line in files based on the path
-	  */
-	 public static void readline(String filePath, String filename){  
-//	        System.out.println("------Read file-------");  
-	        File file = new File(filePath); 
-	        int index=0;
-	        if(file.exists()){  
-	            try {  
-	                FileReader fileReader = new FileReader(file);  
-	                BufferedReader br = new BufferedReader(fileReader);  
-	                String lineContent = null;  
-	                while((lineContent = br.readLine())!=null){  
-	                	index++;
-	                    System.out.println(lineContent);  
-	                    List<String> elephantList = Arrays.asList(lineContent.split(","));
-	                    System.out.println(elephantList);
-	                }  
-	                br.close();  
-	                fileReader.close();  
-	            } catch (FileNotFoundException e) {  
-//	                System.out.println("no this file");  
-	                e.printStackTrace();  
-	            } catch (IOException e) {  
-//	                System.out.println("io exception");  
-	                e.printStackTrace();  
-	            }  
-	        }  
-	    }
 	
     public void startPrac(ActionEvent event){
-    	//Get the current stage
-    	Stage thisstage = (Stage)start_prac_button.getScene().getWindow();
-    	readSelectedfile();
+    	if (cat_choice.getSelectionModel().getSelectedItem()!=null) {
+    		//Get the current stage
+        	Stage thisstage = (Stage)start_prac_button.getScene().getWindow();
+        	try {
+    			readSelectedfile();
+    		} catch (IOException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    			a.setAlertType(AlertType.ERROR); 
+                // show the dialog 
+                a.show(); 
+                a.setHeaderText("File Reading Error");
+                a.setContentText("Please check the question format");
+    		}
+        	
+        	
+    		//Open new winodw start the game
+        	try {
+        		
+        		//Pass parameter across
+        		FXMLLoader loader = new FXMLLoader(getClass().getResource("PracticeAnswer.fxml"));
+    			loader.load();
+    	    	PracticeAnswerController controller = loader.getController();
+    			//Pass value to the next page
+    			controller.setStrings(showtext,answer,bracket);
+    			System.out.println(bracket);
+    			
+    			
+    			//Load GUI process
+    			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("PracticeAnswer.fxml"));
+    			Scene scene = new Scene(root);
+    			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+    			Stage secondStage = new Stage();
+    			secondStage.setScene(scene);
+    			secondStage.show();
+    			
+//    			FXMLLoader loader = new FXMLLoader(getClass().getResource("PracticeAnswer.fxml"));
+//    			loader.load();
+//    	    	PracticeAnswerController controller = loader.getController();
+//    			controller.setQuestion("Shiit");
+    			
+    			thisstage.close();
+    		} catch(Exception e) {
+    			e.printStackTrace();
+    			a.setAlertType(AlertType.ERROR); 
+                // show the dialog 
+                a.show(); 
+                a.setHeaderText("File Reading Error");
+                a.setContentText("Please check the file arrangment");
+    		}
+    			
+    		}else {
+    			
+    		// If no cat is selected
+   			 a.setAlertType(AlertType.WARNING); 
+   	            // show the dialog 
+   	            a.show(); 
+   	            a.setHeaderText("Selection required");
+   	            a.setContentText("You have to select a category");
+    		}
     	
-		//Open new winodw start the game
-    	try {
-    		//Pass parameter across
-    		FXMLLoader loader = new FXMLLoader(getClass().getResource("PracticeAnswer.fxml"));
-			loader.load();
-	    	PracticeAnswerController controller = loader.getController();
-			
-			controller.setAnswer("What");
-			
-			
-			//Load GUI process
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("PracticeAnswer.fxml"));
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			Stage secondStage = new Stage();
-			secondStage.setScene(scene);
-			secondStage.show();
-			
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource("PracticeAnswer.fxml"));
-//			loader.load();
-//	    	PracticeAnswerController controller = loader.getController();
-//			controller.setQuestion("Shiit");
-			
-			thisstage.close();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+    	
     }
     
     
