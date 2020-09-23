@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1000.0" style="-fx-background-color: #1f1f1f; -fx-border-width: 8; -fx-border-color: #ffa31a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PracticeAnswerController">
+   <children>
+      <Text fill="#d8dbdc" layoutX="248.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Practise">
+         <font>
+            <Font name="Comic Sans MS Bold" size="80.0" />
+         </font>
+      </Text>
+      <Label fx:id="question_label" alignment="CENTER" layoutX="9.0" layoutY="240.0" prefHeight="39.0" prefWidth="983.0" text="1" textFill="WHITE">
+         <font>
+            <Font name="Comic Sans MS Bold" size="28.0" />
+         </font>
+      </Label>
+      <Text fill="#ffa31a" layoutX="591.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mode">
+         <font>
+            <Font name="Comic Sans MS Bold" size="80.0" />
+         </font>
+      </Text>
+      <Button fx:id="start_prac_button" layoutX="410.0" layoutY="475.0" mnemonicParsing="false" onAction="#submit" prefHeight="69.0" prefWidth="178.0" style="-fx-background-color: #ffa31a;" text="Submit">
+         <font>
+            <Font name="Comic Sans MS Bold Italic" size="33.0" />
+         </font>
+      </Button>
+      <Line endX="100.0" layoutX="129.0" layoutY="93.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
+      <Line endX="100.0" layoutX="795.0" layoutY="94.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
+      <Label layoutX="426.0" layoutY="173.0" text="Question:" textFill="WHITE">
+         <font>
+            <Font name="Comic Sans MS Bold" size="28.0" />
+         </font>
+      </Label>
+      <TextField layoutX="368.0" layoutY="316.0" prefHeight="39.0" prefWidth="263.0" />
+      <Label alignment="CENTER" layoutX="367.0" layoutY="388.0" prefHeight="28.0" prefWidth="263.0" text="HINT" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+         <font>
+            <Font name="Comic Sans MS Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="25.0" layoutY="599.0" prefHeight="28.0" prefWidth="191.0" text="Chances left:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+         <font>
+            <Font name="Comic Sans MS Bold" size="20.0" />
+         </font>
+      </Label>
+      <Slider layoutX="833.0" layoutY="606.0" opacity="0.73" prefHeight="14.0" prefWidth="131.0" />
+      <Label layoutX="752.0" layoutY="597.0" prefHeight="28.0" prefWidth="184.0" text="Volume:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+         <font>
+            <Font name="Comic Sans MS Bold" size="20.0" />
+         </font>
+      </Label>
+      <Button layoutX="747.0" layoutY="554.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="63.0" style="-fx-background-radius: 100;" text="Replay">
+         <font>
+            <Font name="Comic Sans MS Bold Italic" size="12.0" />
+         </font></Button>
+      <Label fx:id="chance_left" layoutX="159.0" layoutY="583.0" prefHeight="56.0" prefWidth="38.0" text="3" textFill="WHITE">
+         <font>
+            <Font name="Comic Sans MS Bold" size="30.0" />
+         </font>
+      </Label>
+      <ProgressBar layoutX="833.0" layoutY="564.0" prefHeight="14.0" prefWidth="131.0" progress="0.0" visible="false" />
+   </children>
+</AnchorPane>

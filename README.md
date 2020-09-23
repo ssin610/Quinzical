@@ -1,6 +1,9 @@
 # project
 
-Use this repo for both Assignment 3 and also your final Project (as you will be in the same team). 
-
-Be sure to update this README file to provide an easy-to-follow set of instructions on how to run your program. 
-
+Quinzical ----- backup/		(All question files as backup)
+ 	   ----  bin/
+ 	   ----- cat/ 			(All question files might be modified)
+ 	   ----- src/
+ 	   	---- application/     	(Currently contains all files)
+ 	   
+ 	   -----build.fxbuild
