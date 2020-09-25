@@ -74,35 +74,44 @@ public class PracticeAnswerController implements Initializable{
 	 * @param sentence
 	 */
 	public void speak(String sentence) {
-//		String cmd = "echo \""+sentence+"\" | festival --tts"; //spd-say -i100 "hello"
-		String cmd = "spd-say -i"+_volume+" \""+sentence+"\"";
-//		String cmd = "espeak \"Hellow\"";
-//		String cmd = "echo $pwd";
-		System.out.println(cmd);
-		
-		String[] cmds = {"/bin/sh", "-c", cmd};
-//		System.out.println(cmd);
-		Process process;
-		try {
-			process = Runtime.getRuntime().exec(cmds);
-			process.waitFor();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			a.setAlertType(AlertType.ERROR); 
-            // show the dialog 
-            a.show(); 
-            a.setHeaderText("spd-say not installed");
-            a.setContentText("Please check the READ.md and install spd-say");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			a.setAlertType(AlertType.INFORMATION); 
-            // show the dialog 
-            a.show(); 
-            a.setHeaderText("Audio is playing");
-            a.setContentText("Please do not click frequently!");
-		}
+		 Thread thread = new Thread() {
+             @Override
+             public void run() {
+//            	 String cmd = "echo \""+sentence+"\" | festival --tts"; //spd-say -i100 "hello"
+         		String cmd = "spd-say -i"+_volume+" \""+sentence+"\"";
+//         		String cmd = "espeak \"Hellow\"";
+//         		String cmd = "echo $pwd";
+         		
+         		String[] cmds = {"/bin/sh", "-c", cmd};
+//         		System.out.println(cmd);
+         		Process process;
+         		try {
+         			process = Runtime.getRuntime().exec(cmds);
+         			System.out.println(cmd);
+         			process.waitFor();
+         		} catch (IOException e) {
+         			// TODO Auto-generated catch block
+         			e.printStackTrace();
+         			a.setAlertType(AlertType.ERROR); 
+                     // show the dialog 
+                     a.show(); 
+                     a.setHeaderText("spd-say not installed");
+                     a.setContentText("Please check the READ.md and install spd-say");
+         		} catch (InterruptedException e) {
+         			// TODO Auto-generated catch block
+         			e.printStackTrace();
+         			a.setAlertType(AlertType.INFORMATION); 
+                     // show the dialog 
+                     a.show(); 
+                     a.setHeaderText("Audio is playing");
+                     a.setContentText("Please do not click frequently!");
+         		}
+             }
+              
+         };
+         thread.setName("thread1");
+         thread.start();
+//		
 	}
 	
 	public void volumeChanged(){
