@@ -126,7 +126,7 @@ public class PracStartController implements Initializable {
 	                String lineContent = null;  
 	                while((lineContent = br.readLine())!=null){  
 	                	index++;
-	                	System.out.println(lineContent);
+//	                	System.out.println(lineContent);
 	                	_questionsselected.add(lineContent);
 	                }  
 	                br.close();  
@@ -187,7 +187,8 @@ public class PracStartController implements Initializable {
     	    	PracticeAnswerController controller = loader.getController();
     			//Pass value to the next page
     			controller.setStrings(showtext,answer,bracket);
-    			System.out.println(bracket);
+    		
+//    			System.out.println(bracket);
     			
     			
     			//Load GUI process

@@ -17,7 +17,7 @@
             <Font name="Comic Sans MS Bold" size="80.0" />
          </font>
       </Text>
-      <Label fx:id="question_label" alignment="CENTER" layoutX="9.0" layoutY="240.0" prefHeight="39.0" prefWidth="983.0" text="1" textFill="WHITE">
+      <Label fx:id="question_label" alignment="CENTER" layoutX="9.0" layoutY="202.0" prefHeight="107.0" prefWidth="983.0" text="1" textFill="WHITE" wrapText="true">
          <font>
             <Font size="23.0" />
          </font>
@@ -50,13 +50,13 @@
             <Font name="Comic Sans MS Bold" size="20.0" />
          </font>
       </Label>
-      <Slider layoutX="833.0" layoutY="606.0" opacity="0.73" prefHeight="14.0" prefWidth="131.0" />
-      <Label layoutX="749.0" layoutY="597.0" prefHeight="28.0" prefWidth="184.0" text="Volume:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+      <Slider fx:id="volume_slider" layoutX="841.0" layoutY="606.0" min="-100.0" onDragDetected="#volumeChanged" opacity="0.73" prefHeight="14.0" prefWidth="131.0" value="100.0" />
+      <Label layoutX="749.0" layoutY="597.0" prefHeight="28.0" prefWidth="86.0" text="Volume:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
          <font>
             <Font name="Comic Sans MS Bold" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="audio_replay_button" layoutX="747.0" layoutY="554.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="63.0" style="-fx-background-radius: 100;" text="Replay">
+      <Button fx:id="audio_replay_button" layoutX="747.0" layoutY="554.0" mnemonicParsing="false" onAction="#replay" prefHeight="39.0" prefWidth="103.0" style="-fx-background-radius: 100;" text="Audio Replay">
          <font>
             <Font name="Comic Sans MS Bold Italic" size="12.0" />
          </font></Button>
@@ -65,7 +65,7 @@
             <Font name="Comic Sans MS Bold" size="30.0" />
          </font>
       </Label>
-      <ProgressBar layoutX="833.0" layoutY="564.0" prefHeight="14.0" prefWidth="131.0" progress="0.0" visible="false" />
-      <Button fx:id="back_button" layoutX="443.0" layoutY="592.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="112.0" text="Back to Menu" visible="false" />
+      <ProgressBar fx:id="reading_bar" layoutX="833.0" layoutY="564.0" prefHeight="14.0" prefWidth="131.0" progress="0.0" visible="false" />
+      <Button fx:id="back_button" layoutX="443.0" layoutY="592.0" mnemonicParsing="false" onAction="#backMenu" prefHeight="28.0" prefWidth="112.0" text="Back to Menu" visible="false" />
    </children>
 </AnchorPane>
