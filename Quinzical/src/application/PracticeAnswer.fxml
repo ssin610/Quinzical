@@ -50,7 +50,7 @@
             <Font name="Comic Sans MS Bold" size="20.0" />
          </font>
       </Label>
-      <Slider fx:id="volume_slider" layoutX="841.0" layoutY="606.0" min="-100.0" onDragDetected="#volumeChanged" opacity="0.73" prefHeight="14.0" prefWidth="131.0" value="100.0" />
+      <Slider fx:id="volume_slider" layoutX="841.0" layoutY="606.0" max="100.0" min="-100.0"  opacity="0.73" prefHeight="14.0" prefWidth="131.0" value="0.0" />
       <Label layoutX="749.0" layoutY="597.0" prefHeight="28.0" prefWidth="86.0" text="Volume:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
          <font>
             <Font name="Comic Sans MS Bold" size="20.0" />

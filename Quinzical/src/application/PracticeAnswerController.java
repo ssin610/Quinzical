@@ -58,12 +58,12 @@ public class PracticeAnswerController implements Initializable{
 	@FXML
 	TextField user_input;
 	
-	static String _question;
-	static String _answer;
-	static String _hint;
+	static String _question;	//What is expected from the user
+	static String _answer=""; //What display to the user
+	static String _hint;	
 	static String _bracket;
 	private int _chance=3;
-	private String _volume="100";
+	private String _volume="0";
 	Alert a = new Alert(AlertType.NONE);
 	
 	
@@ -79,7 +79,7 @@ public class PracticeAnswerController implements Initializable{
              public void run() {
 //            	 String cmd = "echo \""+sentence+"\" | festival --tts"; //spd-say -i100 "hello"
          		String cmd = "spd-say -i"+_volume+" \""+sentence+"\"";
-//         		String cmd = "espeak \"Hellow\"";
+//         		String cmd = "espeak -a"+_volume+" \""+sentence+"\"";
 //         		String cmd = "echo $pwd";
          		
          		String[] cmds = {"/bin/sh", "-c", cmd};
@@ -113,12 +113,6 @@ public class PracticeAnswerController implements Initializable{
          thread.start();
 //		
 	}
-	
-	public void volumeChanged(){
-		int temp = (int)volume_slider.getValue();
-		_volume=Integer.toString(temp);
-    	System.out.println(_volume);
-    }
 	
 	
 	public void replay(ActionEvent event){
@@ -193,8 +187,9 @@ public class PracticeAnswerController implements Initializable{
     	_question=question;
     	_bracket=bracket;
 //    	System.out.println(_bracket);
+//    	System.out.println(_question);
     	_hint=_question.substring(0, 1);
-    	System.out.println(_question);
+    	speak(_answer);
 	}
 
 
@@ -205,7 +200,12 @@ public class PracticeAnswerController implements Initializable{
 		question_label.setText(_answer);
 		chance_left.setText(Integer.toString(_chance));
 		user_input.setPromptText(_bracket);
-		speak(_answer);
+		//Add lisenter to the slider
+		volume_slider.setOnMouseReleased(event -> {
+            int temp = (int)volume_slider.getValue();
+            _volume=Integer.toString(temp);
+            System.out.println(_volume);
+        });
 	}
     
     
