@@ -63,7 +63,7 @@ public class PracticeAnswerController implements Initializable{
 	static String _hint;	
 	static String _bracket;
 	private int _chance=3;
-	private String _volume="0";
+	private String _speed="0";
 	Alert a = new Alert(AlertType.NONE);
 	
 	
@@ -78,7 +78,7 @@ public class PracticeAnswerController implements Initializable{
              @Override
              public void run() {
 //            	 String cmd = "echo \""+sentence+"\" | festival --tts"; //spd-say -i100 "hello"
-         		String cmd = "spd-say -i"+_volume+" \""+sentence+"\"";
+         		String cmd = "spd-say -r"+_speed+" \""+sentence+"\"";
 //         		String cmd = "espeak -a"+_volume+" \""+sentence+"\"";
 //         		String cmd = "echo $pwd";
          		
@@ -203,8 +203,8 @@ public class PracticeAnswerController implements Initializable{
 		//Add lisenter to the slider
 		volume_slider.setOnMouseReleased(event -> {
             int temp = (int)volume_slider.getValue();
-            _volume=Integer.toString(temp);
-            System.out.println(_volume);
+            _speed=Integer.toString(temp);
+            System.out.println(_speed);
         });
 	}
     

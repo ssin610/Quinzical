@@ -50,12 +50,8 @@
             <Font name="Comic Sans MS Bold" size="20.0" />
          </font>
       </Label>
-      <Slider fx:id="volume_slider" layoutX="841.0" layoutY="606.0" max="100.0" min="-100.0"  opacity="0.73" prefHeight="14.0" prefWidth="131.0" value="0.0" />
-      <Label layoutX="749.0" layoutY="597.0" prefHeight="28.0" prefWidth="86.0" text="Volume:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
-         <font>
-            <Font name="Comic Sans MS Bold" size="20.0" />
-         </font>
-      </Label>
+      <Slider fx:id="volume_slider" layoutX="841.0" layoutY="606.0" max="100.0" min="-100.0" opacity="0.73" prefHeight="14.0" prefWidth="131.0" value="0.0" />
+      <Label layoutX="753.0" layoutY="598.0" prefHeight="28.0" prefWidth="92.0" text="Audio Speed:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true" />
       <Button fx:id="audio_replay_button" layoutX="747.0" layoutY="554.0" mnemonicParsing="false" onAction="#replay" prefHeight="39.0" prefWidth="103.0" style="-fx-background-radius: 100;" text="Audio Replay">
          <font>
             <Font name="Comic Sans MS Bold Italic" size="12.0" />
@@ -67,5 +63,20 @@
       </Label>
       <ProgressBar fx:id="reading_bar" layoutX="833.0" layoutY="564.0" prefHeight="14.0" prefWidth="131.0" progress="0.0" visible="false" />
       <Button fx:id="back_button" layoutX="443.0" layoutY="592.0" mnemonicParsing="false" onAction="#backMenu" prefHeight="28.0" prefWidth="112.0" text="Back to Menu" visible="false" />
+      <Label layoutX="841.0" layoutY="620.0" prefHeight="28.0" prefWidth="30.0" text="-100" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="949.0" layoutY="620.0" prefHeight="28.0" prefWidth="22.0" text="100" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="896.0" layoutY="620.0" prefHeight="28.0" prefWidth="22.0" text="0" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
