@@ -82,29 +82,25 @@ public class PracticeAnswerController implements Initializable{
 //         		String cmd = "espeak -a"+_volume+" \""+sentence+"\"";
 //         		String cmd = "echo $pwd";
          		
-         		String[] cmds = {"/bin/sh", "-c", cmd};
+         		ProcessBuilder ttsBuilder = new ProcessBuilder("bash","-c",cmd);
+//         		String[] cmds = {"/bin/sh", "-c", cmd};
 //         		System.out.println(cmd);
-         		Process process;
+//         		Process process;
          		try {
-         			process = Runtime.getRuntime().exec(cmds);
-         			System.out.println(cmd);
-         			process.waitFor();
+         			Process ttsProcess = ttsBuilder.start();
+//         			process = Runtime.getRuntime().exec(cmds);
+//         			System.out.println(cmd);
+//         			process.waitFor();
          		} catch (IOException e) {
          			// TODO Auto-generated catch block
          			e.printStackTrace();
          			a.setAlertType(AlertType.ERROR); 
                      // show the dialog 
                      a.show(); 
-                     a.setHeaderText("spd-say not installed");
-                     a.setContentText("Please check the READ.md and install spd-say");
-         		} catch (InterruptedException e) {
-         			// TODO Auto-generated catch block
-         			e.printStackTrace();
-         			a.setAlertType(AlertType.INFORMATION); 
-                     // show the dialog 
-                     a.show(); 
-                     a.setHeaderText("Audio is playing");
-                     a.setContentText("Please do not click frequently!");
+//                     a.setHeaderText("spd-say not installed");
+//                     a.setContentText("Please check the READ.md and install spd-say");
+                     a.setHeaderText("Audio System Crash");
+                     a.setContentText("Please make sure spd-say is installed (in READ.md) and restart the game");
          		}
              }
               
@@ -204,7 +200,7 @@ public class PracticeAnswerController implements Initializable{
 		volume_slider.setOnMouseReleased(event -> {
             int temp = (int)volume_slider.getValue();
             _speed=Integer.toString(temp);
-            System.out.println(_speed);
+//            System.out.println(_speed);
         });
 	}
     

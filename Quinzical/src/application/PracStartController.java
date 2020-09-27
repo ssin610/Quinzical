@@ -114,7 +114,7 @@ public class PracStartController implements Initializable {
 	public void readSelectedfile() throws IOException {
 		//Get the choice from the choicebox
     	String selected_cat = (String) cat_choice.getSelectionModel().getSelectedItem();
-		System.out.println(selected_cat);
+//		System.out.println(selected_cat);
 		String currentpath=System.getProperty("user.dir");
 		
 //		System.out.println(currentpath); 
