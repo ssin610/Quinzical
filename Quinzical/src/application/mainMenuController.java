@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 
 
 
+
 public class mainMenuController implements Initializable {
 	Alert a = new Alert(AlertType.NONE);
 	@FXML
@@ -39,8 +40,12 @@ public class mainMenuController implements Initializable {
 		Platform.exit();
 	}
 	
-	public void gameMode() {
-		
+	public void gameMode(ActionEvent event) throws IOException {
+		Parent viewParent = FXMLLoader.load(getClass().getResource("questionBoard.fxml"));
+		Scene viewScene = new Scene(viewParent);
+		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		window.setScene(viewScene);
+		window.show();
 	}
 	
 	public void practiceMode() {

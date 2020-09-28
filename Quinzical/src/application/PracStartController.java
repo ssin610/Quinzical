@@ -143,7 +143,7 @@ public class PracStartController implements Initializable {
 	 */
 	public void readfile() throws IOException{
 		String currentpath=System.getProperty("user.dir");
-//		System.out.println(currentpath); 
+		//System.out.println(currentpath); 
       File file = new File(currentpath+"/cat");   
       File[] array = file.listFiles();   
 
