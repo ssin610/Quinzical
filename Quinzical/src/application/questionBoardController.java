@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -23,6 +26,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import javafx.event.EventHandler;
+
 
 public class questionBoardController implements Initializable {
 
@@ -55,6 +61,7 @@ public class questionBoardController implements Initializable {
         if (categoryFolder != null) {
             for (int i = 0; i < 5; i++) { // iterate through each category
                 ArrayList<Integer> addedIndex = new ArrayList<Integer>();
+                ArrayList<String> values = new ArrayList<String>();
                 File randomCat = getRandom(categoryFolder);
                 while (addedCategories.contains(randomCat)) {
                     randomCat = getRandom(categoryFolder);
@@ -77,11 +84,27 @@ public class questionBoardController implements Initializable {
                         randomIndex = ThreadLocalRandom.current().nextInt(0, lines.size());
                     }
                     System.out.println(lines.get(randomIndex) + " | ");
-                    String value = lines.get(randomIndex).split("\\,")[2];
+                   
+                    String value = lines.get(randomIndex).substring(lines.get(randomIndex).lastIndexOf(',') + 1).trim();
+                    values.add(value);
                     addedIndex.add(randomIndex);
+    
+                }
+              
+                Collections.sort(values, new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        return Integer.valueOf(o1).compareTo(Integer.valueOf(o2));
+                    }
+                });
+                for (String value : values) {
                     index_y++;
-                    addButton(value); // add it to the board
-
+                    if (index_y == 1) {
+                        addButton(value, true); // add it to the board
+                    }
+                    else {
+                        addButton(value, false); // add it to the board
+                    }
                 }
                 index_x++;
             }
@@ -96,13 +119,35 @@ public class questionBoardController implements Initializable {
         return array[rnd];
     }
 
-    public void addButton(String text) {
+    public void addButton(String text, Boolean lowest) {
         Button button = new Button("$" + text);
         button.setPrefSize(190, 80);
         button.setFont(Font.font("Agency FB", 20));
         button.setStyle("-fx-background-color: #ffc100; ");
+        if (!lowest) {
+            button.setDisable(true);
+            button.setStyle("-fx-background-color: #ACACAC; ");
+        }
+        button.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) { // when the player selections a question
+                try {
+                    onQuestionButtonPushed(event); // send the event to the buttons event handler
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         grid.add(button, index_x, index_y);
         GridPane.setHalignment(button, HPos.CENTER);
+    }
+
+    public void onQuestionButtonPushed(ActionEvent event) throws IOException {
+        Parent viewParent = FXMLLoader.load(getClass().getResource("gameAnswer.fxml"));
+        Scene viewScene = new Scene(viewParent);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(viewScene);
+        window.show();
     }
 
 }
