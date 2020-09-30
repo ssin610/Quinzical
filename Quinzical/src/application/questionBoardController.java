@@ -21,14 +21,15 @@ import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.event.EventHandler;
-
 
 public class questionBoardController implements Initializable {
 
@@ -51,6 +52,11 @@ public class questionBoardController implements Initializable {
     ArrayList<File> addedCategories = new ArrayList<File>();
 
     
+    //	String quest="This native bird lays the largest egg in relation to their body size of any species of bird in the world, (What is) the Kiwi";
+	String showtext;
+	String answer;
+	String bracket;
+	Alert a = new Alert(AlertType.NONE);
 
     public void initialize(URL url, ResourceBundle rb) {
         resetText.setVisible(false);
@@ -62,6 +68,7 @@ public class questionBoardController implements Initializable {
             for (int i = 0; i < 5; i++) { // iterate through each category
                 ArrayList<Integer> addedIndex = new ArrayList<Integer>();
                 ArrayList<String> values = new ArrayList<String>();
+                ArrayList<String> questions = new ArrayList<String>();
                 File randomCat = getRandom(categoryFolder);
                 while (addedCategories.contains(randomCat)) {
                     randomCat = getRandom(categoryFolder);
@@ -83,27 +90,33 @@ public class questionBoardController implements Initializable {
                     while (addedIndex.contains(randomIndex)) {
                         randomIndex = ThreadLocalRandom.current().nextInt(0, lines.size());
                     }
-                    System.out.println(lines.get(randomIndex) + " | ");
-                   
+
                     String value = lines.get(randomIndex).substring(lines.get(randomIndex).lastIndexOf(',') + 1).trim();
                     values.add(value);
+                    questions.add(lines.get(randomIndex));
                     addedIndex.add(randomIndex);
-    
+
                 }
-              
-                Collections.sort(values, new Comparator<String>() {
+
+                Collections.sort(questions, new Comparator<String>() {
                     @Override
                     public int compare(String o1, String o2) {
-                        return Integer.valueOf(o1).compareTo(Integer.valueOf(o2));
+                        return Integer.valueOf(o1.substring(o1.lastIndexOf(',') + 1).trim()).compareTo(Integer.valueOf(o2.substring(o2.lastIndexOf(',') + 1).trim()));
                     }
                 });
-                for (String value : values) {
+               
+                for (int k = 0; k < 5; k++) {
                     index_y++;
                     if (index_y == 1) {
-                        addButton(value, true); // add it to the board
-                    }
-                    else {
-                        addButton(value, false); // add it to the board
+                        trimString(questions.get(k));
+                        System.out.println(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim());
+                        System.out.println(showtext);
+                        System.out.println(answer);
+                        System.out.println(bracket);
+                        addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), true, showtext, answer, bracket); // add it to the board
+                    } else {
+                        trimString(questions.get(k));
+                        addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), false, showtext, answer, bracket); // add it to the board
                     }
                 }
                 index_x++;
@@ -118,8 +131,31 @@ public class questionBoardController implements Initializable {
         int rnd = new Random().nextInt(array.length);
         return array[rnd];
     }
+	
+	/**
+	 * Split the string into 3 parts
+	 * @param question
+	 */
+	public void trimString(String question) {
+		try {
+    
+			String temp[] = question.split("\\(");
+			showtext=temp[0].substring(0, temp[0].length()-2);;
+			String temp2[] = temp[1].split("\\)");
+			bracket="( "+temp2[0].trim()+" )";
+			answer=temp2[1].trim();
+		
+		}catch (Exception e) {
+			
+			 a.setAlertType(AlertType.ERROR); 
+	            // show the dialog 
+	            a.show(); 
+	            a.setHeaderText("Question Reading Error");
+	            a.setContentText("Please check the question format");
+		}
+	}
 
-    public void addButton(String text, Boolean lowest) {
+    public void addButton(String text, Boolean lowest, String question, String answer, String bracket) {
         Button button = new Button("$" + text);
         button.setPrefSize(190, 80);
         button.setFont(Font.font("Agency FB", 20));
@@ -132,6 +168,10 @@ public class questionBoardController implements Initializable {
             @Override
             public void handle(ActionEvent event) { // when the player selections a question
                 try {
+                    gameAnswerController.setQuestion(question);
+                    gameAnswerController.setAnswer(answer);
+                    gameAnswerController.setValue(Integer.valueOf(text));
+                    gameAnswerController.setBracket(bracket);
                     onQuestionButtonPushed(event); // send the event to the buttons event handler
                 } catch (IOException e) {
                     e.printStackTrace();

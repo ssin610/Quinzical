@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1000.0" style="-fx-background-color: #1f1f1f; -fx-border-width: 8; -fx-border-color: #ffa31a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gameAnswerController">
    <children>
-      <Text fill="#d8dbdc" layoutX="256.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game">
+      <Text fill="#d8dbdc" layoutX="222.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game">
          <font>
             <Font name="Comic Sans MS Bold" size="80.0" />
          </font>
@@ -22,18 +22,18 @@
             <Font size="23.0" />
          </font>
       </Label>
-      <Text fill="#ffa31a" layoutX="507.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mode">
+      <Text fill="#ffa31a" layoutX="561.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mode">
          <font>
             <Font name="Comic Sans MS Bold" size="80.0" />
          </font>
       </Text>
-      <Button fx:id="submit_button" layoutX="410.0" layoutY="475.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="178.0" style="-fx-background-color: #ffa31a;" text="Submit">
+      <Button fx:id="submit_button" layoutX="410.0" layoutY="475.0" mnemonicParsing="false" onAction="#onSubmitButtonPushed" prefHeight="69.0" prefWidth="178.0" style="-fx-background-color: #ffa31a;" text="Submit">
          <font>
             <Font name="Comic Sans MS Bold Italic" size="33.0" />
          </font>
       </Button>
-      <Line endX="100.0" layoutX="120.0" layoutY="93.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
-      <Line endX="100.0" layoutX="735.0" layoutY="93.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
+      <Line endX="100.0" layoutX="109.0" layoutY="93.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
+      <Line endX="100.0" layoutX="775.0" layoutY="93.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
       <Label layoutX="390.0" layoutY="167.0" text="Ask a Question for:" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="20.0" />
@@ -52,8 +52,8 @@
       </Label>
       <Slider fx:id="volume_slider" layoutX="841.0" layoutY="606.0" max="100.0" min="-100.0" opacity="0.73" prefHeight="14.0" prefWidth="131.0" value="0.0" />
       <Label layoutX="753.0" layoutY="598.0" prefHeight="28.0" prefWidth="92.0" text="Audio Speed:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true" />
-      <Button fx:id="audio_replay_button" layoutX="747.0" layoutY="554.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="103.0" style="-fx-background-radius: 100;" text="Audio Replay">
-             <font>
+      <Button fx:id="audio_replay_button" layoutX="747.0" layoutY="554.0" mnemonicParsing="false" onAction="#replay" prefHeight="39.0" prefWidth="103.0" style="-fx-background-radius: 100;" text="Audio Replay">
+         <font>
             <Font name="Comic Sans MS Bold Italic" size="12.0" />
          </font></Button>
       <Label fx:id="chance_left" layoutX="159.0" layoutY="583.0" prefHeight="56.0" prefWidth="38.0" text="3" textFill="WHITE">
@@ -62,7 +62,7 @@
          </font>
       </Label>
       <ProgressBar fx:id="reading_bar" layoutX="833.0" layoutY="564.0" prefHeight="14.0" prefWidth="131.0" progress="0.0" visible="false" />
-      <Button fx:id="back_button" layoutX="443.0" layoutY="592.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="112.0" text="Back to Menu" visible="false" />
+      <Button fx:id="back_button" layoutX="443.0" layoutY="592.0" mnemonicParsing="false" onAction="#backMenu" prefHeight="28.0" prefWidth="112.0" text="Back to Menu" visible="false" />
       <Label layoutX="841.0" layoutY="620.0" prefHeight="28.0" prefWidth="30.0" text="-100" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
          <font>
             <Font size="10.0" />
