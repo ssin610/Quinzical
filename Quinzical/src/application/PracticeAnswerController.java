@@ -174,14 +174,20 @@ public class PracticeAnswerController implements Initializable{
     	}
    
     }
-    
+    /**
+     * Get rid off the useless leading char when giving hint
+     * @param hint
+     * @return
+     */
     public String gethint(String hint) {
-    	System.out.println("Before:"+ hint);
-    	if (hint.contains("the")) {
-    		hint=hint.replace("the","");
+//    	System.out.println("Before:"+ hint);
+    	String leading = hint.trim().split(" ")[0]; 
+    	if (leading.equalsIgnoreCase("the") || leading.equalsIgnoreCase("a") || leading.equalsIgnoreCase("an")) {
+    		String temp = leading+" ";
+    		hint=hint.replace(temp,"");
     		hint=hint.trim();
     	}
-    	System.out.println("After:"+ hint);
+//    	System.out.println("After:"+ hint);
     	return hint.substring(0, 1);
     }
     
