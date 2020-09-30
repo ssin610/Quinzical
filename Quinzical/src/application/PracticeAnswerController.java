@@ -175,16 +175,26 @@ public class PracticeAnswerController implements Initializable{
    
     }
     
+    public String gethint(String hint) {
+    	System.out.println("Before:"+ hint);
+    	if (hint.contains("the")) {
+    		hint=hint.replace("the","");
+    		hint=hint.trim();
+    	}
+    	System.out.println("After:"+ hint);
+    	return hint.substring(0, 1);
+    }
+    
     public   void setQuestion(String question) {
     	_question=question;
 	}
     public   void setStrings(String answer, String question, String bracket) {
     	_answer=answer;
-    	_question=question;
+    	_question=question.split(",")[0];
     	_bracket=bracket;
 //    	System.out.println(_bracket);
-//    	System.out.println(_question);
-    	_hint=_question.substring(0, 1);
+    	System.out.println(_question);
+    	_hint="Hint: "+gethint(_question);
     	speak(_answer);
 	}
 
