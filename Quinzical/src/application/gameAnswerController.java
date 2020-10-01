@@ -55,7 +55,10 @@ public class gameAnswerController implements Initializable{
 	Slider volume_slider;
 	
 	@FXML
-    TextField user_input;
+	TextField user_input;
+	
+	@FXML
+	Label winnings;
     
     // store information about the particular question
 	private static String question;
@@ -149,35 +152,25 @@ public class gameAnswerController implements Initializable{
     	if (input.trim().equalsIgnoreCase(answer.trim()) || input.trim().equalsIgnoreCase(_bracket +answer.trim()) || input.trim().equalsIgnoreCase(_bracket +" "+answer.trim())) {
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! The question is " + bracket + " " + answer);
-			
+			MainMenu.setWinnings(value);
 			submit_button.setDisable(true);
     		audio_replay_button.setDisable(true);
     		back_button.setDisable(false);
     		back_button.setVisible(true);
 
     	}else {
-    		//IF input is not correct
-    		_chance=_chance-1;
-//    		System.out.println(_chance);
     		
-    		hint_label.setVisible(true);
-    		hint_label.setText("Sorry, incorrect!");
-    		
-    		//Compare the chance to see whether finished or show hint
-    		if (_chance==0) { 											//Game over
         		hint_label.setVisible(true);
         		hint_label.setText("Sorry, The question is " + bracket +" "+ answer);
-        		
+        		MainMenu.setWinnings(-value);
         		submit_button.setDisable(true);
         		audio_replay_button.setDisable(true);
         		back_button.setDisable(false);
-        		back_button.setVisible(true);
-        	}else if (_chance == 1) {									//Show hint
-        		hint_label.setVisible(true);
-        		hint_label.setText(_hint);
-        	}
-    	}
-   
+        		back_button.setVisible(true);        	
+        	
+		}
+		winnings.setText("Winnings: $" + Integer.toString(MainMenu.getWinnings()));
+
     }
     
    
@@ -208,11 +201,13 @@ public class gameAnswerController implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+	
 		back_button.setDisable(true);
 		// TODO Auto-generated method stub
 		question_label.setText(question);
-	
+		winnings.setText("Winnings: $" + Integer.toString(MainMenu.getWinnings()));
 		user_input.setPromptText(_bracket);
+		MainMenu.addAnsweredQuestion(question);
 		//Add lisenter to the slider
 		volume_slider.setOnMouseReleased(event -> {
             int temp = (int)volume_slider.getValue();
