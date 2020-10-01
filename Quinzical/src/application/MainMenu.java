@@ -57,6 +57,10 @@ public class MainMenu extends Application {
 	public static ArrayList<String> getAddedQuestions() {
         return addedQuestions;
 	}
+
+	public static ArrayList<String> getAnsweredQuestions() {
+        return answeredQuestions;
+	}
 	
 	public static ArrayList<File> getAddedCategories() {
         return addedCategories;

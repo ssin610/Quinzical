@@ -49,6 +49,9 @@ public class questionBoardController implements Initializable {
     int index_y = 0;
     int index_x = 0;
 
+    // track the progress of the game
+    int completedCategoryCounter = 0;
+
     // String quest="This native bird lays the largest egg in relation to their body
     // size of any species of bird in the world, (What is) the Kiwi";
     String showtext;
@@ -60,6 +63,7 @@ public class questionBoardController implements Initializable {
         resetText.setVisible(false);
         reset.setVisible(false);
         winnings.setText("Winnings: $");
+      
         File dir = new File("cat"); // get location of categories folder
         File[] categoryFolder = dir.listFiles();
         if (categoryFolder != null) {
@@ -141,26 +145,44 @@ public class questionBoardController implements Initializable {
                     index_x++;
                 }
                 index_x = 0;
+                int[] validQuestionArray = new int[]{ 0,0,0,0,0 }; 
+                int k = 0;
                 for (int i = 0; i < MainMenu.getAddedQuestions().size(); i++) {
-
+                    trimString(MainMenu.getAddedQuestions().get(i));
                     if (i % 5 == 0 && i != 0) {
+                        if (validQuestionArray[k] == 0) {
+                            Text complete = new Text("Category complete!");
+                            complete.setFont(Font.font("Agency FB", 29));
+                            complete.setFill(Color.LIGHTGREEN);
+                            complete.setWrappingWidth(150);
+                            grid.add(complete, index_x, 1);
+                            GridPane.setHalignment(complete, HPos.CENTER);
+                            completedCategoryCounter++;
+                        }
+                        k++;
                         index_x++;
                         index_y = 0;
                     }
-                    index_y++;
-                    trimString(MainMenu.getAddedQuestions().get(i));
-                    if (index_y == 1) {
-                        addButton(
-                                MainMenu.getAddedQuestions().get(i)
-                                        .substring(MainMenu.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
-                                true, showtext, answer, bracket); // add it to the board
-                    } else {
-                        addButton(
-                                MainMenu.getAddedQuestions().get(i)
-                                        .substring(MainMenu.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
-                                false, showtext, answer, bracket); // add it to the board
-                    }
+                    if (!(MainMenu.getAnsweredQuestions().contains(showtext))) {
+
+
+                        
+                        index_y++;
+                        trimString(MainMenu.getAddedQuestions().get(i));
+                        validQuestionArray[k] = validQuestionArray[k] + 1;
+                        if (index_y == 1) {
+                            addButton(
+                                    MainMenu.getAddedQuestions().get(i)
+                                            .substring(MainMenu.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
+                                    true, showtext, answer, bracket); // add it to the board
+                        } else {
+                            addButton(
+                                    MainMenu.getAddedQuestions().get(i)
+                                            .substring(MainMenu.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
+                                    false, showtext, answer, bracket); // add it to the board
+                        }
                 }
+            }
 
             }
 
