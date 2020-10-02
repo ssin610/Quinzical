@@ -115,11 +115,6 @@ public class questionBoardController implements Initializable {
                         if (index_y == 1) {
                             MainMenu.addAddedQuestion(questions.get(k));
                             trimString(questions.get(k));
-                            System.out
-                                    .println(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim());
-                            System.out.println(showtext);
-                            System.out.println(answer);
-                            System.out.println(bracket);
                             addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), true,
                                     showtext, answer, bracket); // add it to the board
                         } else {
@@ -149,22 +144,8 @@ public class questionBoardController implements Initializable {
                 int k = 0;
                 for (int i = 0; i < MainMenu.getAddedQuestions().size(); i++) {
                     trimString(MainMenu.getAddedQuestions().get(i));
-                    if (i % 5 == 0 && i != 0) {
-                        if (validQuestionArray[k] == 0) {
-                            Text complete = new Text("Category complete!");
-                            complete.setFont(Font.font("Agency FB", 29));
-                            complete.setFill(Color.LIGHTGREEN);
-                            complete.setWrappingWidth(150);
-                            grid.add(complete, index_x, 1);
-                            GridPane.setHalignment(complete, HPos.CENTER);
-                            completedCategoryCounter++;
-                        }
-                        k++;
-                        index_x++;
-                        index_y = 0;
-                    }
+                    
                     if (!(MainMenu.getAnsweredQuestions().contains(showtext))) {
-
 
                         
                         index_y++;
@@ -182,7 +163,23 @@ public class questionBoardController implements Initializable {
                                     false, showtext, answer, bracket); // add it to the board
                         }
                 }
+                if (i == 4 || i == 9 || i == 14 || i == 19 || i == 24) {
+                    if (validQuestionArray[k] == 0) {
+                        Text complete = new Text("Category complete!");
+                        complete.setFont(Font.font("Agency FB", 29));
+                        complete.setFill(Color.LIGHTGREEN);
+                        complete.setWrappingWidth(150);
+                        grid.add(complete, index_x, 1);
+                        GridPane.setHalignment(complete, HPos.CENTER);
+                        completedCategoryCounter++;
+                    }
+                    System.out.println(i-1);
+                    k++;
+                    index_x++;
+                    index_y = 0;
+                }
             }
+
 
             }
 
@@ -191,6 +188,10 @@ public class questionBoardController implements Initializable {
             System.out.println("Category folder not found");
         }
 
+        if (completedCategoryCounter == 5) { // when the game has been completed
+            resetText.setVisible(true);
+            reset.setVisible(true);
+        }
     }
 
     public static File getRandom(File[] array) {
@@ -254,6 +255,24 @@ public class questionBoardController implements Initializable {
         Parent viewParent = FXMLLoader.load(getClass().getResource("gameAnswer.fxml"));
         Scene viewScene = new Scene(viewParent);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(viewScene);
+        window.show();
+    }
+
+    public void onMainMenuPushed(ActionEvent event) throws IOException
+    {
+        Parent viewParent = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        Scene viewScene = new Scene(viewParent);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(viewScene);
+        window.show();
+    }
+    
+    // called when there are no categories available
+	public void onResetPushed(ActionEvent event) throws IOException {
+        Parent viewParent = FXMLLoader.load(getClass().getResource("reset.fxml"));
+        Scene viewScene = new Scene(viewParent);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(viewScene);
         window.show();
     }

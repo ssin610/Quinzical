@@ -28,7 +28,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="reset" mnemonicParsing="false" prefHeight="80.0" prefWidth="194.0" style="-fx-background-color: #ffc100;" text="Reset game" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <Button fx:id="reset" mnemonicParsing="false" onAction="#onResetPushed" prefHeight="80.0" prefWidth="194.0" style="-fx-background-color: #ffc100;" text="Reset game" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <font>
                   <Font name="Comic Sans MS Bold" size="22.0" />
                </font>
@@ -43,7 +43,7 @@
             </Text>
          </children>
       </GridPane>
-      <Button layoutX="375.0" layoutY="577.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="250.0" style="-fx-background-color: #ffc100;" text="Main Menu">
+      <Button layoutX="375.0" layoutY="577.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="80.0" prefWidth="250.0" style="-fx-background-color: #ffc100;" text="Main Menu">
          <font>
             <Font name="Comic Sans MS Bold" size="34.0" />
          </font></Button>
