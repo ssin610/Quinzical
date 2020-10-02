@@ -1,6 +1,7 @@
 package application;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
@@ -16,7 +17,7 @@ public class MainMenu extends Application {
 	private static int winnings = 0;
 	private static ArrayList<String> answeredQuestions = new ArrayList<String>();
 	private static ArrayList<String> addedQuestions = new ArrayList<String>();
-	private static ArrayList<File> addedCategories = new ArrayList<File>();
+	private static ArrayList<String> addedCategories = new ArrayList<String>();
 	private static boolean random = true;
 	@Override
 	public void start(Stage primaryStage) {
@@ -26,6 +27,28 @@ public class MainMenu extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			TextFileReader reader = new TextFileReader();
+			File w = new File("winnings");
+			if (w.exists()) {
+				winnings = Integer.valueOf(reader.read(w).get(0)); // if winnings have previously been saved, read from this
+																   // file
+				random = false;
+			}
+			File an = new File("answeredQuestions");
+			if (an.exists()) {
+				answeredQuestions = (ArrayList<String>) reader.read(an); // if answered questions have previously been saved,
+																		// read from this file
+			}
+			File ad = new File("addedQuestions");
+			if (ad.exists()) {
+				addedQuestions = (ArrayList<String>) reader.read(ad); // if answered questions have previously been saved,
+																		// read from this file
+			}
+			File ac = new File("addedCategories");
+			if (ac.exists()) {
+				addedCategories = (ArrayList<String>) reader.read(ac); // if answered questions have previously been saved,
+																		// read from this file
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -35,6 +58,14 @@ public class MainMenu extends Application {
 		launch(args);
 	}
 
+	@Override
+    public void stop() throws IOException {
+        TextFileWriter.write("winnings", winnings, null); // save fields in files
+		TextFileWriter.write("answeredQuestions", null, answeredQuestions);
+		TextFileWriter.write("addedQuestions", null, addedQuestions);
+		TextFileWriter.write("addedCategories", null, addedCategories);
+    }
+
 	public static void setWinnings(int value) {
         if (value == 0) {
             winnings = 0;
@@ -42,8 +73,8 @@ public class MainMenu extends Application {
         winnings += value;
 	}
 
-	public static void setRandom() {
-        random = false;
+	public static void setRandom(Boolean bool) {
+        random = bool;
 	}
 	
 	public static int getWinnings() {
@@ -62,7 +93,7 @@ public class MainMenu extends Application {
         return answeredQuestions;
 	}
 	
-	public static ArrayList<File> getAddedCategories() {
+	public static ArrayList<String> getAddedCategories() {
         return addedCategories;
     }
 	
@@ -75,11 +106,20 @@ public class MainMenu extends Application {
 	}
 	
 	public static void addAddedQuestion(String question) {
-        addedQuestions.add(question);
+		if (question == null) {
+            addedQuestions.clear();
+        } else {
+			addedQuestions.add(question);
+        }
+       
 	}
 	
-	public static void addCategory(File category) {
-        addedCategories.add(category);
+	public static void addCategory(String category) {
+		if (category == null) {
+            addedCategories.clear();
+        } else {
+			addedCategories.add(category);
+        }
     }
 }
 

@@ -76,7 +76,7 @@ public class questionBoardController implements Initializable {
                     while (MainMenu.getAddedCategories().contains(randomCat)) {
                         randomCat = getRandom(categoryFolder);
                     }
-                    MainMenu.addCategory(randomCat);
+                    MainMenu.addCategory(randomCat.getName());
                     index_y = 0;
                     Text categoryName = new Text(randomCat.getName().toUpperCase());
                     categoryName.setFont(Font.font("Agency FB", 20));
@@ -129,10 +129,10 @@ public class questionBoardController implements Initializable {
                 }
             }
             if (MainMenu.getRandom()) {
-                MainMenu.setRandom();
+                MainMenu.setRandom(false);
             } else {
-                for (File category : MainMenu.getAddedCategories()) {
-                    Text categoryName = new Text(category.getName().toUpperCase());
+                for (String category : MainMenu.getAddedCategories()) {
+                    Text categoryName = new Text(category.toUpperCase());
                     categoryName.setFont(Font.font("Agency FB", 20));
                     categoryName.setFill(Color.LIGHTSKYBLUE);
                     grid.add(categoryName, index_x, index_y);

@@ -14,10 +14,17 @@ public class resetController {
     public void onYesButton(ActionEvent event) throws IOException {
         MainMenu.setWinnings(0);
         MainMenu.addAnsweredQuestion(null);
+        MainMenu.addAddedQuestion(null);
+        MainMenu.addCategory(null);
+        MainMenu.setRandom(true);
         File w = new File("winnings");
         w.delete();
-        File a = new File("answeredQuestions");
-        a.delete();
+        File an = new File("answeredQuestions");
+        an.delete();
+        File ad = new File("addedQuestions");
+        ad.delete();
+        File ac = new File("addedCategories");
+        ac.delete();
         Parent viewParent = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         Scene viewScene = new Scene(viewParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
