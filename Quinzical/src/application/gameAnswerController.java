@@ -34,16 +34,19 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+public class gameAnswerController implements Initializable {
 
-public class gameAnswerController implements Initializable{
-	
 	@FXML
 	Button submit_button;
+
+	@FXML
+	Button dontknow_button;
+
 	@FXML
 	Button back_button;
 	@FXML
 	Button audio_replay_button;
-	
+
 	@FXML
 	Label question_label;
 
@@ -53,82 +56,81 @@ public class gameAnswerController implements Initializable{
 	ProgressBar reading_bar;
 	@FXML
 	Slider volume_slider;
-	
+
 	@FXML
 	TextField user_input;
-	
+
 	@FXML
 	Label winnings;
-    
-    // store information about the particular question
+
+	// store information about the particular question
 	private static String question;
 	private static String answer;
 	private static String bracket;
 	private static int value;
-	
-	static String _question;	//What is expected from the user
-	static String _answer=""; //What display to the user
-	static String _hint;	
-	static String _bracket;
-	private int _chance=3;
-	private String _speed="0";
-	Alert a = new Alert(AlertType.NONE);
-	
-	
 
-	
+	static String _question; // What is expected from the user
+	static String _answer = ""; // What display to the user
+	static String _hint;
+	static String _bracket;
+	private int _chance = 3;
+	private String _speed = "0";
+	Alert a = new Alert(AlertType.NONE);
+
 	/**
 	 * Use spd-say to speak & in the worker thread
+	 * 
 	 * @param sentence
 	 */
 	public void speak(String sentence) {
-		 Thread thread = new Thread() {
-             @Override
-             public void run() {
-//            	 String cmd = "echo \""+sentence+"\" | festival --tts"; //spd-say -i100 "hello"
-         		String cmd = "spd-say -r"+_speed+" \""+sentence+"\"";
-//         		String cmd = "espeak -a"+_volume+" \""+sentence+"\"";
-//         		String cmd = "echo $pwd";
-         		
-         		ProcessBuilder ttsBuilder = new ProcessBuilder("bash","-c",cmd);
-//         		String[] cmds = {"/bin/sh", "-c", cmd};
-//         		System.out.println(cmd);
-//         		Process process;
-         		try {
-         			Process ttsProcess = ttsBuilder.start();
-//         			process = Runtime.getRuntime().exec(cmds);
-//         			System.out.println(cmd);
-//         			process.waitFor();
-         		} catch (IOException e) {
-         			// TODO Auto-generated catch block
-         			e.printStackTrace();
-         			a.setAlertType(AlertType.ERROR); 
-                     // show the dialog 
-                     a.show(); 
-//                     a.setHeaderText("spd-say not installed");
-//                     a.setContentText("Please check the READ.md and install spd-say");
-                     a.setHeaderText("Audio System Crash");
-                     a.setContentText("Please make sure spd-say is installed (in READ.md) and restart the game");
-         		}
-             }
-              
-         };
-         thread.setName("thread1");
-         thread.start();
-//		
+		Thread thread = new Thread() {
+			@Override
+			public void run() {
+				// String cmd = "echo \""+sentence+"\" | festival --tts"; //spd-say -i100
+				// "hello"
+				String cmd = "spd-say -r" + _speed + " \"" + sentence + "\"";
+				// String cmd = "espeak -a"+_volume+" \""+sentence+"\"";
+				// String cmd = "echo $pwd";
+
+				ProcessBuilder ttsBuilder = new ProcessBuilder("bash", "-c", cmd);
+				// String[] cmds = {"/bin/sh", "-c", cmd};
+				// System.out.println(cmd);
+				// Process process;
+				try {
+					Process ttsProcess = ttsBuilder.start();
+					// process = Runtime.getRuntime().exec(cmds);
+					// System.out.println(cmd);
+					// process.waitFor();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					a.setAlertType(AlertType.ERROR);
+					// show the dialog
+					a.show();
+					// a.setHeaderText("spd-say not installed");
+					// a.setContentText("Please check the READ.md and install spd-say");
+					a.setHeaderText("Audio System Crash");
+					a.setContentText("Please make sure spd-say is installed (in READ.md) and restart the game");
+				}
+			}
+
+		};
+		thread.setName("thread1");
+		thread.start();
+		//
 	}
-	
-	
-	public void replay(ActionEvent event){
-    	speak(_answer);
-    }
+
+	public void replay(ActionEvent event) {
+		speak(_answer);
+	}
+
 	public void backMenu() {
 
 		try {
-			Stage thisstage = (Stage)submit_button.getScene().getWindow();
-			//Load GUI process
+			Stage thisstage = (Stage) submit_button.getScene().getWindow();
+			// Load GUI process
 			AnchorPane root;
-			root = (AnchorPane)FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+			root = (AnchorPane) FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			Stage secondStage = new Stage();
@@ -138,52 +140,65 @@ public class gameAnswerController implements Initializable{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			a.setAlertType(AlertType.ERROR); 
-            // show the dialog 
-            a.show(); 
-            a.setHeaderText("Fatal Error");
-            a.setContentText("Please restart the game");
+			a.setAlertType(AlertType.ERROR);
+			// show the dialog
+			a.show();
+			a.setHeaderText("Fatal Error");
+			a.setContentText("Please restart the game");
 		}
-		
+
 	}
-   
-    public void onSubmitButtonPushed(ActionEvent event) throws IOException {
-    	String input = user_input.getText();
-    	if (input.trim().equalsIgnoreCase(answer.trim()) || input.trim().equalsIgnoreCase(_bracket +answer.trim()) || input.trim().equalsIgnoreCase(_bracket +" "+answer.trim())) {
+
+	public void onSubmitButtonPushed(ActionEvent event) throws IOException {
+		String input = user_input.getText();
+		if (input.trim().equalsIgnoreCase(answer.trim()) || input.trim().equalsIgnoreCase(_bracket + answer.trim())
+				|| input.trim().equalsIgnoreCase(_bracket + " " + answer.trim())) {
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! The question is " + bracket + " " + answer);
 			MainMenu.setWinnings(value);
 			submit_button.setDisable(true);
-    		audio_replay_button.setDisable(true);
-    		back_button.setDisable(false);
-    		back_button.setVisible(true);
+			audio_replay_button.setDisable(true);
+			back_button.setDisable(false);
+			back_button.setVisible(true);
 
-    	}else {
-    		
-        		hint_label.setVisible(true);
-        		hint_label.setText("Sorry, The question is " + bracket +" "+ answer);
-        		MainMenu.setWinnings(-value);
-        		submit_button.setDisable(true);
-        		audio_replay_button.setDisable(true);
-        		back_button.setDisable(false);
-        		back_button.setVisible(true);        	
-        	
+		} else {
+
+			hint_label.setVisible(true);
+			hint_label.setText("Sorry, The question is " + bracket + " " + answer);
+			MainMenu.setWinnings(-value);
+			submit_button.setDisable(true);
+			audio_replay_button.setDisable(true);
+			back_button.setDisable(false);
+			back_button.setVisible(true);
+
 		}
 		winnings.setText("Winnings: $" + Integer.toString(MainMenu.getWinnings()));
 
-    }
-    
-   
-    public   void setStrings(String answer, String question, String bracket) {
-    	_answer=answer;
-    	_question=question;
-    	_bracket=bracket;
-//    	System.out.println(_bracket);
-//    	System.out.println(_question);
-    	_hint=_question.substring(0, 1);
-    	speak(_answer);
 	}
-    public static void setQuestion(String questionString) {
+
+	public void onDontKnowPushed(ActionEvent event) throws IOException {
+		hint_label.setVisible(true);
+		hint_label.setText("Sorry, The question is " + bracket + " " + answer);
+		MainMenu.setWinnings(-value);
+		submit_button.setDisable(true);
+		dontknow_button.setDisable(true);
+		audio_replay_button.setDisable(true);
+		back_button.setDisable(false);
+		back_button.setVisible(true);
+		winnings.setText("Winnings: $" + Integer.toString(MainMenu.getWinnings()));
+	}
+
+	public void setStrings(String answer, String question, String bracket) {
+		_answer = answer;
+		_question = question;
+		_bracket = bracket;
+		// System.out.println(_bracket);
+		// System.out.println(_question);
+		_hint = _question.substring(0, 1);
+		speak(_answer);
+	}
+
+	public static void setQuestion(String questionString) {
 		question = questionString;
 	}
 
@@ -201,20 +216,19 @@ public class gameAnswerController implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-	
+
 		back_button.setDisable(true);
 		// TODO Auto-generated method stub
 		question_label.setText(question);
 		winnings.setText("Winnings: $" + Integer.toString(MainMenu.getWinnings()));
 		user_input.setPromptText(_bracket);
 		MainMenu.addAnsweredQuestion(question);
-		//Add lisenter to the slider
+		// Add lisenter to the slider
 		volume_slider.setOnMouseReleased(event -> {
-            int temp = (int)volume_slider.getValue();
-            _speed=Integer.toString(temp);
-//            System.out.println(_speed);
-        });
+			int temp = (int) volume_slider.getValue();
+			_speed = Integer.toString(temp);
+			// System.out.println(_speed);
+		});
 	}
-    
-    
+
 }

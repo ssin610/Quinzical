@@ -73,5 +73,10 @@
             <Font size="10.0" />
          </font>
       </Label>
+      <Button fx:id="dontknow_button" layoutX="44.0" layoutY="475.0" mnemonicParsing="false" onAction="#onDontKnowPushed" prefHeight="69.0" prefWidth="178.0" style="-fx-background-color: #ffa31a;" text="Don't know">
+         <font>
+            <Font name="Comic Sans MS Bold Italic" size="26.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
