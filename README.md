@@ -1,11 +1,19 @@
-# project
+	   
+# Run the game
+To run the game, please go into the Quinzical/ folder and then excute the run.sh
+
+	Please type ./run.sh in the terminal in Quinzical/
+
+
+# File setup
 Quinzical ----- backup/		(All question files as backup)
  	   ----  bin/
  	   ----- cat/ 			(All question files ,might be modified)
  	   ----- src/
- 	   	---- application/     	(Currently contains all files)
+ 	   	---- application/     
  	   
- 	   -----build.fxbuild
+ 	   -----build.fxbuild	
+
  	   
 # Troubleshoot
  - Audio(spd-say) issue:
