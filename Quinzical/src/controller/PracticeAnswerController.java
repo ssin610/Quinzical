@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -120,9 +120,9 @@ public class PracticeAnswerController implements Initializable{
 			Stage thisstage = (Stage)submit_button.getScene().getWindow();
 			//Load GUI process
 			AnchorPane root;
-			root = (AnchorPane)FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+			root = (AnchorPane)FXMLLoader.load(getClass().getResource("view/MainMenu.fxml"));
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+	
 			Stage secondStage = new Stage();
 			secondStage.setScene(scene);
 			secondStage.show();

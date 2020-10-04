@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -182,7 +182,7 @@ public class PracStartController implements Initializable {
         	try {
         		
         		//Pass parameter across
-        		FXMLLoader loader = new FXMLLoader(getClass().getResource("PracticeAnswer.fxml"));
+        		FXMLLoader loader = new FXMLLoader(getClass().getResource("view/PracticeAnswer.fxml"));
     			loader.load();
     	    	PracticeAnswerController controller = loader.getController();
     			//Pass value to the next page
@@ -192,9 +192,9 @@ public class PracStartController implements Initializable {
     			
     			
     			//Load GUI process
-    			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("PracticeAnswer.fxml"));
+    			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("view/PracticeAnswer.fxml"));
     			Scene scene = new Scene(root);
-    			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+    	
     			Stage secondStage = new Stage();
     			secondStage.setScene(scene);
     			secondStage.show();

@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,9 +29,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 
-
-
-public class mainMenuController implements Initializable {
+public class MainMenuController implements Initializable {
 	Alert a = new Alert(AlertType.NONE);
 	@FXML
 	Button prac;
@@ -41,7 +39,7 @@ public class mainMenuController implements Initializable {
 	}
 	
 	public void gameMode(ActionEvent event) throws IOException {
-		Parent viewParent = FXMLLoader.load(getClass().getResource("questionBoard.fxml"));
+		Parent viewParent = FXMLLoader.load(getClass().getResource("view/ClueGrid.fxml"));
 		Scene viewScene = new Scene(viewParent);
 		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		window.setScene(viewScene);
@@ -55,9 +53,9 @@ public class mainMenuController implements Initializable {
     		
     		Stage thisstage = (Stage)prac.getScene().getWindow();
     		//Load GUI process
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("PracticeStart.fxml"));
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("view/PracticeStart.fxml"));
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+	
 			Stage secondStage = new Stage();
 			secondStage.setScene(scene);
 			secondStage.show();

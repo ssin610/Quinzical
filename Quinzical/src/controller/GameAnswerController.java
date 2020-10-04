@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,7 +34,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class gameAnswerController implements Initializable {
+import application.Main;
+
+public class GameAnswerController implements Initializable {
 
 	@FXML
 	Button submit_button;
@@ -130,9 +132,9 @@ public class gameAnswerController implements Initializable {
 			Stage thisstage = (Stage) submit_button.getScene().getWindow();
 			// Load GUI process
 			AnchorPane root;
-			root = (AnchorPane) FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+			root = (AnchorPane) FXMLLoader.load(getClass().getResource("view/MainMenu.fxml"));
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
 			Stage secondStage = new Stage();
 			secondStage.setScene(scene);
 			secondStage.show();
@@ -155,7 +157,7 @@ public class gameAnswerController implements Initializable {
 				|| input.trim().equalsIgnoreCase(_bracket + " " + answer.trim())) {
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! The question is " + bracket + " " + answer);
-			MainMenu.setWinnings(value);
+			Main.setWinnings(value);
 			submit_button.setDisable(true);
 			audio_replay_button.setDisable(true);
 			back_button.setDisable(false);
@@ -165,27 +167,27 @@ public class gameAnswerController implements Initializable {
 
 			hint_label.setVisible(true);
 			hint_label.setText("Sorry, The question is " + bracket + " " + answer);
-			MainMenu.setWinnings(-value);
+			Main.setWinnings(-value);
 			submit_button.setDisable(true);
 			audio_replay_button.setDisable(true);
 			back_button.setDisable(false);
 			back_button.setVisible(true);
 
 		}
-		winnings.setText("Winnings: $" + Integer.toString(MainMenu.getWinnings()));
+		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
 
 	}
 
 	public void onDontKnowPushed(ActionEvent event) throws IOException {
 		hint_label.setVisible(true);
 		hint_label.setText("Sorry, The question is " + bracket + " " + answer);
-		MainMenu.setWinnings(-value);
+		Main.setWinnings(-value);
 		submit_button.setDisable(true);
 		dontknow_button.setDisable(true);
 		audio_replay_button.setDisable(true);
 		back_button.setDisable(false);
 		back_button.setVisible(true);
-		winnings.setText("Winnings: $" + Integer.toString(MainMenu.getWinnings()));
+		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
 	}
 
 	public void setStrings(String answer, String question, String bracket) {
@@ -220,9 +222,9 @@ public class gameAnswerController implements Initializable {
 		back_button.setDisable(true);
 		// TODO Auto-generated method stub
 		question_label.setText(question);
-		winnings.setText("Winnings: $" + Integer.toString(MainMenu.getWinnings()));
+		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
 		user_input.setPromptText(_bracket);
-		MainMenu.addAnsweredQuestion(question);
+		Main.addAnsweredQuestion(question);
 		// Add lisenter to the slider
 		volume_slider.setOnMouseReleased(event -> {
 			int temp = (int) volume_slider.getValue();

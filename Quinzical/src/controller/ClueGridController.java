@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -31,7 +32,11 @@ import javafx.scene.text.Text;
 
 import javafx.event.EventHandler;
 
-public class questionBoardController implements Initializable {
+import application.Main;
+
+import helper.TextFileReader;
+
+public class ClueGridController implements Initializable {
 
     @FXML
     GridPane grid;
@@ -67,16 +72,16 @@ public class questionBoardController implements Initializable {
         File dir = new File("cat"); // get location of categories folder
         File[] categoryFolder = dir.listFiles();
         if (categoryFolder != null) {
-            if (MainMenu.getRandom()) {
+            if (Main.getRandom()) {
                 for (int i = 0; i < 5; i++) { // iterate through each category
                     ArrayList<Integer> addedIndex = new ArrayList<Integer>();
                     ArrayList<String> values = new ArrayList<String>();
                     ArrayList<String> questions = new ArrayList<String>();
                     File randomCat = getRandom(categoryFolder);
-                    while (MainMenu.getAddedCategories().contains(randomCat)) {
+                    while (Main.getAddedCategories().contains(randomCat)) {
                         randomCat = getRandom(categoryFolder);
                     }
-                    MainMenu.addCategory(randomCat.getName());
+                    Main.addCategory(randomCat.getName());
                     index_y = 0;
                     Text categoryName = new Text(randomCat.getName().toUpperCase());
                     categoryName.setFont(Font.font("Agency FB", 20));
@@ -113,12 +118,12 @@ public class questionBoardController implements Initializable {
                     for (int k = 0; k < 5; k++) {
                         index_y++;
                         if (index_y == 1) {
-                            MainMenu.addAddedQuestion(questions.get(k));
+                            Main.addAddedQuestion(questions.get(k));
                             trimString(questions.get(k));
                             addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), true,
                                     showtext, answer, bracket); // add it to the board
                         } else {
-                            MainMenu.addAddedQuestion(questions.get(k));
+                            Main.addAddedQuestion(questions.get(k));
                             trimString(questions.get(k));
                             addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), false,
                                     showtext, answer, bracket); // add it to the board
@@ -128,10 +133,10 @@ public class questionBoardController implements Initializable {
                     index_x++;
                 }
             }
-            if (MainMenu.getRandom()) {
-                MainMenu.setRandom(false);
+            if (Main.getRandom()) {
+                Main.setRandom(false);
             } else {
-                for (String category : MainMenu.getAddedCategories()) {
+                for (String category : Main.getAddedCategories()) {
                     Text categoryName = new Text(category.toUpperCase());
                     categoryName.setFont(Font.font("Agency FB", 20));
                     categoryName.setFill(Color.LIGHTSKYBLUE);
@@ -142,24 +147,24 @@ public class questionBoardController implements Initializable {
                 index_x = 0;
                 int[] validQuestionArray = new int[]{ 0,0,0,0,0 }; 
                 int k = 0;
-                for (int i = 0; i < MainMenu.getAddedQuestions().size(); i++) {
-                    trimString(MainMenu.getAddedQuestions().get(i));
+                for (int i = 0; i < Main.getAddedQuestions().size(); i++) {
+                    trimString(Main.getAddedQuestions().get(i));
                     
-                    if (!(MainMenu.getAnsweredQuestions().contains(showtext))) {
+                    if (!(Main.getAnsweredQuestions().contains(showtext))) {
 
                         
                         index_y++;
-                        trimString(MainMenu.getAddedQuestions().get(i));
+                        trimString(Main.getAddedQuestions().get(i));
                         validQuestionArray[k] = validQuestionArray[k] + 1;
                         if (index_y == 1) {
                             addButton(
-                                    MainMenu.getAddedQuestions().get(i)
-                                            .substring(MainMenu.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
+                                    Main.getAddedQuestions().get(i)
+                                            .substring(Main.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
                                     true, showtext, answer, bracket); // add it to the board
                         } else {
                             addButton(
-                                    MainMenu.getAddedQuestions().get(i)
-                                            .substring(MainMenu.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
+                                    Main.getAddedQuestions().get(i)
+                                            .substring(Main.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
                                     false, showtext, answer, bracket); // add it to the board
                         }
                 }
@@ -173,7 +178,6 @@ public class questionBoardController implements Initializable {
                         GridPane.setHalignment(complete, HPos.CENTER);
                         completedCategoryCounter++;
                     }
-                    System.out.println(i-1);
                     k++;
                     index_x++;
                     index_y = 0;
@@ -237,10 +241,10 @@ public class questionBoardController implements Initializable {
             @Override
             public void handle(ActionEvent event) { // when the player selections a question
                 try {
-                    gameAnswerController.setQuestion(question);
-                    gameAnswerController.setAnswer(answer);
-                    gameAnswerController.setValue(Integer.valueOf(text));
-                    gameAnswerController.setBracket(bracket);
+                    GameAnswerController.setQuestion(question);
+                    GameAnswerController.setAnswer(answer);
+                    GameAnswerController.setValue(Integer.valueOf(text));
+                    GameAnswerController.setBracket(bracket);
                     onQuestionButtonPushed(event); // send the event to the buttons event handler
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -252,7 +256,7 @@ public class questionBoardController implements Initializable {
     }
 
     public void onQuestionButtonPushed(ActionEvent event) throws IOException {
-        Parent viewParent = FXMLLoader.load(getClass().getResource("gameAnswer.fxml"));
+        Parent viewParent = FXMLLoader.load(getClass().getResource("view/GameAnswer.fxml"));
         Scene viewScene = new Scene(viewParent);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(viewScene);
@@ -261,7 +265,7 @@ public class questionBoardController implements Initializable {
 
     public void onMainMenuPushed(ActionEvent event) throws IOException
     {
-        Parent viewParent = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        Parent viewParent = FXMLLoader.load(getClass().getResource("view/MainMenu.fxml"));
         Scene viewScene = new Scene(viewParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(viewScene);
@@ -270,7 +274,7 @@ public class questionBoardController implements Initializable {
     
     // called when there are no categories available
 	public void onResetPushed(ActionEvent event) throws IOException {
-        Parent viewParent = FXMLLoader.load(getClass().getResource("reset.fxml"));
+        Parent viewParent = FXMLLoader.load(getClass().getResource("view/Reset.fxml"));
         Scene viewScene = new Scene(viewParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(viewScene);

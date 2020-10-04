@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,14 +9,16 @@ import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
-public class resetController {
+import application.Main;
+
+public class ResetController {
 
     public void onYesButton(ActionEvent event) throws IOException {
-        MainMenu.setWinnings(0);
-        MainMenu.addAnsweredQuestion(null);
-        MainMenu.addAddedQuestion(null);
-        MainMenu.addCategory(null);
-        MainMenu.setRandom(true);
+        Main.setWinnings(0);
+        Main.addAnsweredQuestion(null);
+        Main.addAddedQuestion(null);
+        Main.addCategory(null);
+        Main.setRandom(true);
         File w = new File("winnings");
         w.delete();
         File an = new File("answeredQuestions");
@@ -25,7 +27,7 @@ public class resetController {
         ad.delete();
         File ac = new File("addedCategories");
         ac.delete();
-        Parent viewParent = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        Parent viewParent = FXMLLoader.load(getClass().getResource("view/MainMenu.fxml"));
         Scene viewScene = new Scene(viewParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(viewScene);
@@ -33,7 +35,7 @@ public class resetController {
     }
 
     public void onNoButton(ActionEvent event) throws IOException {
-        Parent viewParent = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        Parent viewParent = FXMLLoader.load(getClass().getResource("view/Home.fxml"));
         Scene viewScene = new Scene(viewParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(viewScene);
