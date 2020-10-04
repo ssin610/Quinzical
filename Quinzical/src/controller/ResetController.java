@@ -30,7 +30,7 @@ public class ResetController implements Initializable {
   
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        resetText.setText("Congratulations on completing the game with winnings of $" + Main.getWinnings() + "! Do you want to reset the game?");
+        resetText.setText("You have winnings of $" + Main.getWinnings() + "! Do you want to reset the game?");
         resetText.setFont(Font.font("System", FontWeight.BOLD, 50));
     }
 

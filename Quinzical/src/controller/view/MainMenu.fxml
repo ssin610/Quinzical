@@ -15,7 +15,7 @@
          <font>
             <Font name="System Bold" size="35.0" />
          </font></Button>
-      <Button fx:id="quit" layoutX="375.0" layoutY="436.0" mnemonicParsing="false" onAction="#onExit" prefHeight="125.0" prefWidth="350.0" style="-fx-background-color: #ffc100;" text="Quit" textFill="#e42828">
+      <Button fx:id="quit" layoutX="595.0" layoutY="432.0" mnemonicParsing="false" onAction="#onExit" prefHeight="125.0" prefWidth="350.0" style="-fx-background-color: #ffc100;" text="Quit" textFill="#e42828">
          <font>
             <Font name="System Bold" size="44.0" />
          </font></Button>
@@ -24,5 +24,10 @@
             <Font name="Dyuthi Regular" size="83.0" />
          </font>
       </Text>
+      <Button fx:id="quit1" layoutX="170.0" layoutY="432.0" mnemonicParsing="false" onAction="#onResetPushed" prefHeight="125.0" prefWidth="350.0" style="-fx-background-color: #ffc100;" text="Reset">
+         <font>
+            <Font name="System Bold" size="44.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

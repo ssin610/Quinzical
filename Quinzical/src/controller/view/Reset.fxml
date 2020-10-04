@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1000.0" style="-fx-background-color: #1f1f1f; -fx-border-color: #ffa31a; -fx-border-width: 8;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ResetController">
    <children>
-      <Text fx:id="resetText" fill="#45ccca" layoutX="189.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Congratulations on completing the game with winnings of $3333! Do you want to reset the game?" textAlignment="CENTER" wrappingWidth="622.0">
+      <Text fx:id="resetText" fill="#45ccca" layoutX="189.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Congratulations on completing the game with winnings of $3333! Do you want to reset the game?" textAlignment="CENTER" wrappingWidth="622.0">
          <font>
             <Font name="System Bold" size="32.0" />
          </font>

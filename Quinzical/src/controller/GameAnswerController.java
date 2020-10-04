@@ -111,7 +111,7 @@ public class GameAnswerController implements Initializable {
 	public void replay(ActionEvent event) {
 		speak(question);
 	}
-	public void textshow(ActionEvent event) {
+	public void showText(ActionEvent event) {
 		question_label.setVisible(true);
 	}
 
@@ -138,6 +138,7 @@ public class GameAnswerController implements Initializable {
 				|| input.trim().equalsIgnoreCase(bracket + " " + answer.trim())) {
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
+			speak("Correct! $" + value + " has been added to your winnings!");
 			Main.setWinnings(value);
 			submit_button.setDisable(true);
 			audio_replay_button.setDisable(true);
@@ -148,6 +149,7 @@ public class GameAnswerController implements Initializable {
 		} else {
 			hint_label.setVisible(true);
 			hint_label.setText("Incorrect. The correct answer was: " + bracket + " " + answer);
+			speak("Incorrect. The correct answer was: " + bracket + " " + answer);
 			Main.setWinnings(-value);
 			submit_button.setDisable(true);
 			audio_replay_button.setDisable(true);
@@ -163,6 +165,7 @@ public class GameAnswerController implements Initializable {
 	public void onDontKnowPushed(ActionEvent event) {
 		hint_label.setVisible(true);
 		hint_label.setText("The correct answer was: " + bracket + " " + answer);
+		speak("The correct answer was: " + bracket + " " + answer);
 		Main.setWinnings(-value);
 		submit_button.setDisable(true);
 		dontknow_button.setDisable(true);

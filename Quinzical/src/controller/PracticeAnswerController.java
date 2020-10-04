@@ -124,7 +124,7 @@ public class PracticeAnswerController implements Initializable {
 				|| input.trim().equalsIgnoreCase(_bracket + " " + _question.trim())) {
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! The answer was: " + _bracket + " " + _question);
-
+			speak("Correct! The answer was: " + _bracket + " " + _question);
 			submit_button.setDisable(true);
 			audio_replay_button.setDisable(true);
 			back_button.setDisable(false);
@@ -140,6 +140,7 @@ public class PracticeAnswerController implements Initializable {
 			if (_chance == 0) { // Game over
 				hint_label.setVisible(true);
 				hint_label.setText("Incorrect. The correct answer was: " + _bracket + " " + _question);
+				speak("Incorrect. The correct answer was: " + _bracket + " " + _question);
 				submit_button.setDisable(true);
 				audio_replay_button.setDisable(true);
 				back_button.setDisable(false);

@@ -69,7 +69,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="textshow_button" layoutX="25.0" layoutY="559.0" mnemonicParsing="false" onAction="#textshow" prefHeight="39.0" prefWidth="131.0" style="-fx-background-radius: 100;" text="Show Question">
+      <Button fx:id="textshow_button" layoutX="25.0" layoutY="559.0" mnemonicParsing="false" onAction="#showText" prefHeight="39.0" prefWidth="131.0" style="-fx-background-radius: 100;" text="Show Question">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
