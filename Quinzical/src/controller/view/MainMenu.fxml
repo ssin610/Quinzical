@@ -7,15 +7,15 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1000.0" style="-fx-background-color: #1f1f1f; -fx-border-color: #ffa31a; -fx-border-width: 8;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
    <children>
-      <Button  fx:id="game" layoutX="148.0" layoutY="244.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="291.0" style="-fx-background-color: #ffc100;" text="Game Mode" onAction="#gameMode">
+      <Button fx:id="game" layoutX="148.0" layoutY="244.0" mnemonicParsing="false" onAction="#onGameModePushed" prefHeight="100.0" prefWidth="291.0" style="-fx-background-color: #ffc100;" text="Game Mode">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font></Button>
-      <Button fx:id="prac" layoutX="551.0" layoutY="244.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="291.0" style="-fx-background-color: #ffc100;" text="Practice Mode" onAction="#practiceMode">
+      <Button fx:id="prac" layoutX="551.0" layoutY="244.0" mnemonicParsing="false" onAction="#onPractiseModePushed" prefHeight="100.0" prefWidth="291.0" style="-fx-background-color: #ffc100;" text="Practice Mode">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font></Button>
-      <Button fx:id="quit" layoutX="354.0" layoutY="395.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="291.0" style="-fx-background-color: #ffc100;" text="Quit" textFill="#e42828" onAction="#quit">
+      <Button fx:id="quit" layoutX="354.0" layoutY="395.0" mnemonicParsing="false" onAction="#onExit" prefHeight="100.0" prefWidth="291.0" style="-fx-background-color: #ffc100;" text="Quit" textFill="#e42828">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font></Button>
