@@ -7,14 +7,14 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1000.0" style="-fx-background-color: #1f1f1f;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
    <children>
-      <Text fill="#5ec738" layoutX="178.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quinzical">
+      <Text fill="#09eded" layoutX="220.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quinzical">
          <font>
-            <Font name="Comic Sans MS Bold" size="150.0" />
+            <Font name="Dyuthi Regular" size="150.0" />
          </font>
       </Text>
-      <Button fx:id="playButton" layoutX="297.0" layoutY="356.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="177.0" prefWidth="405.0" style="-fx-background-color: #ffc100;" text="Play">
+      <Button fx:id="playButton" layoutX="392.0" layoutY="372.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="118.0" prefWidth="215.0" style="-fx-background-color: #ffc100; -fx-background-radius: 30;" text="Play">
          <font>
-            <Font name="Comic Sans MS Bold" size="85.0" />
+            <Font size="61.0" />
          </font>
       </Button>
    </children>

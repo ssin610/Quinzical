@@ -62,7 +62,7 @@ public class ClueGridController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         resetText.setVisible(false);
         reset.setVisible(false);
-        winnings.setText("Winnings: $");
+        winnings.setText("Winnings: $"+ Integer.toString(Main.getWinnings()));
 
         File dir = new File("cat"); // get location of categories folder
         File[] categoryFolder = dir.listFiles();

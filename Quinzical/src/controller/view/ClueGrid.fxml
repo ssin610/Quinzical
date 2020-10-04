@@ -28,15 +28,15 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="reset" mnemonicParsing="false" onAction="#onResetPushed" prefHeight="80.0" prefWidth="194.0" style="-fx-background-color: #ffc100;" text="Reset game" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <Button fx:id="reset" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onResetPushed" prefHeight="58.0" prefWidth="362.0" style="-fx-background-color: #ffc100; -fx-background-radius: 20;" text="Reset game" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <font>
-                  <Font name="Comic Sans MS Bold" size="22.0" />
+                  <Font size="21.0" />
                </font>
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>
             </Button>
-            <Text fx:id="resetText" fill="#45ccca" strokeType="OUTSIDE" strokeWidth="0.0" text="There are no questions available! Click below to reset game" textAlignment="CENTER" wrappingWidth="350.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <Text fx:id="resetText" fill="#45ccca" strokeType="OUTSIDE" strokeWidth="0.0" text="There are no questions available! Click below to reset game !" textAlignment="CENTER" wrappingWidth="648.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="Comic Sans MS Bold" size="20.0" />
                </font>
@@ -47,9 +47,9 @@
          <font>
             <Font name="Comic Sans MS Bold" size="34.0" />
          </font></Button>
-      <Button fx:id="winnings" layoutX="14.0" layoutY="579.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="250.0" style="-fx-background-color: #ffc100;" text="Winnings: $-34343">
+      <Button fx:id="winnings" alignment="BOTTOM_LEFT" layoutX="14.0" layoutY="579.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="278.0" style="-fx-background-color: #00FF0000;" text="Current Winnings: $-34343" textFill="WHITE">
          <font>
-            <Font name="Comic Sans MS Bold" size="20.0" />
+            <Font name="Dyuthi Regular" size="20.0" />
          </font>
       </Button>
    </children>

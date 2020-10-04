@@ -35,6 +35,9 @@ public class GameAnswerController implements Initializable {
 
 	@FXML
 	Button audio_replay_button;
+	
+	@FXML
+	Button textshow_button;
 
 	@FXML
 	Label question_label;
@@ -108,10 +111,13 @@ public class GameAnswerController implements Initializable {
 	public void replay(ActionEvent event) {
 		speak(question);
 	}
+	public void textshow(ActionEvent event) {
+		question_label.setVisible(true);
+	}
 
 	public void onMainMenuPushed(ActionEvent event) {
 		try {
-			Parent viewParent = FXMLLoader.load(getClass().getResource("view/MainMenu.fxml"));
+			Parent viewParent = FXMLLoader.load(getClass().getResource("view/ClueGrid.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
@@ -137,7 +143,8 @@ public class GameAnswerController implements Initializable {
 			audio_replay_button.setDisable(true);
 			back_button.setDisable(false);
 			back_button.setVisible(true);
-
+			dontknow_button.setDisable(true);
+			textshow_button.setDisable(true);
 		} else {
 			hint_label.setVisible(true);
 			hint_label.setText("Incorrect. The correct answer was: " + bracket + " " + answer);
@@ -146,6 +153,9 @@ public class GameAnswerController implements Initializable {
 			audio_replay_button.setDisable(true);
 			back_button.setDisable(false);
 			back_button.setVisible(true);
+			dontknow_button.setDisable(true);
+			textshow_button.setDisable(true);
+
 		}
 		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
 	}
@@ -160,6 +170,7 @@ public class GameAnswerController implements Initializable {
 		back_button.setDisable(false);
 		back_button.setVisible(true);
 		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
+		textshow_button.setDisable(true);
 	}
 
 	public static void setQuestion(String questionString) {
