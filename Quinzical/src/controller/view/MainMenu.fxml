@@ -9,11 +9,11 @@
    <children>
       <Button fx:id="game" layoutX="140.0" layoutY="244.0" mnemonicParsing="false" onAction="#onGameModePushed" prefHeight="125.0" prefWidth="350.0" style="-fx-background-color: #ffc100;" text="Game Mode">
          <font>
-            <Font name="System Bold" size="44.0" />
+            <Font name="System Bold" size="35.0" />
          </font></Button>
       <Button fx:id="prac" layoutX="579.0" layoutY="244.0" mnemonicParsing="false" onAction="#onPracticeModePushed" prefHeight="125.0" prefWidth="350.0" style="-fx-background-color: #ffc100;" text="Practice Mode">
          <font>
-            <Font name="System Bold" size="43.0" />
+            <Font name="System Bold" size="35.0" />
          </font></Button>
       <Button fx:id="quit" layoutX="355.0" layoutY="488.0" mnemonicParsing="false" onAction="#onExit" prefHeight="125.0" prefWidth="350.0" style="-fx-background-color: #ffc100;" text="Quit" textFill="#e42828">
          <font>
@@ -21,7 +21,7 @@
          </font></Button>
       <Text fill="#45ccca" layoutX="73.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Quinzical">
          <font>
-            <Font name="System Bold" size="93.0" />
+            <Font name="System Bold" size="83.0" />
          </font>
       </Text>
    </children>

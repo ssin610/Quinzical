@@ -10,12 +10,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #1f1f1f; -fx-border-width: 8; -fx-border-color: #ffa31a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PracStartController">
    <children>
-      <Text fill="#d8dbdc" layoutX="238.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Practise">
+      <Text fill="#d8dbdc" layoutX="174.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Practise">
          <font>
             <Font name="System Bold" size="88.0" />
          </font>
       </Text>
-      <Label layoutX="260.0" layoutY="213.0" text="Select A Category:" textFill="WHITE">
+      <Label layoutX="182.0" layoutY="213.0" text="Select A Category:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="44.0" />
          </font>
@@ -30,8 +30,8 @@
             <Font name="System Bold" size="54.0" />
          </font>
       </Button>
-      <Line endX="100.0" layoutX="95.0" layoutY="94.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
-      <Line endX="100.0" layoutX="861.0" layoutY="94.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
+      <Line endX="100.0" layoutX="42.0" layoutY="98.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
+      <Line endX="100.0" layoutX="873.0" layoutY="94.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
       <ChoiceBox fx:id="cat_choice" layoutX="673.0" layoutY="230.0" prefHeight="30.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

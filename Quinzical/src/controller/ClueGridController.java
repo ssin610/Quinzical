@@ -231,7 +231,7 @@ public class ClueGridController implements Initializable {
             if (i == 4 || i == 9 || i == 14 || i == 19 || i == 24) {
                 if (validQuestionArray[k] == 0) {
                     Text complete = new Text("Category complete!");
-                    complete.setFont(Font.font("System", FontWeight.BOLD, 29));
+                    complete.setFont(Font.font("System", FontWeight.BOLD, 25));
                     complete.setFill(Color.LIGHTGREEN);
                     complete.setWrappingWidth(150);
                     grid.add(complete, index_x, 1);

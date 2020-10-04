@@ -9,7 +9,7 @@
    <children>
       <Text fill="#5ec738" layoutX="118.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quinzical">
          <font>
-            <Font name="System Bold" size="200.0" />
+            <Font name="System Bold" size="180.0" />
          </font>
       </Text>
       <Button fx:id="playButton" layoutX="347.0" layoutY="410.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="177.0" prefWidth="405.0" style="-fx-background-color: #ffc100;" text="Play">

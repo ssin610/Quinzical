@@ -35,18 +35,18 @@
             </Text>
             <Button fx:id="reset" mnemonicParsing="false" onAction="#onResetPushed" prefHeight="88.0" prefWidth="221.0" style="-fx-background-color: #ffc100;" text="Reward Screen" GridPane.columnIndex="2" GridPane.rowIndex="5">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Button>
          </children>
       </GridPane>
       <Button layoutX="425.0" layoutY="584.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="80.0" prefWidth="250.0" style="-fx-background-color: #ffc100;" text="Main Menu">
          <font>
-            <Font name="System Bold" size="37.0" />
+            <Font name="System Bold" size="33.0" />
          </font></Button>
       <Label fx:id="winnings" layoutX="35.0" layoutY="609.0" prefHeight="66.0" prefWidth="299.0" text="Winnings: $-33333" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
          <font>
-            <Font name="System Bold" size="33.0" />
+            <Font name="System Bold" size="25.0" />
          </font>
       </Label>
    </children>
