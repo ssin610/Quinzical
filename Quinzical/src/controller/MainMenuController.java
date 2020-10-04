@@ -35,7 +35,7 @@ public class MainMenuController {
 
 	}
 	
-	public void onPractiseModePushed(ActionEvent event) {
+	public void onPracticeModePushed(ActionEvent event) {
     	try {
 			Parent viewParent = FXMLLoader.load(getClass().getResource("view/PracticeStart.fxml"));
 			Scene viewScene = new Scene(viewParent);

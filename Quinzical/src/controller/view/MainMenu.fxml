@@ -11,7 +11,7 @@
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font></Button>
-      <Button fx:id="prac" layoutX="551.0" layoutY="244.0" mnemonicParsing="false" onAction="#onPractiseModePushed" prefHeight="100.0" prefWidth="291.0" style="-fx-background-color: #ffc100;" text="Practice Mode">
+      <Button fx:id="prac" layoutX="551.0" layoutY="244.0" mnemonicParsing="false" onAction="#onPracticeModePushed" prefHeight="100.0" prefWidth="291.0" style="-fx-background-color: #ffc100;" text="Practice Mode">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font></Button>

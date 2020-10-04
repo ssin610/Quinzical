@@ -25,7 +25,7 @@
             <Font name="Comic Sans MS Bold" size="80.0" />
          </font>
       </Text>
-      <Button fx:id="start_prac_button" layoutX="434.0" layoutY="371.0" mnemonicParsing="false" onAction="#startPrac" prefHeight="52.0" prefWidth="138.0" style="-fx-background-color: #ffa31a;" text="Start">
+      <Button fx:id="start_prac_button" layoutX="434.0" layoutY="371.0" mnemonicParsing="false" onAction="#onStartPushed" prefHeight="52.0" prefWidth="138.0" style="-fx-background-color: #ffa31a;" text="Start">
          <font>
             <Font name="Comic Sans MS Bold Italic" size="33.0" />
          </font>

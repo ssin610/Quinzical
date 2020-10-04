@@ -27,7 +27,7 @@
             <Font name="Comic Sans MS Bold" size="80.0" />
          </font>
       </Text>
-      <Button fx:id="submit_button" layoutX="410.0" layoutY="475.0" mnemonicParsing="false" onAction="#submit" prefHeight="69.0" prefWidth="178.0" style="-fx-background-color: #ffa31a;" text="Submit">
+      <Button fx:id="submit_button" layoutX="410.0" layoutY="475.0" mnemonicParsing="false" onAction="#onSubmitButtonPushed" prefHeight="69.0" prefWidth="178.0" style="-fx-background-color: #ffa31a;" text="Submit">
          <font>
             <Font name="Comic Sans MS Bold Italic" size="33.0" />
          </font>
@@ -52,7 +52,7 @@
       </Label>
       <Slider fx:id="volume_slider" layoutX="841.0" layoutY="606.0" max="100.0" min="-100.0" opacity="0.73" prefHeight="14.0" prefWidth="131.0" value="0.0" />
       <Label layoutX="753.0" layoutY="598.0" prefHeight="28.0" prefWidth="92.0" text="Audio Speed:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true" />
-      <Button fx:id="audio_replay_button" layoutX="747.0" layoutY="554.0" mnemonicParsing="false" onAction="#replay" prefHeight="39.0" prefWidth="103.0" style="-fx-background-radius: 100;" text="Audio Replay">
+      <Button fx:id="audio_replay_button" layoutX="747.0" layoutY="554.0" mnemonicParsing="false" onAction="#onReplayPushed" prefHeight="39.0" prefWidth="103.0" style="-fx-background-radius: 100;" text="Audio Replay">
          <font>
             <Font name="Comic Sans MS Bold Italic" size="12.0" />
          </font></Button>
@@ -62,7 +62,7 @@
          </font>
       </Label>
       <ProgressBar fx:id="reading_bar" layoutX="833.0" layoutY="564.0" prefHeight="14.0" prefWidth="131.0" progress="0.0" visible="false" />
-      <Button fx:id="back_button" layoutX="443.0" layoutY="592.0" mnemonicParsing="false" onAction="#backMenu" prefHeight="28.0" prefWidth="112.0" text="Back to Menu" visible="false" />
+      <Button fx:id="back_button" layoutX="443.0" layoutY="592.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="28.0" prefWidth="112.0" text="Back to Menu" visible="false" />
       <Label layoutX="841.0" layoutY="620.0" prefHeight="28.0" prefWidth="30.0" text="-100" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
          <font>
             <Font size="10.0" />
