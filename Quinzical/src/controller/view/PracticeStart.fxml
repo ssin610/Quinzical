@@ -20,18 +20,18 @@
             <Font name="System Bold" size="44.0" />
          </font>
       </Label>
-     <Text fill="#ffa31a" layoutX="600.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mode">
+     <Text fill="#ffa31a" layoutX="638.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mode">
          <font>
             <Font name="System Bold" size="88.0" />
          </font>
       </Text>
-      <Button fx:id="start_prac_button" layoutX="426.0" layoutY="414.0" mnemonicParsing="false" onAction="#onStartPushed" prefHeight="120.0" prefWidth="240.0" style="-fx-background-color: #ffa31a;" text="Start">
+      <Button fx:id="start_prac_button" layoutX="458.0" layoutY="394.0" mnemonicParsing="false" onAction="#onStartPushed" prefHeight="120.0" prefWidth="240.0" style="-fx-background-color: #ffa31a; -fx-background-radius: 20;" text="Start">
          <font>
             <Font name="System Bold" size="54.0" />
          </font>
       </Button>
       <Line endX="100.0" layoutX="42.0" layoutY="98.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
-      <Line endX="100.0" layoutX="873.0" layoutY="94.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
+      <Line endX="100.0" layoutX="931.0" layoutY="98.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
       <ChoiceBox fx:id="cat_choice" layoutX="673.0" layoutY="230.0" prefHeight="30.0" prefWidth="200.0" />
    </children>
 </AnchorPane>
