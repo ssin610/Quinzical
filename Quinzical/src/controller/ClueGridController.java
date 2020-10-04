@@ -22,10 +22,12 @@ import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.event.EventHandler;
 
@@ -38,7 +40,7 @@ public class ClueGridController implements Initializable {
     GridPane grid;
 
     @FXML
-    Button winnings;
+    Label winnings;
 
     @FXML
     Button reset;
@@ -62,7 +64,7 @@ public class ClueGridController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         resetText.setVisible(false);
         reset.setVisible(false);
-        winnings.setText("Winnings: $"+ Integer.toString(Main.getWinnings()));
+        winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
 
         File dir = new File("cat"); // get location of categories folder
         File[] categoryFolder = dir.listFiles();
@@ -124,7 +126,7 @@ public class ClueGridController implements Initializable {
             Main.addCategory(randomCat.getName());
             index_y = 0;
             Text categoryName = new Text(randomCat.getName().toUpperCase());
-            categoryName.setFont(Font.font("Agency FB", 20));
+            categoryName.setFont(Font.font("System", FontWeight.BOLD, 20));
             categoryName.setFill(Color.LIGHTSKYBLUE);
             grid.add(categoryName, index_x, index_y);
             GridPane.setHalignment(categoryName, HPos.CENTER);
@@ -187,7 +189,7 @@ public class ClueGridController implements Initializable {
 
         for (String category : Main.getAddedCategories()) {
             Text categoryName = new Text(category.toUpperCase());
-            categoryName.setFont(Font.font("Agency FB", 20));
+            categoryName.setFont(Font.font("System", FontWeight.BOLD, 23));
             categoryName.setFill(Color.LIGHTSKYBLUE);
             grid.add(categoryName, index_x, index_y);
             GridPane.setHalignment(categoryName, HPos.CENTER);
@@ -229,7 +231,7 @@ public class ClueGridController implements Initializable {
             if (i == 4 || i == 9 || i == 14 || i == 19 || i == 24) {
                 if (validQuestionArray[k] == 0) {
                     Text complete = new Text("Category complete!");
-                    complete.setFont(Font.font("Agency FB", 29));
+                    complete.setFont(Font.font("System", FontWeight.BOLD, 29));
                     complete.setFill(Color.LIGHTGREEN);
                     complete.setWrappingWidth(150);
                     grid.add(complete, index_x, 1);
@@ -270,7 +272,7 @@ public class ClueGridController implements Initializable {
     public void addButton(String text, Boolean lowest, String question, String answer, String bracket) {
         Button button = new Button("$" + text);
         button.setPrefSize(190, 80);
-        button.setFont(Font.font("Agency FB", 20));
+        button.setFont(Font.font("System", FontWeight.BOLD, 25));
         button.setStyle("-fx-background-color: #ffc100; ");
         // if the money value isn't the lowest for the category
         if (!lowest) {

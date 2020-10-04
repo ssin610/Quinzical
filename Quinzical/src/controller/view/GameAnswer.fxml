@@ -10,44 +10,32 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1000.0" style="-fx-background-color: #1f1f1f; -fx-border-width: 8; -fx-border-color: #ffa31a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameAnswerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #1f1f1f; -fx-border-width: 8; -fx-border-color: #ffa31a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameAnswerController">
    <children>
-      <Text fill="#d8dbdc" layoutX="249.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game">
+      <Label fx:id="question_label" alignment="CENTER" layoutX="33.0" layoutY="143.0" prefHeight="107.0" prefWidth="947.0" text="1" textFill="WHITE" visible="false" wrapText="true">
          <font>
-            <Font name="Comic Sans MS Bold" size="80.0" />
-         </font>
-      </Text>
-      <Label fx:id="question_label" alignment="CENTER" layoutX="33.0" layoutY="154.0" prefHeight="107.0" prefWidth="947.0" text="1" textFill="WHITE" visible="false" wrapText="true">
-         <font>
-            <Font size="23.0" />
+            <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <Text fill="#ffa31a" layoutX="538.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mode">
+      <Button fx:id="submit_button" layoutX="411.0" layoutY="431.0" mnemonicParsing="false" onAction="#onSubmitButtonPushed" prefHeight="69.0" prefWidth="178.0" style="-fx-background-color: #ffa31a;" text="Submit">
          <font>
-            <Font name="Comic Sans MS Bold" size="80.0" />
-         </font>
-      </Text>
-      <Button fx:id="submit_button" layoutX="410.0" layoutY="416.0" mnemonicParsing="false" onAction="#onSubmitButtonPushed" prefHeight="69.0" prefWidth="178.0" style="-fx-background-color: #ffa31a;" text="Submit">
-         <font>
-            <Font name="Comic Sans MS Bold Italic" size="33.0" />
+            <Font name="System Bold" size="33.0" />
          </font>
       </Button>
-      <Line endX="100.0" layoutX="109.0" layoutY="93.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
-      <Line endX="100.0" layoutX="775.0" layoutY="93.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
-      <Label layoutX="354.0" layoutY="271.0" text="Enter your answer below:" textFill="WHITE">
+      <Label layoutX="370.0" layoutY="225.0" text="Enter your answer below:" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="user_input" layoutX="368.0" layoutY="316.0" prefHeight="39.0" prefWidth="263.0" />
+      <TextField fx:id="user_input" layoutX="368.0" layoutY="282.0" prefHeight="39.0" prefWidth="263.0" />
       <Label fx:id="hint_label" alignment="CENTER" layoutX="4.0" layoutY="372.0" prefHeight="28.0" prefWidth="991.0" text="HINT" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" visible="false" wrapText="true">
          <font>
             <Font name="Comic Sans MS Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="winnings" layoutX="25.0" layoutY="599.0" prefHeight="33.0" prefWidth="281.0" text="Current Winnings:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+      <Label fx:id="winnings" layoutX="25.0" layoutY="599.0" prefHeight="69.0" prefWidth="345.0" text="Winnings: $-33333" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
          <font>
-            <Font name="Dyuthi Regular" size="20.0" />
+            <Font name="System Bold" size="33.0" />
          </font>
       </Label>
       <Slider fx:id="volume_slider" layoutX="841.0" layoutY="606.0" max="100.0" min="-100.0" opacity="0.73" prefHeight="14.0" prefWidth="131.0" value="0.0" />
@@ -57,7 +45,10 @@
             <Font name="Comic Sans MS Bold Italic" size="12.0" />
          </font></Button>
       <ProgressBar fx:id="reading_bar" layoutX="833.0" layoutY="564.0" prefHeight="14.0" prefWidth="131.0" progress="0.0" visible="false" />
-      <Button fx:id="back_button" layoutX="443.0" layoutY="598.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="28.0" prefWidth="112.0" text="Menu" visible="false" />
+      <Button fx:id="back_button" layoutX="443.0" layoutY="625.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="28.0" prefWidth="112.0" text="Clue Grid" visible="false">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Button>
       <Label layoutX="841.0" layoutY="620.0" prefHeight="28.0" prefWidth="30.0" text="-100" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
          <font>
             <Font size="10.0" />
@@ -73,15 +64,27 @@
             <Font size="10.0" />
          </font>
       </Label>
-      <Button fx:id="dontknow_button" layoutX="432.0" layoutY="507.0" mnemonicParsing="false" onAction="#onDontKnowPushed" prefHeight="47.0" prefWidth="137.0" style="-fx-background-color: #ffa31a;" text="I Don't Know">
+      <Button fx:id="dontknow_button" layoutX="431.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDontKnowPushed" prefHeight="47.0" prefWidth="137.0" style="-fx-background-color: #ffa31a;" text="I Don't Know">
          <font>
-            <Font size="17.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="textshow_button" layoutX="25.0" layoutY="559.0" mnemonicParsing="false" onAction="#textshow" prefHeight="39.0" prefWidth="131.0" style="-fx-background-radius: 100;" text="Disply Question">
+      <Button fx:id="textshow_button" layoutX="25.0" layoutY="559.0" mnemonicParsing="false" onAction="#textshow" prefHeight="39.0" prefWidth="131.0" style="-fx-background-radius: 100;" text="Show Question">
          <font>
-            <Font size="12.0" />
+            <Font name="System Bold Italic" size="12.0" />
          </font>
       </Button>
+      <Text fill="#d8dbdc" layoutX="291.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game">
+         <font>
+            <Font name="System Bold" size="88.0" />
+         </font>
+      </Text>
+      <Text fill="#ffa31a" layoutX="569.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mode">
+         <font>
+            <Font name="System Bold" size="88.0" />
+         </font>
+      </Text>
+      <Line endX="100.0" layoutX="138.0" layoutY="104.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
+      <Line endX="100.0" layoutX="838.0" layoutY="104.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
    </children>
 </AnchorPane>

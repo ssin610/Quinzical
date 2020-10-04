@@ -5,23 +5,23 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1000.0" style="-fx-background-color: #1f1f1f; -fx-border-color: #ffa31a; -fx-border-width: 8;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #1f1f1f; -fx-border-color: #ffa31a; -fx-border-width: 8;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
    <children>
-      <Button fx:id="game" layoutX="148.0" layoutY="244.0" mnemonicParsing="false" onAction="#onGameModePushed" prefHeight="100.0" prefWidth="291.0" style="-fx-background-color: #ffc100;" text="Game Mode">
+      <Button fx:id="game" layoutX="140.0" layoutY="244.0" mnemonicParsing="false" onAction="#onGameModePushed" prefHeight="125.0" prefWidth="350.0" style="-fx-background-color: #ffc100;" text="Game Mode">
          <font>
-            <Font name="System Bold Italic" size="24.0" />
+            <Font name="System Bold" size="44.0" />
          </font></Button>
-      <Button fx:id="prac" layoutX="551.0" layoutY="244.0" mnemonicParsing="false" onAction="#onPracticeModePushed" prefHeight="100.0" prefWidth="291.0" style="-fx-background-color: #ffc100;" text="Practice Mode">
+      <Button fx:id="prac" layoutX="579.0" layoutY="244.0" mnemonicParsing="false" onAction="#onPracticeModePushed" prefHeight="125.0" prefWidth="350.0" style="-fx-background-color: #ffc100;" text="Practice Mode">
          <font>
-            <Font name="System Bold Italic" size="24.0" />
+            <Font name="System Bold" size="43.0" />
          </font></Button>
-      <Button fx:id="quit" layoutX="354.0" layoutY="395.0" mnemonicParsing="false" onAction="#onExit" prefHeight="100.0" prefWidth="291.0" style="-fx-background-color: #ffc100;" text="Quit" textFill="#e42828">
+      <Button fx:id="quit" layoutX="355.0" layoutY="488.0" mnemonicParsing="false" onAction="#onExit" prefHeight="125.0" prefWidth="350.0" style="-fx-background-color: #ffc100;" text="Quit" textFill="#e42828">
          <font>
-            <Font name="System Bold Italic" size="24.0" />
+            <Font name="System Bold" size="44.0" />
          </font></Button>
-      <Text fill="#45ccca" layoutX="160.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Quinzical" textAlignment="CENTER" wrappingWidth="678.87841796875">
+      <Text fill="#45ccca" layoutX="73.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Quinzical">
          <font>
-            <Font name="Dyuthi Regular" size="75.0" />
+            <Font name="System Bold" size="93.0" />
          </font>
       </Text>
    </children>

@@ -28,7 +28,7 @@ public class Main extends Application {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("view/Home.fxml"));
 			primaryStage.setTitle("Quinzical");
-			primaryStage.setScene(new Scene(root, 1000, 671));
+			primaryStage.setScene(new Scene(root, 1100, 700));
 			primaryStage.setResizable(false);
 			primaryStage.show();
 			TextFileReader reader = new TextFileReader();

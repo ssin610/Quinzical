@@ -50,6 +50,7 @@ public class PracStartController implements Initializable {
 		try {
 			readfile();
 			cat_choice.setItems(FXCollections.observableList(cats));
+			cat_choice.setStyle("-fx-font: 18px \"Serif\";");
 		} catch (IOException e) {
 			e.printStackTrace();
 			// Show alert
@@ -70,7 +71,6 @@ public class PracStartController implements Initializable {
 		try {
 			String temp[] = question.split("\\(");
 			showtext = temp[0].substring(0, temp[0].length() - 2);
-			;
 			String temp2[] = temp[1].split("\\)");
 			bracket = "( " + temp2[0].trim() + " )";
 			answer = temp2[1].trim();
