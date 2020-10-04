@@ -256,7 +256,7 @@ public class ClueGridController implements Initializable {
             String temp[] = question.split("\\(");
             showtext = temp[0].substring(0, temp[0].length() - 2);
             String temp2[] = temp[1].split("\\)");
-            bracket = "( " + temp2[0].trim() + " )";
+            bracket = "(" + temp2[0].trim() + ")";
             answer = temp2[1].trim().split(",")[0];
 
         } catch (Exception e) {
