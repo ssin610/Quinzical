@@ -121,10 +121,20 @@ public class PracStartController implements Initializable {
 			}
 			br.close();
 			fileReader.close();
+			
+			
 		}
 
-		Collections.shuffle(questionsSelected); // Shuffle the list
-		trimString(questionsSelected.get(0)); // Process the line after shuffle
+		try {
+			Collections.shuffle(questionsSelected); // Shuffle the list
+			trimString(questionsSelected.get(0)); // Process the line after shuffle
+		}catch(Exception e) {
+			a.setAlertType(AlertType.ERROR);
+			// show the dialog
+			a.show();
+			a.setHeaderText("File Reading Error");
+			a.setContentText("Please check the question file");
+		}
 	}
 
 	/**
