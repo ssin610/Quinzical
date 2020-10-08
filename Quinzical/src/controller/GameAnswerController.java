@@ -138,7 +138,7 @@ public class GameAnswerController implements Initializable {
 				|| input.trim().equalsIgnoreCase(bracket + " " + answer.trim())) {
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
-			speak("Correct! $" + value + " has been added to your winnings!");
+			speak("Correct!");
 			Main.setWinnings(value);
 			submit_button.setDisable(true);
 			audio_replay_button.setDisable(true);
