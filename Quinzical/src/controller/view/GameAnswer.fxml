@@ -86,10 +86,10 @@
       </Text>
       <Line endX="100.0" layoutX="138.0" layoutY="104.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
       <Line endX="100.0" layoutX="838.0" layoutY="104.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
-      <ProgressBar fx:id="bar" layoutX="370.0" layoutY="668.0" prefHeight="14.0" prefWidth="345.0" progress="0.39" />
-      <Label fx:id="time" alignment="BOTTOM_CENTER" layoutX="370.0" layoutY="634.0" prefHeight="28.0" prefWidth="345.0" text="Time Left:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+      <ProgressBar fx:id="bar" layoutX="370.0" layoutY="668.0" prefHeight="14.0" prefWidth="345.0" progress="1.0" />
+      <Label fx:id="time" alignment="BOTTOM_CENTER" layoutX="370.0" layoutY="634.0" prefHeight="28.0" prefWidth="345.0" text="Time  Left:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
          <font>
-            <Font name="System Bold Italic" size="15.0" />
+            <Font name="Dyuthi Regular" size="26.0" />
          </font>
       </Label>
    </children>

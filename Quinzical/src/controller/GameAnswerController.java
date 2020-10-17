@@ -164,6 +164,7 @@ public class GameAnswerController implements Initializable {
 		String input = normal(user_input.getText());
 		String normalizedanswer = normal(answer.trim());
 		
+		// Only allow 3 the (xxx) xxxx || xxxx || (xxx)xxxx
 		if (input.trim().equalsIgnoreCase(normalizedanswer) || input.trim().equalsIgnoreCase(bracket + normalizedanswer)
 				|| input.trim().equalsIgnoreCase(bracket + " " + normalizedanswer)) {
 			hint_label.setVisible(true);
