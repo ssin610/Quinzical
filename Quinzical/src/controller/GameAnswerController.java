@@ -1,9 +1,16 @@
 package controller;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.SwingWorker;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,12 +63,21 @@ public class GameAnswerController implements Initializable {
 
 	@FXML
 	Label winnings;
+	
+	@FXML  
+	Label time;
+	
+	@FXML  
+	ProgressBar bar;
+	
+	
 
 	// store information about the particular question
 	private static String question;
 	private static String answer;
 	private static String bracket;
 	private static int value;
+	private int total_time;
 
 	private String _speed = "0";
 	Alert a = new Alert(AlertType.NONE);
@@ -80,6 +96,17 @@ public class GameAnswerController implements Initializable {
 			int temp = (int) volume_slider.getValue();
 			_speed = Integer.toString(temp);
 		});
+		countdown();
+//		String answer2 = normal(answer.trim());
+//		String answer3 = normal(question.trim());
+//		String answer4 = normal(bracket.trim());
+//		System.out.println(answer2);
+//		System.out.println(answer);
+//		System.out.println(answer3);
+//		System.out.println(question);
+//		System.out.println(answer4);
+//		System.out.println(bracket);
+		
 	}
 
 	/**
@@ -131,11 +158,14 @@ public class GameAnswerController implements Initializable {
 			a.setContentText("Please restart the game");
 		}
 	}
-
-	public void onSubmitButtonPushed(ActionEvent event) {
-		String input = user_input.getText();
-		if (input.trim().equalsIgnoreCase(answer.trim()) || input.trim().equalsIgnoreCase(bracket + answer.trim())
-				|| input.trim().equalsIgnoreCase(bracket + " " + answer.trim())) {
+	@FXML
+	public void onSubmitButtonPushed() {
+		//Normalize 2 Strings to get rid of macrons
+		String input = normal(user_input.getText());
+		String normalizedanswer = normal(answer.trim());
+		
+		if (input.trim().equalsIgnoreCase(normalizedanswer) || input.trim().equalsIgnoreCase(bracket + normalizedanswer)
+				|| input.trim().equalsIgnoreCase(bracket + " " + normalizedanswer)) {
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
 			speak("Correct!");
@@ -160,6 +190,7 @@ public class GameAnswerController implements Initializable {
 
 		}
 		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
+		worker.cancel(true); //Stop count down
 	}
 
 	public void onDontKnowPushed(ActionEvent event) {
@@ -174,8 +205,102 @@ public class GameAnswerController implements Initializable {
 		back_button.setVisible(true);
 		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
 		textshow_button.setDisable(true);
+		worker.cancel(true); //Stop count down
 	}
+	
+	/**
+	 * Begin the count down
+	 */
+	public void countdown() {
+		total_time=20;
+		worker.addPropertyChangeListener(listener); // Add a poperty change listener to the worker
+		worker.execute();
+	}
+	
+	/**
+	 * Replace macrons in Strings with normal letter lowercased
+	 */
+	public String normal(String text) {
+		String[] macrons = new String[] {"ā","ē","ī","ō","ū","Ā","Ē","Ī","Ō","Ū"};
+		String[] normalLetter = new String[] {"a","e","i","o","u","a","e","i","o","u"};
+		for(String i :  macrons){
+			if (text.contains(i)) {
+				text=text.replace(i, normalLetter[Arrays.asList(macrons).indexOf(i)]);
+			}
+		}
+		return text.toLowerCase();
+		
 
+	};
+	
+	/**
+	 * Create a swing worker to do the count down
+	 */
+	SwingWorker<Integer,Integer> worker = new SwingWorker<Integer,Integer>(){
+		@Override
+		protected Integer doInBackground() throws Exception {
+			total_time=20;
+			while (total_time!=0) {
+				publish(total_time); 
+				Thread.sleep(1000);
+				total_time--;
+			}
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		 protected void process(List<Integer> chunks) { //Used to send value to the progress bar
+		        super.process(chunks);
+		        for (int i :chunks)
+		        {
+		            this.setProgress(i);
+		        }
+		 }
+	};
+	/**
+	 * Add property change listener to the worker so that we can update the GUI
+	 */
+	PropertyChangeListener listener = new PropertyChangeListener() {
+		@Override
+		public void propertyChange(PropertyChangeEvent evt) {
+			
+			// TODO Auto-generated method stub
+			if("progress"==evt.getPropertyName()){			// During the progress update the GUI
+				
+                int progress = (Integer)evt.getNewValue();
+                //When 10 seconds left, Highlight the Text and the bar
+                if (total_time==10) {
+                	Platform.runLater(new Runnable() {
+    				    @Override
+    				    public void run() {
+    				    	bar.setStyle("-fx-accent: #CF1708");
+    		                time.setStyle("-fx-text-fill: #ffa31a;");
+    				    }
+    				});
+                }
+
+                // Run Swing on JavaFx Thread to Update GUI
+                Platform.runLater(new Runnable() {
+				    @Override
+				    public void run() {
+				    	bar.setProgress(progress*0.05);//Change the progress bar
+		                time.setText("Time Left："+progress); 
+				    }
+				});
+            }else if ("DONE"==evt.getNewValue().toString()) { //Disable buttons when the progress is finished
+            	Platform.runLater(new Runnable() {
+				    @Override
+				    public void run() {
+				    	onSubmitButtonPushed();
+				    	bar.setVisible(false);		
+				    	time.setText("Done !!!"); 
+				    	time.setStyle("-fx-text-fill: #ffa31a;");
+				    }
+				});
+            }
+		}
+	};
+	
 	public static void setQuestion(String questionString) {
 		question = questionString;
 	}

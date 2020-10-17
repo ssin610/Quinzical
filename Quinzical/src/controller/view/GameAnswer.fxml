@@ -17,7 +17,7 @@
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <Button fx:id="submit_button" layoutX="454.0" layoutY="433.0" mnemonicParsing="false" onAction="#onSubmitButtonPushed" prefHeight="69.0" prefWidth="178.0" style="-fx-background-color: #ffa31a;" text="Submit">
+      <Button fx:id="submit_button" layoutX="454.0" layoutY="386.0" mnemonicParsing="false" onAction="#onSubmitButtonPushed" prefHeight="69.0" prefWidth="178.0" style="-fx-background-color: #ffa31a;" text="Submit">
          <font>
             <Font name="System Bold" size="33.0" />
          </font>
@@ -28,7 +28,7 @@
          </font>
       </Label>
       <TextField fx:id="user_input" layoutX="411.0" layoutY="280.0" prefHeight="39.0" prefWidth="263.0" />
-      <Label fx:id="hint_label" alignment="CENTER" layoutX="48.0" layoutY="364.0" prefHeight="28.0" prefWidth="991.0" text="HINT" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" visible="false" wrapText="true">
+      <Label fx:id="hint_label" alignment="CENTER" layoutX="47.0" layoutY="336.0" prefHeight="28.0" prefWidth="991.0" text="HINT" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" visible="false" wrapText="true">
          <font>
             <Font name="Comic Sans MS Bold" size="20.0" />
          </font>
@@ -45,7 +45,7 @@
             <Font name="System Bold" size="12.0" />
          </font></Button>
       <ProgressBar fx:id="reading_bar" layoutX="833.0" layoutY="564.0" prefHeight="14.0" prefWidth="131.0" progress="0.0" visible="false" />
-      <Button fx:id="back_button" layoutX="487.0" layoutY="620.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="28.0" prefWidth="112.0" text="Clue Grid" visible="false">
+      <Button fx:id="back_button" layoutX="487.0" layoutY="545.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="28.0" prefWidth="112.0" text="Clue Grid" visible="false">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font></Button>
@@ -64,7 +64,7 @@
             <Font size="10.0" />
          </font>
       </Label>
-      <Button fx:id="dontknow_button" layoutX="474.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDontKnowPushed" prefHeight="47.0" prefWidth="137.0" style="-fx-background-color: #ffa31a;" text="I Don't Know">
+      <Button fx:id="dontknow_button" layoutX="474.0" layoutY="474.0" mnemonicParsing="false" onAction="#onDontKnowPushed" prefHeight="47.0" prefWidth="137.0" style="-fx-background-color: #ffa31a;" text="I Don't Know">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -86,5 +86,11 @@
       </Text>
       <Line endX="100.0" layoutX="138.0" layoutY="104.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
       <Line endX="100.0" layoutX="838.0" layoutY="104.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
+      <ProgressBar fx:id="bar" layoutX="370.0" layoutY="668.0" prefHeight="14.0" prefWidth="345.0" progress="0.39" />
+      <Label fx:id="time" alignment="BOTTOM_CENTER" layoutX="370.0" layoutY="634.0" prefHeight="28.0" prefWidth="345.0" text="Time Left:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
