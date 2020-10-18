@@ -3,6 +3,7 @@
 To run the game, please go into the Quinzical/ folder and then excute the run.sh
 
 	Please type ./run.sh in the terminal in Quinzical/
+	
 
 
 # File setup
@@ -12,7 +13,7 @@ Quinzical ----- backup/		(All question files as backup)
  	   ----- src/			(All project code is in this folder)
  	   ----- build.fxbuild	
  	   ----- run.sh 		(To excute the game, run this script)
- 	   ----- (All other txt files generated during the game are not recommanded to be modified)
+ 	   ----- (All other files generated during the game are not recommanded to be modified)
 
  	   
 # Troubleshoot
