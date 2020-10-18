@@ -48,6 +48,7 @@ public class ResetController implements Initializable {
         ad.delete();
         File ac = new File("addedCategories");
         ac.delete();
+     
 
         try {
             Parent viewParent = FXMLLoader.load(getClass().getResource("view/MainMenu.fxml"));

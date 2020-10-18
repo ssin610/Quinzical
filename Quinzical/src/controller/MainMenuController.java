@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 
+import application.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -16,10 +17,17 @@ import javafx.stage.Stage;
 public class MainMenuController {
 
 	Alert a = new Alert(AlertType.NONE);
-
+	
 	public void onGameModePushed(ActionEvent event) {
 		try {
-			Parent viewParent = FXMLLoader.load(getClass().getResource("view/ClueGrid.fxml"));
+	
+			Parent viewParent;
+			if (Main.getRandom()) {
+				viewParent = FXMLLoader.load(getClass().getResource("view/ChooseCategories.fxml"));
+			}
+			else {
+				viewParent = FXMLLoader.load(getClass().getResource("view/ClueGrid.fxml"));
+			}
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
