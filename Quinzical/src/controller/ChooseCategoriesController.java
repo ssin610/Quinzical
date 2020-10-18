@@ -6,7 +6,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import application.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +17,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -30,9 +28,6 @@ public class ChooseCategoriesController implements Initializable {
 
 	@FXML
 	GridPane grid;
-
-	@FXML
-	Label winnings;
 
 	@FXML
 	Button cont;
@@ -52,7 +47,7 @@ public class ChooseCategoriesController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		cont.setVisible(false);
-		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
+		
 
 		File dir = new File("cat"); // get location of categories folder
 		File[] categoryFolder = dir.listFiles();

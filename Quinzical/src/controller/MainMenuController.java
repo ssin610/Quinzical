@@ -40,7 +40,6 @@ public class MainMenuController {
             a.setHeaderText("File Reading Error");
             a.setContentText("Please check the file arrangment");
 		}
-
 	}
 	
 	public void onPracticeModePushed(ActionEvent event) {

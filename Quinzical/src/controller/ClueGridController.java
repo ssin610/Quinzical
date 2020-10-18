@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -74,7 +73,7 @@ public class ClueGridController implements Initializable {
 		File[] categoryFolder = dir.listFiles();
 		if (categoryFolder != null) {
 			if (Main.getRandom()) {
-				randomlySelectAndDisplayClues(categoryFolder);
+				selectedAndDisplayCluesFromCBS(categoryFolder);
 			} else {
 				selectAndDisplayCluesFromFile();
 			}
@@ -96,24 +95,13 @@ public class ClueGridController implements Initializable {
 	}
 
 	/**
-	 * Get a random category from the categories list
-	 * 
-	 * @param array the list of categories
-	 * @return the random category selected
-	 */
-	public static File getRandom(File[] categoryFolder) {
-		int rnd = new Random().nextInt(categoryFolder.length);
-		return categoryFolder[rnd];
-	}
-
-	/**
-	 * Randomly select categories and clues from the list and display them on the
+	 * Randomly select clues from the list of categories selected and display them on the
 	 * clue grid
-	 * 
 	 * @param categoryFolder the list of categories
 	 */
-	public void randomlySelectAndDisplayClues(File[] categoryFolder) {
+	public void selectedAndDisplayCluesFromCBS(File[] categoryFolder) {
 		for (CheckBox cb : cbs) { // iterate through each category
+			
 			// arraylist's to store and keep track of which questions have
 			// been randomly selected
 			ArrayList<Integer> addedIndex = new ArrayList<Integer>();

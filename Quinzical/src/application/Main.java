@@ -64,10 +64,12 @@ public class Main extends Application {
 
 	@Override
 	public void stop() throws IOException {
-		TextFileWriter.write("winnings", winnings, null); // save fields to files
-		TextFileWriter.write("answeredQuestions", null, answeredQuestions);
-		TextFileWriter.write("addedQuestions", null, addedQuestions);
-		TextFileWriter.write("addedCategories", null, addedCategories);
+		if (addedCategories.size() != 0) {
+			TextFileWriter.write("winnings", winnings, null); // save fields to files
+			TextFileWriter.write("answeredQuestions", null, answeredQuestions);
+			TextFileWriter.write("addedQuestions", null, addedQuestions);
+			TextFileWriter.write("addedCategories", null, addedCategories);
+		}
 	}
 
 	public static void setWinnings(int value) {
