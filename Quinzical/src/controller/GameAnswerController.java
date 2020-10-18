@@ -213,7 +213,7 @@ public class GameAnswerController implements Initializable {
 	 * Begin the count down
 	 */
 	public void countdown() {
-		total_time=20;
+		total_time=40;
 		worker.addPropertyChangeListener(listener); // Add a poperty change listener to the worker
 		worker.execute();
 	}
@@ -222,7 +222,7 @@ public class GameAnswerController implements Initializable {
 	 * Replace macrons in Strings with normal letter lowercased
 	 */
 	public String normal(String text) {
-		String[] macrons = new String[] {"ā","ē","ī","ō","ū","Ā","Ē","Ī","Ō","Ū"};
+		String[] macrons = new String[] {"膩","膿","墨","艒","奴","膧","膾","莫","艑","弄"};
 		String[] normalLetter = new String[] {"a","e","i","o","u","a","e","i","o","u"};
 		for(String i :  macrons){
 			if (text.contains(i)) {
@@ -240,7 +240,7 @@ public class GameAnswerController implements Initializable {
 	SwingWorker<Integer,Integer> worker = new SwingWorker<Integer,Integer>(){
 		@Override
 		protected Integer doInBackground() throws Exception {
-			total_time=20;
+			total_time=40;
 			while (total_time!=0) {
 				publish(total_time); 
 				Thread.sleep(1000);
@@ -284,8 +284,8 @@ public class GameAnswerController implements Initializable {
                 Platform.runLater(new Runnable() {
 				    @Override
 				    public void run() {
-				    	bar.setProgress(progress*0.05);//Change the progress bar
-		                time.setText("Time Left："+progress); 
+				    	bar.setProgress(progress*0.025);//Change the progress bar
+		                time.setText("Time Left锛�"+progress); 
 				    }
 				});
             }else if ("DONE"==evt.getNewValue().toString()) { //Disable buttons when the progress is finished
