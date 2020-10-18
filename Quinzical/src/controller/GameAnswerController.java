@@ -222,7 +222,7 @@ public class GameAnswerController implements Initializable {
 	 * Replace macrons in Strings with normal letter lowercased
 	 */
 	public String normal(String text) {
-		String[] macrons = new String[] {"膩","膿","墨","艒","奴","膧","膾","莫","艑","弄"};
+		String[] macrons = new String[] {"ā","ē","ī","ō","ū","Ā","Ē","Ī","Ō","Ū"};
 		String[] normalLetter = new String[] {"a","e","i","o","u","a","e","i","o","u"};
 		for(String i :  macrons){
 			if (text.contains(i)) {
@@ -285,7 +285,7 @@ public class GameAnswerController implements Initializable {
 				    @Override
 				    public void run() {
 				    	bar.setProgress(progress*0.025);//Change the progress bar
-		                time.setText("Time Left锛�"+progress); 
+		                time.setText("Time Left: "+progress); 
 				    }
 				});
             }else if ("DONE"==evt.getNewValue().toString()) { //Disable buttons when the progress is finished
