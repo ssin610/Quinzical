@@ -6,6 +6,7 @@ To run the game, please go into the Quinzical/ folder and then excute the run.sh
 	
 
 
+
 # File setup
 Quinzical ----- backup/		(All question files as backup)
  	   ----  bin/
@@ -17,6 +18,13 @@ Quinzical ----- backup/		(All question files as backup)
 
  	   
 # Troubleshoot
+- If the game cannot start properly, please open the run.sh in Qunzical/ and do the following:
+	Change the following line:
+		java --module-path /home/se2062020/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.media,javafx.base,javafx.fxml -jar Quinzical.jar
+	To 
+		java --module-path PATH --add-modules javafx.controls,javafx.media,javafx.base,javafx.fxml -jar Quinzical.jar
+	Where the PATH is the path of where your javafx lib folder is located
+
  - Audio(spd-say) issue:
  	Run command: "sudo apt-get install speech-dispatcher" in the terminal to install spd-say
  	
