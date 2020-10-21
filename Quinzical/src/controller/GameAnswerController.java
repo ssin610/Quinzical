@@ -123,7 +123,7 @@ public class GameAnswerController implements Initializable {
 		Thread thread = new Thread() {
 			@Override
 			public void run() {
-				String cmd = "spd-say -r" + _speed + " \"" + sentence + "\"";
+				String cmd = "spd-say --wait -r" + _speed + " \"" + sentence + "\"";
 				ProcessBuilder ttsBuilder = new ProcessBuilder("bash", "-c", cmd);
 				try {
 					Process ttsProcess = ttsBuilder.start();
