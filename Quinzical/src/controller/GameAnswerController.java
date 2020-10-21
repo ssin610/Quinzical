@@ -68,6 +68,9 @@ public class GameAnswerController implements Initializable {
 	Label time;
 	
 	@FXML  
+	Label bracketLabel;
+	
+	@FXML  
 	ProgressBar bar;
 	
 	
@@ -78,6 +81,7 @@ public class GameAnswerController implements Initializable {
 	private static String bracket;
 	private static int value;
 	private int total_time;
+	private Thread _audioThread;
 
 	private String _speed = "0";
 	Alert a = new Alert(AlertType.NONE);
@@ -88,7 +92,7 @@ public class GameAnswerController implements Initializable {
 		back_button.setDisable(true);
 		question_label.setText(question);
 		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
-		user_input.setPromptText(bracket);
+//		user_input.setPromptText(bracket);
 		Main.addAnsweredQuestion(question);
 		speak(question);
 		// Add lisenter to the slider
@@ -96,6 +100,8 @@ public class GameAnswerController implements Initializable {
 			int temp = (int) volume_slider.getValue();
 			_speed = Integer.toString(temp);
 		});
+		int endIndex = (bracket.trim().length())-1;
+		bracketLabel.setText(bracket.trim().substring(1, endIndex)+":");
 		countdown();
 //		String answer2 = normal(answer.trim());
 //		String answer3 = normal(question.trim());
@@ -133,6 +139,7 @@ public class GameAnswerController implements Initializable {
 		};
 		thread.setName("thread1");
 		thread.start();
+		_audioThread=thread;
 	}
 
 	public void replay(ActionEvent event) {
@@ -149,6 +156,7 @@ public class GameAnswerController implements Initializable {
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
 			window.show();
+			_audioThread.stop(); //Stop audio playing
 		} catch (IOException e) {
 			e.printStackTrace();
 			a.setAlertType(AlertType.ERROR);
@@ -192,6 +200,7 @@ public class GameAnswerController implements Initializable {
 		}
 		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
 		worker.cancel(true); //Stop count down
+		
 	}
 
 	public void onDontKnowPushed(ActionEvent event) {
@@ -285,7 +294,7 @@ public class GameAnswerController implements Initializable {
 				    @Override
 				    public void run() {
 				    	bar.setProgress(progress*0.025);//Change the progress bar
-		                time.setText("Time Left: "+progress); 
+		                time.setText("Time Left "+progress); 
 				    }
 				});
             }else if ("DONE"==evt.getNewValue().toString()) { //Disable buttons when the progress is finished
