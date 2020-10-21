@@ -100,8 +100,8 @@ public class GameAnswerController implements Initializable {
 			int temp = (int) volume_slider.getValue();
 			_speed = Integer.toString(temp);
 		});
-		int endIndex = (bracket.trim().length())-1;
-		bracketLabel.setText(bracket.trim().substring(1, endIndex)+":");
+		int tempendIndex = (bracket.trim().length())-1;
+		bracketLabel.setText(bracket.trim().substring(1, tempendIndex)+":");
 		countdown();
 //		String answer2 = normal(answer.trim());
 //		String answer3 = normal(question.trim());
@@ -155,6 +155,7 @@ public class GameAnswerController implements Initializable {
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
+			window.setResizable(false);
 			window.show();
 			_audioThread.stop(); //Stop audio playing
 		} catch (IOException e) {
@@ -179,24 +180,24 @@ public class GameAnswerController implements Initializable {
 			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
 			speak("Correct!");
 			Main.setWinnings(value);
-			submit_button.setDisable(true);
+			submit_button.setVisible(false);
 			audio_replay_button.setDisable(true);
 			back_button.setDisable(false);
 			back_button.setVisible(true);
-			dontknow_button.setDisable(true);
+			dontknow_button.setVisible(false);
 			textshow_button.setDisable(true);
 		} else {
 			hint_label.setVisible(true);
 			hint_label.setText("Incorrect. The correct answer was: " + bracket + " " + answer);
 			speak("Incorrect. The correct answer was: " + bracket + " " + answer);
 			Main.setWinnings(-value);
-			submit_button.setDisable(true);
+			submit_button.setVisible(false);
 			audio_replay_button.setDisable(true);
 			back_button.setDisable(false);
 			back_button.setVisible(true);
-			dontknow_button.setDisable(true);
+			dontknow_button.setVisible(false);
 			textshow_button.setDisable(true);
-
+		
 		}
 		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
 		worker.cancel(true); //Stop count down
@@ -208,8 +209,8 @@ public class GameAnswerController implements Initializable {
 		hint_label.setText("The correct answer was: " + bracket + " " + answer);
 		speak("The correct answer was: " + bracket + " " + answer);
 		Main.setWinnings(-value);
-		submit_button.setDisable(true);
-		dontknow_button.setDisable(true);
+		submit_button.setVisible(false);
+		dontknow_button.setVisible(false);
 		audio_replay_button.setDisable(true);
 		back_button.setDisable(false);
 		back_button.setVisible(true);
@@ -294,7 +295,7 @@ public class GameAnswerController implements Initializable {
 				    @Override
 				    public void run() {
 				    	bar.setProgress(progress*0.025);//Change the progress bar
-		                time.setText("Time Left "+progress); 
+		                time.setText("Time Left: "+progress); 
 				    }
 				});
             }else if ("DONE"==evt.getNewValue().toString()) { //Disable buttons when the progress is finished

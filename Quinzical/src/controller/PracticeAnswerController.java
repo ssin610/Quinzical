@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -39,6 +40,9 @@ public class PracticeAnswerController implements Initializable {
 
 	@FXML
 	Label hint_label;
+	
+	@FXML
+	Label bracketLabel;
 
 	@FXML
 	ProgressBar reading_bar;
@@ -52,7 +56,8 @@ public class PracticeAnswerController implements Initializable {
 	private static String _question; // What is expected from the user
 	private static String _answer = ""; // What is displayed to the user
 	private static String _hint;
-	private static String _bracket;
+	private static String _bracket="         ";
+	private Thread _audioThread;
 	private int _chance = 3;
 	private String _speed = "0";
 	Alert a = new Alert(AlertType.NONE);
@@ -62,12 +67,17 @@ public class PracticeAnswerController implements Initializable {
 		back_button.setDisable(true);
 		question_label.setText(_answer);
 		chance_left.setText(Integer.toString(_chance));
-		user_input.setPromptText(_bracket);
+//		user_input.setPromptText(_bracket);
 		// Add lisenter to the slider
 		volume_slider.setOnMouseReleased(event -> {
 			int temp = (int) volume_slider.getValue();
 			_speed = Integer.toString(temp);
 		});
+		int tempendIndex = (_bracket.trim().length())-1;
+		if (tempendIndex>=0) {
+			bracketLabel.setText(_bracket.trim().substring(1, tempendIndex)+":");
+		}
+		
 	}
 
 	/**
@@ -78,7 +88,7 @@ public class PracticeAnswerController implements Initializable {
 		Thread thread = new Thread() {
 			@Override
 			public void run() {
-				String cmd = "spd-say -r" + _speed + " \"" + sentence + "\"";
+				String cmd = "spd-say --wait -r" + _speed + " \"" + sentence + "\"";
 				ProcessBuilder ttsBuilder = new ProcessBuilder("bash", "-c", cmd);
 				try {
 					Process ttsProcess = ttsBuilder.start();
@@ -94,6 +104,7 @@ public class PracticeAnswerController implements Initializable {
 		};
 		thread.setName("thread1");
 		thread.start();
+		_audioThread=thread;
 	}
 
 	public void onReplayPushed(ActionEvent event) {
@@ -106,9 +117,13 @@ public class PracticeAnswerController implements Initializable {
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
+			window.setResizable(false);
 			window.show();
+			if(_audioThread != null) {
+				_audioThread.stop();//Stop aduio thread when exit
+			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			
 			a.setAlertType(AlertType.ERROR);
 			// show the dialog
 			a.show();
@@ -116,12 +131,28 @@ public class PracticeAnswerController implements Initializable {
 			a.setContentText("Please restart the game");
 		}
 	}
+	/**
+	 * Replace macrons in Strings with normal letter lowercased
+	 */
+	public String normal(String text) {
+		String[] macrons = new String[] {"ā","ē","ī","ō","ū","Ā","Ē","Ī","Ō","Ū"};
+		String[] normalLetter = new String[] {"a","e","i","o","u","a","e","i","o","u"};
+		for(String i :  macrons){
+			if (text.contains(i)) {
+				text=text.replace(i, normalLetter[Arrays.asList(macrons).indexOf(i)]);
+			}
+		}
+		return text.toLowerCase();
+		
+
+	};
 
 	public void onSubmitButtonPushed(ActionEvent event) {
-		String input = user_input.getText();
-		if (input.trim().equalsIgnoreCase(_question.trim())
-				|| input.trim().equalsIgnoreCase(_bracket + _question.trim())
-				|| input.trim().equalsIgnoreCase(_bracket + " " + _question.trim())) {
+		String input = normal(user_input.getText());
+		String normalizedanswer = normal(_question.trim());
+		if (input.trim().equalsIgnoreCase(normalizedanswer)
+				|| input.trim().equalsIgnoreCase(_bracket + normalizedanswer)
+				|| input.trim().equalsIgnoreCase(_bracket + " " + normalizedanswer)) {
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! The answer was: " + _bracket + " " + _question);
 			speak("Correct! The answer was: " + _bracket + " " + _question);
@@ -141,16 +172,18 @@ public class PracticeAnswerController implements Initializable {
 				hint_label.setVisible(true);
 				hint_label.setText("Incorrect. The correct answer was: " + _bracket + " " + _question);
 				speak("Incorrect. The correct answer was: " + _bracket + " " + _question);
-				submit_button.setDisable(true);
+				submit_button.setVisible(false);
 				audio_replay_button.setDisable(true);
 				back_button.setDisable(false);
 				back_button.setVisible(true);
+				user_input.setText(_question.trim());
 
 			} else if (_chance == 1) { // Show hint
 				hint_label.setVisible(true);
 				hint_label.setText(_hint);
 			}
 		}
+		
 	}
 
 	/**

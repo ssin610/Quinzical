@@ -45,9 +45,9 @@
             <Font name="System Bold" size="12.0" />
          </font></Button>
       <ProgressBar fx:id="reading_bar" layoutX="833.0" layoutY="564.0" prefHeight="14.0" prefWidth="131.0" progress="0.0" visible="false" />
-      <Button fx:id="back_button" layoutX="487.0" layoutY="545.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="28.0" prefWidth="112.0" text="Clue Grid" visible="false">
+      <Button fx:id="back_button" layoutX="477.0" layoutY="547.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="62.0" prefWidth="131.0" text="Clue Grid" visible="false">
          <font>
-            <Font name="System Bold Italic" size="12.0" />
+            <Font name="System Bold Italic" size="19.0" />
          </font></Button>
       <Label layoutX="927.0" layoutY="620.0" prefHeight="28.0" prefWidth="30.0" text="-100" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
          <font>

@@ -185,6 +185,7 @@ public class PracStartController implements Initializable {
 				Scene scene = new Scene(root);
 				Stage secondStage = new Stage();
 				secondStage.setScene(scene);
+				secondStage.setResizable(false);
 				secondStage.show();
 				thisStage.close();
 			} catch (Exception e) {

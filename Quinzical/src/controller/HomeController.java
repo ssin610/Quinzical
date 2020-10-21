@@ -23,6 +23,7 @@ public class HomeController {
             Scene viewScene = new Scene(viewParent);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(viewScene);
+            window.setResizable(false);
             window.show();
         } catch (IOException e) {
             e.printStackTrace();
