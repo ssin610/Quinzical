@@ -146,21 +146,58 @@ public class PracticeAnswerController implements Initializable {
 		
 
 	};
+	
+	/**
+	 * Refactor the String, so that all non alphabetic char are removed
+	 * Leading a/the/an is also removed
+	 * @param text
+	 * @return
+	 */
+	public String refineString(String text) {
+		// Remove any symbols but not /
+		if (text.contains("/")) {
+			;
+		}else {
+			text = text.replaceAll("\\p{P}", "");
+		}
 
+		//  Remove leading a/the/an
+		String leading = text.split(" ")[0].trim();
+		System.out.println(leading);
+		System.out.println(text.split(" ").length);
+		if (text.split(" ").length>1 && (leading.equalsIgnoreCase("the") || leading.equalsIgnoreCase("a") || leading.equalsIgnoreCase("an"))) {
+			System.out.println("DOOOO");
+			text=text.replaceFirst(leading+" ", "").trim();
+		}
+		return text;
+	}
+	
 	public void onSubmitButtonPushed(ActionEvent event) {
-		String input = normal(user_input.getText());
-		String normalizedanswer = normal(_question.trim());
-		if (input.trim().equalsIgnoreCase(normalizedanswer)
-				|| input.trim().equalsIgnoreCase(_bracket + normalizedanswer)
-				|| input.trim().equalsIgnoreCase(_bracket + " " + normalizedanswer)) {
+		//Normalize 2 Strings to get rid of macrons
+		String input = normal(user_input.getText().trim()).toLowerCase();
+		String normalizedanswer = normal(_question.trim()).toLowerCase();
+		normalizedanswer = refineString(normalizedanswer); //Refactor the answer
+		
+		if (input.equalsIgnoreCase(normalizedanswer) || input.contains(normalizedanswer)) {
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! The answer was: " + _bracket + " " + _question);
 			speak("Correct! The answer was: " + _bracket + " " + _question);
-			submit_button.setDisable(true);
+			submit_button.setVisible(false);
 			audio_replay_button.setDisable(true);
 			back_button.setDisable(false);
 			back_button.setVisible(true);
-		} else {
+		
+		// If answer has multiple answer which is not expected	
+		} else if (_question.contains("/") && normalizedanswer.contains(input)){
+			hint_label.setVisible(true);
+			hint_label.setText("Correct! The answer was: " + _bracket + " " + _question);
+			speak("Correct! The answer was: " + _bracket + " " + _question);
+			submit_button.setVisible(false);
+			audio_replay_button.setDisable(true);
+			back_button.setDisable(false);
+			back_button.setVisible(true);
+		}else {
+		
 			// IF input is not correct
 			_chance = _chance - 1;
 			chance_left.setText(Integer.toString(_chance));

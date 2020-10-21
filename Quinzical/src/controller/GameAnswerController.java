@@ -167,15 +167,38 @@ public class GameAnswerController implements Initializable {
 			a.setContentText("Please restart the game");
 		}
 	}
+	/**
+	 * Refactor the String, so that all non alphabetic char are removed
+	 * Leading a/the/an is also removed
+	 * @param text
+	 * @return
+	 */
+	public String refineString(String text) {
+		// Remove any symbols but not /
+		if (text.contains("/")) {
+			;
+		}else {
+			text = text.replaceAll("\\p{P}", "");
+		}
+
+		//  Remove leading a/the/an
+		String leading = text.split(" ")[0].trim();
+		//Make sure removing the leading wont cause empty String
+		if (text.split(" ").length>1 && (leading.equalsIgnoreCase("the") || leading.equalsIgnoreCase("a") || leading.equalsIgnoreCase("an"))) {
+			text=text.replaceFirst(leading+" ", "").trim();
+		}
+		return text;
+	}
+	
 	@FXML
 	public void onSubmitButtonPushed() {
 		//Normalize 2 Strings to get rid of macrons
-		String input = normal(user_input.getText());
-		String normalizedanswer = normal(answer.trim());
+		String input = normal(user_input.getText().trim()).toLowerCase();
+		String normalizedanswer = normal(answer.trim()).toLowerCase();
+		normalizedanswer = refineString(normalizedanswer); //Refactor the answer
 		
-		// Only allow 3 the (xxx) xxxx || xxxx || (xxx)xxxx
-		if (input.trim().equalsIgnoreCase(normalizedanswer) || input.trim().equalsIgnoreCase(bracket + normalizedanswer)
-				|| input.trim().equalsIgnoreCase(bracket + " " + normalizedanswer)) {
+		// Only allow when equal or input contains answer
+		if (input.equalsIgnoreCase(normalizedanswer) || input.contains(normalizedanswer)) {
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
 			speak("Correct!");
@@ -186,7 +209,20 @@ public class GameAnswerController implements Initializable {
 			back_button.setVisible(true);
 			dontknow_button.setVisible(false);
 			textshow_button.setDisable(true);
-		} else {
+			
+		// If answer has multiple answer which is not expected
+		}else if (answer.contains("/") && normalizedanswer.contains(input)) { 
+			hint_label.setVisible(true);
+			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
+			speak("Correct!");
+			Main.setWinnings(value);
+			submit_button.setVisible(false);
+			audio_replay_button.setDisable(true);
+			back_button.setDisable(false);
+			back_button.setVisible(true);
+			dontknow_button.setVisible(false);
+			textshow_button.setDisable(true);
+		}else {
 			hint_label.setVisible(true);
 			hint_label.setText("Incorrect. The correct answer was: " + bracket + " " + answer);
 			speak("Incorrect. The correct answer was: " + bracket + " " + answer);
