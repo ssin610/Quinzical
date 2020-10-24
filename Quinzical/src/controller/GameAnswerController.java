@@ -2,6 +2,7 @@ package controller;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
@@ -25,6 +26,10 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import application.Main;
 
@@ -72,6 +77,11 @@ public class GameAnswerController implements Initializable {
 	@FXML  
 	ProgressBar bar;
 	
+	@FXML
+	ImageView gif;
+	@FXML
+	ImageView gif2;
+	
 	
 
 	// store information about the particular question
@@ -81,13 +91,12 @@ public class GameAnswerController implements Initializable {
 	private static int value;
 	private int total_time;
 	private Thread _audioThread;
-
+	private static MediaPlayer mp;
 	private String _speed = "0";
 	Alert a = new Alert(AlertType.NONE);
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
 		back_button.setDisable(true);
 		question_label.setText(question);
 		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
@@ -102,7 +111,41 @@ public class GameAnswerController implements Initializable {
 		int tempendIndex = (bracket.trim().length())-1;
 		bracketLabel.setText(bracket.trim().substring(1, tempendIndex)+":");
 		countdown();
-		
+		setGif();
+	}
+	
+	/**
+	 * Set the sound effect and ready to be played
+	 */
+	public void setMusic() {
+		String path = new File("src/resources/cash.mp3").toURI().toString();
+        Media media = new Media(path);
+        mp = new MediaPlayer(media);
+        mp.setVolume(0.5);
+     
+	}
+	
+	/**
+	 * Set the gif and ready to be show
+	 */
+	public void setGif() {
+		//Set the gif 
+		Image i = new Image(new File("src/resources/aha.gif").toURI().toString());
+        gif.setImage(i);
+        gif2.setImage(i);
+        //Set the sound Effect
+	}
+	
+	/**
+	 * Including the gif and cash in sound effect as an reward if answered correctly
+	 */
+	public void ahaMoment() {
+		//Set the sound Effect
+		mp.play();
+		//Start the gifs
+		gif.setVisible(true);
+		gif2.setVisible(true);
+	
 	}
 
 	/**
@@ -189,6 +232,7 @@ public class GameAnswerController implements Initializable {
 		
 		// Only allow when equal or input contains answer
 		if (input.equalsIgnoreCase(normalizedanswer) || input.contains(normalizedanswer)) {
+			ahaMoment();
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
 			speak("Correct!");

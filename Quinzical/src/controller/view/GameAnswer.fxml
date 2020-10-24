@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -92,5 +93,7 @@
             <Font name="Dyuthi Regular" size="26.0" />
          </font>
       </Label>
+      <ImageView fx:id="gif" fitHeight="331.0" fitWidth="359.0" layoutX="34.0" layoutY="174.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <ImageView fx:id="gif2" fitHeight="331.0" fitWidth="359.0" layoutX="702.0" layoutY="169.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" visible="false" />
    </children>
 </AnchorPane>
