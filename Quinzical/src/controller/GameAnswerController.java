@@ -102,7 +102,6 @@ public class GameAnswerController implements Initializable {
 		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
 //		user_input.setPromptText(bracket);
 		Main.addAnsweredQuestion(question);
-		speak(question);
 		// Add lisenter to the slider
 		volume_slider.setOnMouseReleased(event -> {
 			int temp = (int) volume_slider.getValue();
@@ -110,15 +109,17 @@ public class GameAnswerController implements Initializable {
 		});
 		int tempendIndex = (bracket.trim().length())-1;
 		bracketLabel.setText(bracket.trim().substring(1, tempendIndex)+":");
-		countdown();
 		setGif();
+		setMusic();
+		countdown();
+		speak(question);
 	}
 	
 	/**
 	 * Set the sound effect and ready to be played
 	 */
 	public void setMusic() {
-		String path = new File("src/resources/cash.mp3").toURI().toString();
+		String path = new File("src/resources/cash.wav").toURI().toString();
         Media media = new Media(path);
         mp = new MediaPlayer(media);
         mp.setVolume(0.5);
@@ -130,10 +131,11 @@ public class GameAnswerController implements Initializable {
 	 */
 	public void setGif() {
 		//Set the gif 
-		Image i = new Image(new File("src/resources/aha.gif").toURI().toString());
+		Image i = new Image("resources/aha.gif");
+		System.out.println(i.getUrl());
         gif.setImage(i);
         gif2.setImage(i);
-        //Set the sound Effect
+        
 	}
 	
 	/**
@@ -245,7 +247,8 @@ public class GameAnswerController implements Initializable {
 			textshow_button.setDisable(true);
 			
 		// If answer has multiple answer which is not expected
-		}else if (answer.contains("/") && normalizedanswer.contains(input)) { 
+		}else if (answer.contains("/") && normalizedanswer.contains(input) && input!="" ) { 
+			ahaMoment();
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
 			speak("Correct!");

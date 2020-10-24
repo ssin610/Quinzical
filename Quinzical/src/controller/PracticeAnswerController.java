@@ -163,10 +163,8 @@ public class PracticeAnswerController implements Initializable {
 
 		//  Remove leading a/the/an
 		String leading = text.split(" ")[0].trim();
-		System.out.println(leading);
-		System.out.println(text.split(" ").length);
+		//Make sure removing the leading wont cause empty String
 		if (text.split(" ").length>1 && (leading.equalsIgnoreCase("the") || leading.equalsIgnoreCase("a") || leading.equalsIgnoreCase("an"))) {
-			System.out.println("DOOOO");
 			text=text.replaceFirst(leading+" ", "").trim();
 		}
 		return text;
