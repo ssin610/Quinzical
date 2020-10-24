@@ -132,7 +132,6 @@ public class GameAnswerController implements Initializable {
 	public void setGif() {
 		//Set the gif 
 		Image i = new Image("resources/aha.gif");
-		System.out.println(i.getUrl());
         gif.setImage(i);
         gif2.setImage(i);
         
