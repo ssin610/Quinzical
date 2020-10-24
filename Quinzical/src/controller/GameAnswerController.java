@@ -26,7 +26,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-
 import application.Main;
 
 public class GameAnswerController implements Initializable {
@@ -103,15 +102,6 @@ public class GameAnswerController implements Initializable {
 		int tempendIndex = (bracket.trim().length())-1;
 		bracketLabel.setText(bracket.trim().substring(1, tempendIndex)+":");
 		countdown();
-//		String answer2 = normal(answer.trim());
-//		String answer3 = normal(question.trim());
-//		String answer4 = normal(bracket.trim());
-//		System.out.println(answer2);
-//		System.out.println(answer);
-//		System.out.println(answer3);
-//		System.out.println(question);
-//		System.out.println(answer4);
-//		System.out.println(bracket);
 		
 	}
 

@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -296,6 +297,14 @@ public class ClueGridController implements Initializable {
 			window.setScene(viewScene);
 			window.setResizable(false);
 			window.show();
+			
+			//Stop all threads when window is closed
+			window.setOnCloseRequest((EventHandler<WindowEvent>) new EventHandler<WindowEvent>() {
+			    @Override
+			    public void handle(WindowEvent event) {
+			        System.exit(0);
+			    }
+			});
 		} catch (IOException e) {
 			e.printStackTrace();
 			a.setAlertType(AlertType.ERROR);

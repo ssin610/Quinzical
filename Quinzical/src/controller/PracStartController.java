@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class PracStartController implements Initializable {
 
@@ -164,7 +166,6 @@ public class PracStartController implements Initializable {
 			try {
 				readSelectedfile();
 			} catch (IOException e1) {
-				e1.printStackTrace();
 				a.setAlertType(AlertType.ERROR);
 				// show the dialog
 				a.show();
@@ -188,6 +189,13 @@ public class PracStartController implements Initializable {
 				secondStage.setResizable(false);
 				secondStage.show();
 				thisStage.close();
+				//Stop all threads when window is closed
+				secondStage.setOnCloseRequest((EventHandler<WindowEvent>) new EventHandler<WindowEvent>() {
+				    @Override
+				    public void handle(WindowEvent event) {
+				        System.exit(0);
+				    }
+				});
 			} catch (Exception e) {
 				e.printStackTrace();
 				a.setAlertType(AlertType.ERROR);
