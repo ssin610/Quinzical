@@ -3,7 +3,10 @@
 To run the game, please go into the Quinzical/ folder and then excute the run.sh
 
 	Please type ./run.sh in the terminal in Quinzical/
-	
+
+# Important
+In your first play, the game will lag a little bit, due to setting resources and file readings.
+We Thank you for your paitient!	
 
 
 

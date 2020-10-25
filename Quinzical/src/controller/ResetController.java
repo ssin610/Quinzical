@@ -25,6 +25,8 @@ public class ResetController implements Initializable {
 
     @FXML
     Text resetText;
+    @FXML
+    Text beatenText;
 
     Alert a = new Alert(AlertType.NONE);
   
@@ -32,6 +34,24 @@ public class ResetController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
         resetText.setText("You have winnings of $" + Main.getWinnings() + "! Do you want to reset the game?");
         resetText.setFont(Font.font("System", FontWeight.BOLD, 50));
+        
+        // Generate a comparative message to the user
+        try {
+        	double percent = (Main.getWinnings()/ Main.getTotalWings()) * 100;
+            percent=Math.round(percent * 100.0) / 100.0;
+            if(percent >60) {
+            	beatenText.setText("=== Great Work! You've beaten "+ percent+"% players! ===");
+            }else if (percent<60 && percent >0) {
+            	beatenText.setText("=== Keep Working! You've beaten "+ percent+"% players! ===");
+            }else if (Main.getWinnings()>0){
+            	beatenText.setText("=== Not bad! Next time you can do better! ===");
+            }else {
+            	beatenText.setText("=== Keep practising! Next time you can do better! ===");
+            }
+        }catch (Exception e) {
+        	beatenText.setText("=== Its time to start Game mode! ==="); // If no previous total wings stored
+        }
+        
     }
 
     public void onYesButton(ActionEvent event) {

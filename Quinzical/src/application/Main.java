@@ -22,7 +22,8 @@ public class Main extends Application {
 	private static ArrayList<String> addedQuestions = new ArrayList<String>();
 	private static ArrayList<String> addedCategories = new ArrayList<String>();
 	private static boolean random = true;
-
+	private static int _totalWin=0;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -35,7 +36,7 @@ public class Main extends Application {
 			File w = new File("winnings");
 			if (w.exists()) {
 				winnings = Integer.valueOf(reader.read(w).get(0)); // if winnings have previously been saved, read from
-																	// this file
+				_totalWin = Integer.valueOf(reader.read(w).get(1)); // if total winnings have previously been saved, read from
 			}
 			File an = new File("answeredQuestions");
 			if (an.exists()) {
@@ -64,12 +65,24 @@ public class Main extends Application {
 
 	@Override
 	public void stop() throws IOException {
+		ArrayList<String> temp = new ArrayList<String>();
+		temp.add(Integer.toString(winnings));
+		temp.add(Integer.toString(_totalWin));
 		if (addedCategories.size() != 0) {
-			TextFileWriter.write("winnings", winnings, null); // save fields to files
+			TextFileWriter.write("winnings", winnings, null);
+			TextFileWriter.write("winnings", null, temp);// save winngs to winnings and total winnings as the second line
 			TextFileWriter.write("answeredQuestions", null, answeredQuestions);
 			TextFileWriter.write("addedQuestions", null, addedQuestions);
 			TextFileWriter.write("addedCategories", null, addedCategories);
 		}
+	}
+	
+	public static void setTotalWings(int value) {
+		_totalWin=value;
+	}
+	
+	public static int getTotalWings() {
+		return _totalWin;
 	}
 
 	public static void setWinnings(int value) {

@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #1f1f1f; -fx-border-color: #ffa31a; -fx-border-width: 8;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ResetController">
    <children>
-      <Button layoutX="150.0" layoutY="388.0" mnemonicParsing="false" onAction="#onYesButton" prefHeight="99.0" prefWidth="273.0" style="-fx-background-color: #ffc100; -fx-background-radius: 20;" text="Yes" textFill="#60f510">
+      <Button layoutX="224.0" layoutY="388.0" mnemonicParsing="false" onAction="#onYesButton" prefHeight="99.0" prefWidth="273.0" style="-fx-background-color: #ffc100; -fx-background-radius: 20;" text="Yes" textFill="#37800f">
          <font>
             <Font name="System Bold" size="45.0" />
          </font>
@@ -19,7 +19,12 @@
       </Button>
       <Text fx:id="resetText" fill="#45ccca" layoutX="46.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Congratulations on completing the game with winnings of $3333! Do you want to reset the game?" textAlignment="CENTER" wrappingWidth="1000.0">
          <font>
-            <Font name="System Bold" size="50.0" />
+            <Font name="Dyuthi Regular" size="50.0" />
+         </font>
+      </Text>
+      <Text fx:id="beatenText" fill="#45ccca" layoutX="50.0" layoutY="626.0" strokeType="OUTSIDE" strokeWidth="0.0" text="=== You've beaten 100% players ===" textAlignment="CENTER" wrappingWidth="1000.0">
+         <font>
+            <Font name="Dyuthi Regular" size="29.0" />
          </font>
       </Text>
    </children>

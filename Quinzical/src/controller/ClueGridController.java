@@ -65,6 +65,8 @@ public class ClueGridController implements Initializable {
 	String bracket;
 	Alert a = new Alert(AlertType.NONE);
 
+	private int sumValues;
+
 	public void initialize(URL url, ResourceBundle rb) {
 		resetText.setVisible(false);
 		reset.setVisible(false);
@@ -166,7 +168,13 @@ public class ClueGridController implements Initializable {
 				}
 			}
 			index_x++;
+			// Get the max possible value for a complete game
+			for (String e: values) {
+				int temp = Integer.parseInt(e);
+				sumValues=sumValues+temp;
+			}
 		}
+		Main.setTotalWings(sumValues); // Set and to be used in RestController
 		Main.setRandom(false); // as the categories and clues have been randomly selected, they do not need to
 							   // be randomly selected again
 	}
