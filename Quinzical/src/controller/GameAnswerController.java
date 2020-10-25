@@ -95,6 +95,8 @@ public class GameAnswerController implements Initializable {
 	private String _speed = "0";
 	Alert a = new Alert(AlertType.NONE);
 
+	private boolean clicked=false;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		back_button.setDisable(true);
@@ -226,6 +228,7 @@ public class GameAnswerController implements Initializable {
 	
 	@FXML
 	public void onSubmitButtonPushed() {
+		clicked=true;
 		//Normalize 2 Strings to get rid of macrons
 		String input = normal(user_input.getText().trim()).toLowerCase();
 		String normalizedanswer = normal(answer.trim()).toLowerCase();
@@ -277,6 +280,7 @@ public class GameAnswerController implements Initializable {
 	}
 
 	public void onDontKnowPushed(ActionEvent event) {
+		clicked=true;
 		hint_label.setVisible(true);
 		hint_label.setText("The correct answer was: " + bracket + " " + answer);
 		speak("The correct answer was: " + bracket + " " + answer);
@@ -374,10 +378,16 @@ public class GameAnswerController implements Initializable {
             	Platform.runLater(new Runnable() {
 				    @Override
 				    public void run() {
-				    	onSubmitButtonPushed();
-				    	bar.setVisible(false);		
-				    	time.setText("Done !!!"); 
-				    	time.setStyle("-fx-text-fill: #ffa31a;");
+				    	if(clicked) {
+				    		bar.setVisible(false);		
+					    	time.setText("Done !!!"); 
+					    	time.setStyle("-fx-text-fill: #ffa31a;");
+				    	}else {
+				    		onSubmitButtonPushed();
+					    	bar.setVisible(false);		
+					    	time.setText("Done !!!"); 
+					    	time.setStyle("-fx-text-fill: #ffa31a;");
+				    	}
 				    }
 				});
             }
