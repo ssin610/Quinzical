@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
@@ -57,6 +60,8 @@ public class Main extends Application {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		
 	}
 
 	public static void main(String[] args) {
@@ -75,6 +80,7 @@ public class Main extends Application {
 			TextFileWriter.write("addedQuestions", null, addedQuestions);
 			TextFileWriter.write("addedCategories", null, addedCategories);
 		}
+		
 	}
 	
 	public static void setTotalWings(int value) {

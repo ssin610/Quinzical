@@ -35,7 +35,7 @@ public class ChooseCategoriesController implements Initializable {
 	// track the x and y positions within the gridpane
 	int index_y = 0;
 	int index_x = 0;
-	
+
 	// track how many categories have been selected
 	int counter = 0;
 
@@ -47,7 +47,7 @@ public class ChooseCategoriesController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		cont.setVisible(false);
-		
+
 
 		File dir = new File("cat"); // get location of categories folder
 		File[] categoryFolder = dir.listFiles();
@@ -73,34 +73,38 @@ public class ChooseCategoriesController implements Initializable {
 	 */
 	public void displayCategories(File[] categoryFolder) {
 		for (int i = 0; i < categoryFolder.length; i++) { // iterate through each category
+			if (!(categoryFolder[i].getName().equalsIgnoreCase("International"))) {
+				CheckBox cb = new CheckBox(categoryFolder[i].getName());
 
-			CheckBox cb = new CheckBox(categoryFolder[i].getName());
-			cb.setFont(Font.font("System", FontWeight.BOLD, 20));
-			cb.setTextFill(Color.LIGHTSKYBLUE);
-			grid.add(cb, index_x, index_y);
-			cbs.add(cb);
-			EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
 
-				public void handle(ActionEvent e) 
-				{ 
-					if (cb.isSelected()) {
-						counter++;
-					}
+				cb.setFont(Font.font("System", FontWeight.BOLD, 20));
+				cb.setTextFill(Color.LIGHTSKYBLUE);
+				grid.add(cb, index_x, index_y);
+				cbs.add(cb);
+				EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
 
-					else {
-						counter--;
-					}
-					checkIfContinue();
-				} 
-			}; 
+					public void handle(ActionEvent e) 
+					{ 
+						if (cb.isSelected()) {
+							counter++;
+						}
 
-			// set event to checkbox 
-			cb.setOnAction(event); 
-			index_x++;
+						else {
+							counter--;
+						}
+						checkIfContinue();
+					} 
+				}; 
 
-			if (index_x == 3) {
-				index_x = 0;
-				index_y++;
+				// set event to checkbox 
+				cb.setOnAction(event); 
+
+				index_x++;
+
+				if (index_x == 3) {
+					index_x = 0;
+					index_y++;
+				}
 			}
 		}
 

@@ -23,6 +23,7 @@ import javafx.geometry.HPos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
@@ -55,7 +56,7 @@ public class ClueGridController implements Initializable {
 
 	// track the progress of the game
 	int completedCategoryCounter = 0;
-	
+
 	// store the selected categories
 	private static ArrayList<CheckBox> cbs = new ArrayList<CheckBox>();
 
@@ -64,6 +65,8 @@ public class ClueGridController implements Initializable {
 	String answer;
 	String bracket;
 	Alert a = new Alert(AlertType.NONE);
+
+	private static Boolean internationalBool = false;
 
 	private int sumValues;
 
@@ -76,7 +79,12 @@ public class ClueGridController implements Initializable {
 		File[] categoryFolder = dir.listFiles();
 		if (categoryFolder != null) {
 			if (Main.getRandom()) {
-				selectedAndDisplayCluesFromCBS(categoryFolder);
+				for (CheckBox cb : cbs) { // iterate through each category
+					selectedAndDisplayCluesFromCBS(categoryFolder, cb.getText());
+				}
+				Main.setTotalWings(sumValues); // Set and to be used in RestController
+				Main.setRandom(false); // as the categories and clues have been randomly selected, they do not need to
+				// be randomly selected again
 			} else {
 				selectAndDisplayCluesFromFile();
 			}
@@ -91,7 +99,21 @@ public class ClueGridController implements Initializable {
 			a.setContentText("Please check the file arrangment");
 		}
 
-		if (completedCategoryCounter == 5) { // when the game has been completed
+		if (completedCategoryCounter == 2 && internationalBool == false) { // when the international section has been unlocked
+			// show alert
+			a.setAlertType(AlertType.INFORMATION);
+			// show the dialog
+			a.show();
+			a.setHeaderText("Congratulations!");
+			a.setContentText("You have unlocked the international question section!");
+			a.setWidth(400);
+			a.setHeight(200);
+			internationalBool = true;
+			selectedAndDisplayCluesFromCBS(categoryFolder, "International");
+
+		}
+
+		if (completedCategoryCounter == 6) { // when the game has been completed
 			resetText.setVisible(true);
 			reset.setVisible(true);
 		}
@@ -101,82 +123,81 @@ public class ClueGridController implements Initializable {
 	 * Randomly select clues from the list of categories selected and display them on the
 	 * clue grid
 	 * @param categoryFolder the list of categories
+	 * @param category 
 	 */
-	public void selectedAndDisplayCluesFromCBS(File[] categoryFolder) {
-		for (CheckBox cb : cbs) { // iterate through each category
-			
-			// arraylist's to store and keep track of which questions have
-			// been randomly selected
-			ArrayList<Integer> addedIndex = new ArrayList<Integer>();
-			ArrayList<String> values = new ArrayList<String>();
-			ArrayList<String> questions = new ArrayList<String>();
-			Main.addCategory(cb.getText());
-			index_y = 0;
-			Text categoryName = new Text(cb.getText().toUpperCase());
-			categoryName.setFont(Font.font("System", FontWeight.BOLD, 20));
-			categoryName.setFill(Color.LIGHTSKYBLUE);
-			grid.add(categoryName, index_x, index_y);
-			GridPane.setHalignment(categoryName, HPos.CENTER);
-			File categoryFile = null;
-			for (File file : categoryFolder) {
-				if (file.getName().equals(cb.getText())) {
-					categoryFile = file;
-				}
-			}
+	public void selectedAndDisplayCluesFromCBS(File[] categoryFolder, String category) {
 
-			TextFileReader reader = new TextFileReader();
-			List<String> lines = reader.read(categoryFile);
 
-			for (int j = 0; j < 5; j++) { // select 5 questions from the category and parse the results,
-				// forming the respective fields
-				int randomIndex = ThreadLocalRandom.current().nextInt(0, lines.size());
-
-				while (addedIndex.contains(randomIndex)) { // if the question has already been selected previously
-					randomIndex = ThreadLocalRandom.current().nextInt(0, lines.size());
-				}
-
-				String value = lines.get(randomIndex).substring(lines.get(randomIndex).lastIndexOf(',') + 1).trim();
-				values.add(value);
-				questions.add(lines.get(randomIndex));
-				addedIndex.add(randomIndex);
-			}
-
-			// sort the questions by money value
-			Collections.sort(questions, new Comparator<String>() {
-				@Override
-				public int compare(String o1, String o2) {
-					return Integer.valueOf(o1.substring(o1.lastIndexOf(',') + 1).trim())
-							.compareTo(Integer.valueOf(o2.substring(o2.lastIndexOf(',') + 1).trim()));
-				}
-			});
-
-			// add each question to the grid under the respective category
-			for (int k = 0; k < 5; k++) {
-				index_y++;
-
-				// make sure the user can only click the lowest money value for each category
-				if (index_y == 1) {
-					Main.addAddedQuestion(questions.get(k));
-					trimString(questions.get(k));
-					addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), true, showtext,
-							answer, bracket); // add it to the board
-				} else {
-					Main.addAddedQuestion(questions.get(k));
-					trimString(questions.get(k));
-					addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), false, showtext,
-							answer, bracket); // add it to the board
-				}
-			}
-			index_x++;
-			// Get the max possible value for a complete game
-			for (String e: values) {
-				int temp = Integer.parseInt(e);
-				sumValues=sumValues+temp;
+		// arraylist's to store and keep track of which questions have
+		// been randomly selected
+		ArrayList<Integer> addedIndex = new ArrayList<Integer>();
+		ArrayList<String> values = new ArrayList<String>();
+		ArrayList<String> questions = new ArrayList<String>();
+		Main.addCategory(category);
+		index_y = 0;
+		Text categoryName = new Text(category.toUpperCase());
+		categoryName.setFont(Font.font("System", FontWeight.BOLD, 20));
+		categoryName.setFill(Color.LIGHTSKYBLUE);
+		grid.add(categoryName, index_x, index_y);
+		GridPane.setHalignment(categoryName, HPos.CENTER);
+		File categoryFile = null;
+		for (File file : categoryFolder) {
+			if (file.getName().equals(category)) {
+				categoryFile = file;
 			}
 		}
-		Main.setTotalWings(sumValues); // Set and to be used in RestController
-		Main.setRandom(false); // as the categories and clues have been randomly selected, they do not need to
-							   // be randomly selected again
+
+		TextFileReader reader = new TextFileReader();
+		List<String> lines = reader.read(categoryFile);
+
+		for (int j = 0; j < 5; j++) { // select 5 questions from the category and parse the results,
+			// forming the respective fields
+			int randomIndex = ThreadLocalRandom.current().nextInt(0, lines.size());
+
+			while (addedIndex.contains(randomIndex)) { // if the question has already been selected previously
+				randomIndex = ThreadLocalRandom.current().nextInt(0, lines.size());
+			}
+
+			String value = lines.get(randomIndex).substring(lines.get(randomIndex).lastIndexOf(',') + 1).trim();
+			values.add(value);
+			questions.add(lines.get(randomIndex));
+			addedIndex.add(randomIndex);
+		}
+
+		// sort the questions by money value
+		Collections.sort(questions, new Comparator<String>() {
+			@Override
+			public int compare(String o1, String o2) {
+				return Integer.valueOf(o1.substring(o1.lastIndexOf(',') + 1).trim())
+						.compareTo(Integer.valueOf(o2.substring(o2.lastIndexOf(',') + 1).trim()));
+			}
+		});
+
+		// add each question to the grid under the respective category
+		for (int k = 0; k < 5; k++) {
+			index_y++;
+
+			// make sure the user can only click the lowest money value for each category
+			if (index_y == 1) {
+				Main.addAddedQuestion(questions.get(k));
+				trimString(questions.get(k));
+				addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), true, showtext,
+						answer, bracket); // add it to the board
+			} else {
+				Main.addAddedQuestion(questions.get(k));
+				trimString(questions.get(k));
+				addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), false, showtext,
+						answer, bracket); // add it to the board
+			}
+		}
+		index_x++;
+		// Get the max possible value for a complete game
+		for (String e: values) {
+			int temp = Integer.parseInt(e);
+			sumValues=sumValues+temp;
+		}
+
+
 	}
 
 	/**
@@ -196,7 +217,7 @@ public class ClueGridController implements Initializable {
 
 		index_x = 0;
 		// track the amount of valid questions for each of the 5 categories
-		int[] validQuestionArray = new int[] { 0, 0, 0, 0, 0 };
+		int[] validQuestionArray = new int[] { 0, 0, 0, 0, 0, 0 };
 		// index counter for the valid question array
 		int k = 0;
 
@@ -226,7 +247,7 @@ public class ClueGridController implements Initializable {
 
 			// after each category's questions have been iterated through, determine whether
 			// that category has a valid question or not
-			if (i == 4 || i == 9 || i == 14 || i == 19 || i == 24) {
+			if (i == 4 || i == 9 || i == 14 || i == 19 || i == 24 || i == 29) {
 				if (validQuestionArray[k] == 0) {
 					Text complete = new Text("Category complete!");
 					complete.setFont(Font.font("System", FontWeight.BOLD, 25));
@@ -305,13 +326,13 @@ public class ClueGridController implements Initializable {
 			window.setScene(viewScene);
 			window.setResizable(false);
 			window.show();
-			
+
 			//Stop all threads when window is closed
 			window.setOnCloseRequest((EventHandler<WindowEvent>) new EventHandler<WindowEvent>() {
-			    @Override
-			    public void handle(WindowEvent event) {
-			        System.exit(0);
-			    }
+				@Override
+				public void handle(WindowEvent event) {
+					System.exit(0);
+				}
 			});
 		} catch (IOException e) {
 			e.printStackTrace();
