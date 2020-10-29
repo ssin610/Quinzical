@@ -189,13 +189,7 @@ public class PracStartController implements Initializable {
 				secondStage.setResizable(false);
 				secondStage.show();
 				thisStage.close();
-				//Stop all threads when window is closed
-				secondStage.setOnCloseRequest((EventHandler<WindowEvent>) new EventHandler<WindowEvent>() {
-				    @Override
-				    public void handle(WindowEvent event) {
-				        System.exit(0);
-				    }
-				});
+//				
 			} catch (Exception e) {
 				e.printStackTrace();
 				a.setAlertType(AlertType.ERROR);

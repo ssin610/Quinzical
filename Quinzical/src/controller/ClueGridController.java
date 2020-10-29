@@ -327,13 +327,6 @@ public class ClueGridController implements Initializable {
 			window.setResizable(false);
 			window.show();
 
-			//Stop all threads when window is closed
-			window.setOnCloseRequest((EventHandler<WindowEvent>) new EventHandler<WindowEvent>() {
-				@Override
-				public void handle(WindowEvent event) {
-					System.exit(0);
-				}
-			});
 		} catch (IOException e) {
 			e.printStackTrace();
 			a.setAlertType(AlertType.ERROR);
