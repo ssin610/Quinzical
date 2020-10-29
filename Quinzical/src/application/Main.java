@@ -80,7 +80,8 @@ public class Main extends Application {
 			TextFileWriter.write("addedQuestions", null, addedQuestions);
 			TextFileWriter.write("addedCategories", null, addedCategories);
 		}
-		
+		Platform.exit();
+		System.exit(0);
 	}
 	
 	public static void setTotalWings(int value) {

@@ -186,6 +186,7 @@ public class GameAnswerController implements Initializable {
 	}
 
 	public void onMainMenuPushed(ActionEvent event) {
+		speak(" "); // To prevent the audio keep playing after going back to the menu
 		try {
 			Parent viewParent = FXMLLoader.load(getClass().getResource("view/ClueGrid.fxml"));
 			Scene viewScene = new Scene(viewParent);
