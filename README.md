@@ -23,7 +23,7 @@ Quinzical ----- backup/		(All question files as backup)
 # Troubleshoot
 - If the game cannot start properly, please open the run.sh in Qunzical/ and do the following:
 	Change the following line:
-		java --module-path /home/se2062020/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.media,javafx.base,javafx.fxml -jar Quinzical.jar
+		java --module-path /usr/share/java/lib --add-modules javafx.controls,javafx.media,javafx.base,javafx.fxml -jar Quinzical.jar
 	To 
 		java --module-path PATH --add-modules javafx.controls,javafx.media,javafx.base,javafx.fxml -jar Quinzical.jar
 	Where the PATH is the path of where your javafx lib folder is located
@@ -36,3 +36,8 @@ Quinzical ----- backup/		(All question files as backup)
  		Quinzical/addedCategories.txt, 
  		Quinzical/addedQuestions.txt, 
  		Quinzical/answeredQuestions.txt
+ 		Quinzical/winnigs.txt
+ 		
+ - Fatal Error window telling you to check file arrangement:
+ 	Please close the game and make sure all question files are in the formate of "xxx,xxx,xxx" (question,answer,value)
+ 	Then save the modified question file and start again.

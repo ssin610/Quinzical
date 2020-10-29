@@ -25,11 +25,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.control.Alert.AlertType;
+
 import javafx.stage.Stage;
 import application.Main;
 
@@ -112,7 +113,7 @@ public class GameAnswerController implements Initializable {
 		int tempendIndex = (bracket.trim().length())-1;
 		bracketLabel.setText(bracket.trim().substring(1, tempendIndex)+":");
 		setGif();
-		setMusic();
+//		setMusic();
 		countdown();
 		speak(question);
 	}
@@ -120,14 +121,16 @@ public class GameAnswerController implements Initializable {
 	/**
 	 * Set the sound effect and ready to be played
 	 */
-	public void setMusic() {
-		String path = new File("src/resources/cash.wav").toURI().toString();
-        Media media = new Media(path);
-        mp = new MediaPlayer(media);
-        mp.setVolume(0.5);
-     
-	}
-	
+//	public void setMusic() {
+//		String path = new File("src/resources/cash.wav").toURI().toString();
+//		System.out.println("DONE");
+//        Media media = new Media(path);
+//        mp = new MediaPlayer(media);
+//        mp.setVolume(0.5);
+//        System.out.println("DONE2");
+//     
+//	}
+//	
 	/**
 	 * Set the gif and ready to be show
 	 */
@@ -144,7 +147,7 @@ public class GameAnswerController implements Initializable {
 	 */
 	public void ahaMoment() {
 		//Set the sound Effect
-		mp.play();
+//		mp.play();
 		//Start the gifs
 		gif.setVisible(true);
 		gif2.setVisible(true);
