@@ -3,6 +3,7 @@ package application;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Set;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -11,6 +12,8 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.fxml.FXMLLoader;
 
 import helper.TextFileReader;
@@ -26,6 +29,8 @@ public class Main extends Application {
 	private static ArrayList<String> addedCategories = new ArrayList<String>();
 	private static boolean random = true;
 	private static int _totalWin=0;
+	
+	Alert a = new Alert(AlertType.NONE); // Use for warning display
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -67,7 +72,10 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
+	
+	/**
+	 * This method will be called at any stage the window/programme is closed 
+	 */
 	@Override
 	public void stop() throws IOException {
 		ArrayList<String> temp = new ArrayList<String>();
@@ -80,8 +88,25 @@ public class Main extends Application {
 			TextFileWriter.write("addedQuestions", null, addedQuestions);
 			TextFileWriter.write("addedCategories", null, addedCategories);
 		}
-		Platform.exit();
-		System.exit(0);
+		
+		// Stop audios from playing when windows are closed
+		Thread thread = new Thread() {
+			@Override
+			public void run() {
+				String cmd = "spd-say \" \"";
+				ProcessBuilder ttsBuilder = new ProcessBuilder("bash", "-c", cmd);
+				try {
+					Process ttsProcess = ttsBuilder.start();
+				} catch (IOException e) {
+					a.setAlertType(AlertType.ERROR);
+					a.show();
+					a.setHeaderText("Audio System Crash");
+					a.setContentText("Please make sure spd-say is installed (in READ.md) and restart the game");
+				}
+			}
+		};
+		thread.start();
+		
 	}
 	
 	public static void setTotalWings(int value) {
