@@ -92,7 +92,6 @@ public class GameAnswerController implements Initializable {
 	private static int value;
 	private int total_time;
 	private Thread _audioThread;
-	private static MediaPlayer mp;
 	private String _speed = "0";
 	Alert a = new Alert(AlertType.NONE);
 
@@ -113,7 +112,6 @@ public class GameAnswerController implements Initializable {
 		int tempendIndex = (bracket.trim().length())-1;
 		bracketLabel.setText(bracket.trim().substring(1, tempendIndex)+":");
 		setGif();
-//		setMusic();
 		countdown();
 		speak(question);
 	}
@@ -121,15 +119,19 @@ public class GameAnswerController implements Initializable {
 	/**
 	 * Set the sound effect and ready to be played
 	 */
-//	public void setMusic() {
-//		String path = new File("src/resources/cash.wav").toURI().toString();
-//		System.out.println("DONE");
-//        Media media = new Media(path);
-//        mp = new MediaPlayer(media);
-//        mp.setVolume(0.5);
-//        System.out.println("DONE2");
-//     
-//	}
+	public void playSound() {
+		String cmd = "./aha.sh>/dev/null 2>&1";
+		ProcessBuilder builder = new ProcessBuilder("bash", "-c", cmd);
+		try {
+			Process aha = builder.start();
+		} catch (IOException e) {
+			a.setAlertType(AlertType.ERROR);
+			// show the dialog
+			a.show();
+			a.setHeaderText("Audio System Crash");
+			a.setContentText("Please make sure spd-say is installed (in READ.md) and restart the game");
+		}
+	}
 //	
 	/**
 	 * Set the gif and ready to be show
@@ -147,7 +149,7 @@ public class GameAnswerController implements Initializable {
 	 */
 	public void ahaMoment() {
 		//Set the sound Effect
-//		mp.play();
+		playSound();
 		//Start the gifs
 		gif.setVisible(true);
 		gif2.setVisible(true);
