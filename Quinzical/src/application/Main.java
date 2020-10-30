@@ -81,6 +81,7 @@ public class Main extends Application {
 		ArrayList<String> temp = new ArrayList<String>();
 		temp.add(Integer.toString(winnings));
 		temp.add(Integer.toString(_totalWin));
+		System.out.println(_totalWin);
 		if (addedCategories.size() != 0) {
 			TextFileWriter.write("winnings", winnings, null);
 			TextFileWriter.write("winnings", null, temp);// save winngs to winnings and total winnings as the second line

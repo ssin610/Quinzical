@@ -182,12 +182,12 @@ public class ClueGridController implements Initializable {
 				Main.addAddedQuestion(questions.get(k));
 				trimString(questions.get(k));
 				addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), true, showtext,
-						answer, bracket); // add it to the board
+						answer, bracket, category); // add it to the board
 			} else {
 				Main.addAddedQuestion(questions.get(k));
 				trimString(questions.get(k));
 				addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), false, showtext,
-						answer, bracket); // add it to the board
+						answer, bracket, category); // add it to the board
 			}
 		}
 		index_x++;
@@ -226,7 +226,7 @@ public class ClueGridController implements Initializable {
 		for (int i = 0; i < Main.getAddedQuestions().size(); i++) {
 			trimString(Main.getAddedQuestions().get(i));
 
-			if (!(Main.getAnsweredQuestions().contains(showtext))) {
+			if (!(Main.getAnsweredQuestions().contains(showtext + " - " + Main.getAddedCategories().get(i/5)))) {
 				index_y++;
 				trimString(Main.getAddedQuestions().get(i));
 				// increment array as this is a valid question (hasn't been answered yet)
@@ -236,12 +236,12 @@ public class ClueGridController implements Initializable {
 					addButton(
 							Main.getAddedQuestions().get(i)
 							.substring(Main.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
-							true, showtext, answer, bracket); // add it to the board
+							true, showtext, answer, bracket, Main.getAddedCategories().get(i/5)); // add it to the board
 				} else {
 					addButton(
 							Main.getAddedQuestions().get(i)
 							.substring(Main.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
-							false, showtext, answer, bracket); // add it to the board
+							false, showtext, answer, bracket, Main.getAddedCategories().get(i/5)); // add it to the board
 				}
 			}
 
@@ -288,7 +288,7 @@ public class ClueGridController implements Initializable {
 		}
 	}
 
-	public void addButton(String text, Boolean lowest, String question, String answer, String bracket) {
+	public void addButton(String text, Boolean lowest, String question, String answer, String bracket, String category) {
 		Button button = new Button("$" + text);
 		button.setPrefSize(190, 80);
 		button.setFont(Font.font("System", FontWeight.BOLD, 25));
@@ -306,6 +306,7 @@ public class ClueGridController implements Initializable {
 				GameAnswerController.setAnswer(answer);
 				GameAnswerController.setValue(Integer.valueOf(text));
 				GameAnswerController.setBracket(bracket);
+				GameAnswerController.setCategory(category);
 				onQuestionButtonPushed(event); // send the event to the buttons event handler
 			}
 		});

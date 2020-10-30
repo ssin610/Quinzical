@@ -89,6 +89,8 @@ public class GameAnswerController implements Initializable {
 	private static String question;
 	private static String answer;
 	private static String bracket;
+	 
+	private static String category; 
 	private static int value;
 	private int total_time;
 	private Thread _audioThread;
@@ -103,7 +105,7 @@ public class GameAnswerController implements Initializable {
 		question_label.setText(question);
 		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
 //		user_input.setPromptText(bracket);
-		Main.addAnsweredQuestion(question);
+		Main.addAnsweredQuestion(question + " - " + category);
 		// Add lisenter to the slider
 		volume_slider.setOnMouseReleased(event -> {
 			int temp = (int) volume_slider.getValue();
@@ -414,5 +416,9 @@ public class GameAnswerController implements Initializable {
 
 	public static void setBracket(String bracketString) {
 		bracket = bracketString;
+	}
+	
+	public static void setCategory(String categoryString) {
+		category = categoryString;
 	}
 }
