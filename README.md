@@ -1,7 +1,9 @@
 	   
-# Run the game
-To run the game, please go into the Quinzical/ folder and then excute the run.sh
+# Run the game (You can choose any method to excute)
+(Recommanded: 1) Open the terminal and type the following line:
+			./run
 
+(2) Go into the Quinzical/ folder and then excute the run.sh
 	Please type ./run.sh in the terminal in Quinzical/
 
 # Important
