@@ -13,16 +13,28 @@ We Thank you for your paitient!
 
 
 # File setup
-Quinzical ----- backup/		(All question files as backup)
- 	   ----  bin/
- 	   ----- cat/ 			(Please Put all question txt files in this folder, following the same formate as the original files)
- 	   ----- src/			(All project code is in this folder)
- 	   ----- build.fxbuild	
- 	   ----- run.sh 		(To excute the game, run this script)
- 	   ----- (All other files generated during the game are not recommanded to be modified)
+
+assignment-3-and-project-team-01/
+
+	--- README.md 	(Instructions about the game, PLEASE READ IT !!!)
+	
+	--- run	(To excute the game, run this bash script)
+	
+	--- Quinzical/ (The main game source folder, PLEASE DO NOT DELETE ANY FILE IN HERE!!!)
+		----- backup/		(All question files as backup)
+ 	   	----- bin/
+ 	   	----- cat/ 		(Please Put all question txt files in this folder, following the same formate as the original files)
+ 	   	----- src/		(All project code is in this folder)
+ 	   	----- build.fxbuild	
+ 	   	----- run.sh 		(Run this script can excute the game)
+ 	   	----- (All other files generated during the game are not recommanded to be modified)
 
  	   
 # Troubleshoot
+
+- Error Messeage: bash: ./run: Permission denied
+	Please open the terminal and type: chmod +x run
+
 - If the game cannot start properly, please open the run.sh in Qunzical/ and do the following:
 	Change the following line:
 		java --module-path /usr/share/java/lib --add-modules javafx.controls,javafx.media,javafx.base,javafx.fxml -jar Quinzical.jar
