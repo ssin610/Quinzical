@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import main.Main;
 
@@ -79,6 +80,19 @@ public class MainMenuController {
 			a.setHeaderText("Fatal Error");
 			a.setContentText("Please restart the game");
 		}
+	}
+
+	public void onHelpPushed(ActionEvent event){
+		// show alert
+		a.setAlertType(AlertType.INFORMATION);
+		a.setHeaderText("Please refer to the manual for help!");
+		a.setContentText("There is a detailed user manual that comes included with this app! It is recommended to read the manual before using this app to"
+				+ " clarify all aspects of the tool.");
+
+		a.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+		// show the dialog
+		a.show();
 	}
 
 	public void onExit() {

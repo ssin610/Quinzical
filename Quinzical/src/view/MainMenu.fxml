@@ -29,5 +29,10 @@
             <Font name="System Bold" size="44.0" />
          </font>
       </Button>
+      <Button fx:id="game1" layoutX="24.0" layoutY="604.0" mnemonicParsing="false" onAction="#onHelpPushed" prefHeight="75.0" prefWidth="150.0" style="-fx-background-color: #ffc100;" text="Help" textFill="#37800f">
+         <font>
+            <Font name="System Bold" size="35.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
