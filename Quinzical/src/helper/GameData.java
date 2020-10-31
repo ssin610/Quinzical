@@ -21,31 +21,31 @@ public class GameData {
 	 * so the user can continue with their progress
 	 */
 	public static void readSavedData() {
-		TextFileReader reader = new TextFileReader();
+		
 		File w = new File("winnings");
 		if (w.exists()) {
-			GameData.setWinnings(Integer.valueOf(reader.read(w).get(0))); // if winnings have previously been saved, read from
-			GameData.setTotalWings(Integer.valueOf(reader.read(w).get(1))); // if total winnings have previously been saved, read from
+			GameData.setWinnings(Integer.valueOf(TextFileReader.read(w).get(0))); // if winnings have previously been saved, read from
+			GameData.setTotalWings(Integer.valueOf(TextFileReader.read(w).get(1))); // if total winnings have previously been saved, read from
 		}
 		File an = new File("answeredQuestions");
 		if (an.exists()) {
-			GameData.setAnsweredQuestions((ArrayList<String>) reader.read(an)); // if answered questions have previously been
+			GameData.setAnsweredQuestions((ArrayList<String>) TextFileReader.read(an)); // if answered questions have previously been
 																		// saved, read from this file
 		}
 		File ad = new File("addedQuestions");
 		if (ad.exists()) {
-			GameData.setAddedQuestions((ArrayList<String>) reader.read(ad)); // if added questions have previously been
+			GameData.setAddedQuestions((ArrayList<String>) TextFileReader.read(ad)); // if added questions have previously been
 																	// saved, read from this file
 			GameData.setRandom(false);
 		}
 		File ac = new File("addedCategories");
 		if (ac.exists()) {
-			GameData.setAddedCategories((ArrayList<String>) reader.read(ac)); // if answered questions have previously been
+			GameData.setAddedCategories((ArrayList<String>) TextFileReader.read(ac)); // if answered questions have previously been
 																	// saved, read from this file
 		}
 		File ib = new File("international");
 		if (ib.exists()) {
-			GameData.setInternational(Boolean.valueOf(reader.read(ib).get(0))); // if answered questions have previously been
+			GameData.setInternational(Boolean.valueOf(TextFileReader.read(ib).get(0))); // if answered questions have previously been
 																	// saved, read from this file
 		}
 	}
@@ -71,6 +71,29 @@ public class GameData {
 			}
 			
 		}
+	}
+	
+    /**
+	 * This method resets all fields back to their original state and also d
+	 * deletes the files containing saved data
+	 */
+	public static void resetData() {
+		winnings = 0;
+    	answeredQuestions.clear();
+    	addedQuestions.clear();
+    	addedCategories.clear();
+    	random = true;
+    	international = false;
+        File w = new File("winnings");
+        w.delete();
+        File an = new File("answeredQuestions");
+        an.delete();
+        File ad = new File("addedQuestions");
+        ad.delete();
+        File ac = new File("addedCategories");
+        ac.delete();
+        File ib = new File("international");
+        ib.delete();
 	}
 	
 	/**

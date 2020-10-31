@@ -15,12 +15,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.layout.AnchorPane;
+
 import javafx.stage.Stage;
 
 public class PractiseStartController implements Initializable {
@@ -41,7 +43,7 @@ public class PractiseStartController implements Initializable {
 	String bracket;
 
 	Alert a = new Alert(AlertType.NONE);
-	
+
 	/**
 	 * Initialize this controller by setting the relevant FXML elements
 	 * and their values
@@ -90,21 +92,6 @@ public class PractiseStartController implements Initializable {
 	}
 
 	/**
-	 * Return the name of the file given as input
-	 * @param file the file to read
-	 * @return the file's name
-	 */
-	public static String getFileNameNoEx(String file) {
-		if ((file != null) && (file.length() > 0)) {
-			int dot = file.lastIndexOf('.');
-			if ((dot > -1) && (dot < (file.length()))) {
-				return file.substring(0, dot);
-			}
-		}
-		return file;
-	}
-
-	/**
 	 * Read lines in the selected category and add this to the
 	 * questions array
 	 * @throws IOException
@@ -124,8 +111,8 @@ public class PractiseStartController implements Initializable {
 			}
 			br.close();
 			fileReader.close();
-			
-			
+
+
 		}
 
 		try {
@@ -153,13 +140,13 @@ public class PractiseStartController implements Initializable {
 
 		for (int i = 0; i < array.length; i++) {
 			if (array[i].isFile()) {
-				String filename = getFileNameNoEx(array[i].getName());
+				String filename = array[i].getName();
 				cats.add(filename);
 			}
 		}
 
 	}
-	
+
 	/**
 	 * Called when the user presses the start practise button.
 	 * This method then switches the scene to the question answering
@@ -167,35 +154,26 @@ public class PractiseStartController implements Initializable {
 	 */
 	public void onStartPushed(ActionEvent event) {
 		if (cat_choice.getSelectionModel().getSelectedItem() != null) {
-			// Get the current stage
-			Stage thisStage = (Stage) start_prac_button.getScene().getWindow();
-			try {
-				readSelectedfile();
-			} catch (IOException e1) {
-				a.setAlertType(AlertType.ERROR);
-				// show the dialog
-				a.show();
-				a.setHeaderText("File Reading Error");
-				a.setContentText("Please check the question format");
-			}
+		
 
 			// Open new winodw start the game
 			try {
+				readSelectedfile();
 				// Pass parameter across
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/PractiseAnswer.fxml"));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PractiseAnswer.fxml"));
 				loader.load();
 				PractiseAnswerController controller = loader.getController();
 				// Pass value to the next page
 				controller.setStrings(showtext, answer, bracket);
-				// Load GUI process
-				AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("../view/PractiseAnswer.fxml"));
-				Scene scene = new Scene(root);
-				Stage secondStage = new Stage();
-				secondStage.setScene(scene);
-				secondStage.setResizable(false);
-				secondStage.show();
-				thisStage.close();
-//				
+
+
+				Parent viewParent = FXMLLoader.load(getClass().getResource("/view/PractiseAnswer.fxml"));
+				Scene viewScene = new Scene(viewParent);
+				Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				window.setScene(viewScene);
+				window.setResizable(false);
+				window.show();
+				//				
 			} catch (Exception e) {
 				e.printStackTrace();
 				a.setAlertType(AlertType.ERROR);

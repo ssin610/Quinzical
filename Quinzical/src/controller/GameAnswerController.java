@@ -11,6 +11,8 @@ import java.util.ResourceBundle;
 import javax.swing.SwingWorker;
 
 import helper.GameData;
+import helper.InputNormalization;
+import helper.SoundUtil;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -116,25 +118,10 @@ public class GameAnswerController implements Initializable {
 		bracketLabel.setText(bracket.trim().substring(1, tempendIndex)+":");
 		setGif();
 		countdown();
-		speak(question);
+		SoundUtil.speak(question, _speed, a);
 	}
 	
-	/**
-	 * Play a celebratory sound when the user gets a question correct
-	 */
-	public void playSound() {
-		String cmd = "./aha.sh>/dev/null 2>&1";
-		ProcessBuilder builder = new ProcessBuilder("bash", "-c", cmd);
-		try {
-			builder.start();
-		} catch (IOException e) {
-			a.setAlertType(AlertType.ERROR);
-			// show the dialog
-			a.show();
-			a.setHeaderText("Audio System Crash");
-			a.setContentText("Please make sure spd-say is installed (in READ.md) and restart the game");
-		}
-	}
+
 //	
 	/**
 	 * Show the celebratory gif when the user gets a question correct
@@ -153,46 +140,20 @@ public class GameAnswerController implements Initializable {
 	 */
 	public void reward() {
 		//Set the sound Effect
-		playSound();
+		SoundUtil.playSound(a);
 		//Start the gifs
 		gif.setVisible(true);
 		gif2.setVisible(true);
 	
 	}
 
-	/**
-	 * Use spd-say to speak the sentence using a worker thread
-	 * @param sentence the sentence to speak
-	 */
-	public void speak(String sentence) {
-		Thread thread = new Thread() {
-			@Override
-			public void run() {
-				String cmd = "spd-say --wait -r" + _speed + " \"" + sentence + "\"";
-				ProcessBuilder ttsBuilder = new ProcessBuilder("bash", "-c", cmd);
-				try {
-					ttsBuilder.start();
-				} catch (IOException e) {
-					e.printStackTrace();
-					a.setAlertType(AlertType.ERROR);
-					// show the dialog
-					a.show();
-					a.setHeaderText("Audio System Crash");
-					a.setContentText("Please make sure spd-say is installed (in READ.md) and restart the game");
-				}
-			}
-		};
-		thread.setName("thread1");
-		thread.start();
-	
-	}
 	
 	/**
 	 * Called when the user presses the replay button.
 	 * This method speaks the clue again
 	 */
 	public void replay(ActionEvent event) {
-		speak(question);
+		SoundUtil.speak(question, _speed, a);
 	}
 	
 	/**
@@ -208,9 +169,9 @@ public class GameAnswerController implements Initializable {
 	 * This method changes the scene to the main menu 
 	 */
 	public void onMainMenuPushed(ActionEvent event) {
-		speak(" "); // To prevent the audio keep playing after going back to the menu
+		SoundUtil.speak(" ", _speed, a); // To prevent the audio keep playing after going back to the menu
 		try {
-			Parent viewParent = FXMLLoader.load(getClass().getResource("../view/ClueGrid.fxml"));
+			Parent viewParent = FXMLLoader.load(getClass().getResource("/view/ClueGrid.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
@@ -227,28 +188,7 @@ public class GameAnswerController implements Initializable {
 		}
 	}
 	
-	/**
-	 * Perform input normalization on the users answer so that all non alphabetic 
-	 * characters are removed and leading a/the/an are also removed
-	 * @param text the user answer to normalize
-	 * @return the normalized text
-	 */
-	public String refineString(String text) {
-		// Remove any symbols but not /
-		if (text.contains("/")) {
-			;
-		}else {
-			text = text.replaceAll("\\p{P}", "");
-		}
-
-		//  Remove leading a/the/an
-		String leading = text.split(" ")[0].trim();
-		//Make sure removing the leading wont cause empty String
-		if (text.split(" ").length>1 && (leading.equalsIgnoreCase("the") || leading.equalsIgnoreCase("a") || leading.equalsIgnoreCase("an"))) {
-			text=text.replaceFirst(leading+" ", "").trim();
-		}
-		return text;
-	}
+	
 	
 	/**
 	 * Called when the user presses the submit button.
@@ -259,16 +199,17 @@ public class GameAnswerController implements Initializable {
 	public void onSubmitButtonPushed() {
 		clicked=true;
 		//Normalize 2 Strings to get rid of macrons
-		String input = normal(user_input.getText().trim()).toLowerCase();
-		String normalizedanswer = normal(answer.trim()).toLowerCase();
-		normalizedanswer = refineString(normalizedanswer); //Refactor the answer
+		String input = InputNormalization.normal(user_input.getText().trim()).toLowerCase();
+		String normalizedanswer = InputNormalization.normal(answer.trim()).toLowerCase();
+		normalizedanswer = InputNormalization.refineString(normalizedanswer); //Refactor the answer
 		
 		// Only allow when equal or input contains answer
-		if (input.equalsIgnoreCase(normalizedanswer) || input.contains(normalizedanswer)) {
+		// If answer has multiple answer which is not expected
+		if (input.equalsIgnoreCase(normalizedanswer) || input.contains(normalizedanswer) || (answer.contains("/") && normalizedanswer.contains(input) && input!="")) {
 			reward();
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
-			speak("Correct!");
+			SoundUtil.speak("Correct!", _speed, a);
 			GameData.setWinnings(value);
 			submit_button.setVisible(false);
 			audio_replay_button.setDisable(true);
@@ -277,23 +218,11 @@ public class GameAnswerController implements Initializable {
 			dontknow_button.setVisible(false);
 			textshow_button.setDisable(true);
 			
-		// If answer has multiple answer which is not expected
-		}else if (answer.contains("/") && normalizedanswer.contains(input) && input!="" ) { 
-			reward();
-			hint_label.setVisible(true);
-			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
-			speak("Correct!");
-			GameData.setWinnings(value);
-			submit_button.setVisible(false);
-			audio_replay_button.setDisable(true);
-			back_button.setDisable(false);
-			back_button.setVisible(true);
-			dontknow_button.setVisible(false);
-			textshow_button.setDisable(true);
+	
 		}else {
 			hint_label.setVisible(true);
 			hint_label.setText("Incorrect. The correct answer was: " + bracket + " " + answer);
-			speak("Incorrect. The correct answer was: " + bracket + " " + answer);
+			SoundUtil.speak("Incorrect. The correct answer was: " + bracket + " " + answer, _speed, a);
 			GameData.setWinnings(-value);
 			submit_button.setVisible(false);
 			audio_replay_button.setDisable(true);
@@ -317,7 +246,7 @@ public class GameAnswerController implements Initializable {
 		clicked=true;
 		hint_label.setVisible(true);
 		hint_label.setText("The correct answer was: " + bracket + " " + answer);
-		speak("The correct answer was: " + bracket + " " + answer);
+		SoundUtil.speak("The correct answer was: " + bracket + " " + answer, _speed, a);
 		GameData.setWinnings(-value);
 		submit_button.setVisible(false);
 		dontknow_button.setVisible(false);
@@ -349,24 +278,7 @@ public class GameAnswerController implements Initializable {
 		worker.execute();
 	}
 	
-	/**
-	 * Replace macrons in the users answer with normal letters. This normalizes
-	 * the user input so it can be evaluated correctly taking into account macrons
-	 * @param text the user answer to normalize
-	 * @return the normalized text
-	 */
-	public String normal(String text) {
-		String[] macrons = new String[] {"ā","ē","ī","ō","ū","Ā","Ē","Ī","Ō","Ū"};
-		String[] normalLetter = new String[] {"a","e","i","o","u","a","e","i","o","u"};
-		for(String i :  macrons){
-			if (text.contains(i)) {
-				text=text.replace(i, normalLetter[Arrays.asList(macrons).indexOf(i)]);
-			}
-		}
-		return text.toLowerCase();
-		
-
-	};
+	
 	
 	/**
 	 * Create a swing worker to do the count down for each question

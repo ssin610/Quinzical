@@ -341,7 +341,7 @@ public class ClueGridController implements Initializable {
 	public void onQuestionButtonPushed(ActionEvent event) {
 		Parent viewParent;
 		try {
-			viewParent = FXMLLoader.load(getClass().getResource("../view/GameAnswer.fxml"));
+			viewParent = FXMLLoader.load(getClass().getResource("/view/GameAnswer.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
@@ -365,7 +365,7 @@ public class ClueGridController implements Initializable {
 	public void onMainMenuPushed(ActionEvent event){
 		Parent viewParent;
 		try {
-			viewParent = FXMLLoader.load(getClass().getResource("../view/MainMenu.fxml"));
+			viewParent = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
@@ -388,7 +388,7 @@ public class ClueGridController implements Initializable {
 	public void onResetPushed(ActionEvent event){
 		Parent viewParent;
 		try {
-			viewParent = FXMLLoader.load(getClass().getResource("../view/Reset.fxml"));
+			viewParent = FXMLLoader.load(getClass().getResource("/view/Reset.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);

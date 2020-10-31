@@ -27,7 +27,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("../view/Home.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/view/Home.fxml"));
 			primaryStage.setTitle("Quinzical");
 			primaryStage.setScene(new Scene(root, 1300, 700));
 			primaryStage.setResizable(false);

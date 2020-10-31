@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+import helper.InputNormalization;
+import helper.SoundUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -79,6 +81,7 @@ public class PractiseAnswerController implements Initializable {
 			int temp = (int) volume_slider.getValue();
 			_speed = Integer.toString(temp);
 		});
+		
 		int tempendIndex = (_bracket.trim().length())-1;
 		if (tempendIndex>=0) {
 			bracketLabel.setText(_bracket.trim().substring(1, tempendIndex)+":");
@@ -86,39 +89,14 @@ public class PractiseAnswerController implements Initializable {
 		
 	}
 
-	/**
-	 * Use spd-say to speak using the worker thread
-	 * @param sentence the sentence to speak
-	 */
-	public void speak(String sentence) {
-		Thread thread = new Thread() {
-			@Override
-			public void run() {
-				String cmd = "spd-say --wait -r" + _speed + " \"" + sentence + "\"";
-				ProcessBuilder ttsBuilder = new ProcessBuilder("bash", "-c", cmd);
-				try {
-					ttsBuilder.start();
-				} catch (IOException e) {
-					e.printStackTrace();
-					a.setAlertType(AlertType.ERROR);
-					// show the dialog
-					a.show();
-					a.setHeaderText("Audio System Crash");
-					a.setContentText("Please make sure spd-say is installed (in READ.md) and restart the game");
-				}
-			}
-		};
-		thread.setName("thread1");
-		thread.start();
 	
-	}
 	
 	/**
 	 * Called when the user presses the replay button.
 	 * This method speaks the clue again
 	 */
 	public void onReplayPushed(ActionEvent event) {
-		speak(_answer);
+		SoundUtil.speak(_answer, _speed, a);
 	}
 	
 	/**
@@ -126,9 +104,9 @@ public class PractiseAnswerController implements Initializable {
 	 * This method changes the scene to the main menu 
 	 */
 	public void onMainMenuPushed(ActionEvent event) {
-		speak(" "); // To prevent the audio keep playing after going back to the menu
+		SoundUtil.speak(" ", _speed, a); // To prevent the audio keep playing after going back to the menu
 		try {
-			Parent viewParent = FXMLLoader.load(getClass().getResource("../view/MainMenu.fxml"));
+			Parent viewParent = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
@@ -145,47 +123,9 @@ public class PractiseAnswerController implements Initializable {
 		}
 	}
 	
-	/**
-	 * Replace macrons in the users answer with normal letters. This normalizes
-	 * the user input so it can be evaluated correctly taking into account macrons@
-	 * @param text the user answer to normalize
-	 * @return the normalized text
-	 */
-	public String normal(String text) {
-		String[] macrons = new String[] {"ā","ē","ī","ō","ū","Ā","Ē","Ī","Ō","Ū"};
-		String[] normalLetter = new String[] {"a","e","i","o","u","a","e","i","o","u"};
-		for(String i :  macrons){
-			if (text.contains(i)) {
-				text=text.replace(i, normalLetter[Arrays.asList(macrons).indexOf(i)]);
-			}
-		}
-		return text.toLowerCase();
-		
 
-	};
 	
-	/**
-	 * Perform input normalization on the users answer so that all non alphabetic 
-	 * characters are removed and leading a/the/an are also removed
-	 * @param text the user answer to normalize
-	 * @return the normalized text
-	 */
-	public String refineString(String text) {
-		// Remove any symbols but not /
-		if (text.contains("/")) {
-			;
-		}else {
-			text = text.replaceAll("\\p{P}", "");
-		}
 
-		//  Remove leading a/the/an
-		String leading = text.split(" ")[0].trim();
-		//Make sure removing the leading wont cause empty String
-		if (text.split(" ").length>1 && (leading.equalsIgnoreCase("the") || leading.equalsIgnoreCase("a") || leading.equalsIgnoreCase("an"))) {
-			text=text.replaceFirst(leading+" ", "").trim();
-		}
-		return text;
-	}
 	
 	/**
 	 * Called when the user presses the submit button.
@@ -194,29 +134,22 @@ public class PractiseAnswerController implements Initializable {
 	 */
 	public void onSubmitButtonPushed() {
 		//Normalize 2 Strings to get rid of macrons
-		String input = normal(user_input.getText().trim()).toLowerCase();
-		String normalizedanswer = normal(_question.trim()).toLowerCase();
-		normalizedanswer = refineString(normalizedanswer); //Refactor the answer
+		String input = InputNormalization.normal(user_input.getText().trim()).toLowerCase();
+		String normalizedanswer = InputNormalization.normal(_question.trim()).toLowerCase();
+		normalizedanswer = InputNormalization.refineString(normalizedanswer); //Refactor the answer
 		
-		if (input.equalsIgnoreCase(normalizedanswer) || input.contains(normalizedanswer)) {
+		// If answer has multiple answer which is not expected
+		if (input.equalsIgnoreCase(normalizedanswer) || input.contains(normalizedanswer) || (_question.contains("/") && normalizedanswer.contains(input))) {
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! The answer was: " + _bracket + " " + _question);
-			speak("Correct! The answer was: " + _bracket + " " + _question);
+			SoundUtil.speak("Correct! The answer was: " + _bracket + " " + _question, _speed, a);
 			submit_button.setVisible(false);
 			audio_replay_button.setDisable(true);
 			back_button.setDisable(false);
 			back_button.setVisible(true);
 		
-		// If answer has multiple answer which is not expected	
-		} else if (_question.contains("/") && normalizedanswer.contains(input)){
-			hint_label.setVisible(true);
-			hint_label.setText("Correct! The answer was: " + _bracket + " " + _question);
-			speak("Correct! The answer was: " + _bracket + " " + _question);
-			submit_button.setVisible(false);
-			audio_replay_button.setDisable(true);
-			back_button.setDisable(false);
-			back_button.setVisible(true);
-		}else {
+		
+		} else {
 		
 			// IF input is not correct
 			_chance = _chance - 1;
@@ -228,7 +161,7 @@ public class PractiseAnswerController implements Initializable {
 			if (_chance == 0) { // Game over
 				hint_label.setVisible(true);
 				hint_label.setText("Incorrect. The correct answer was: " + _bracket + " " + _question);
-				speak("Incorrect. The correct answer was: " + _bracket + " " + _question);
+				SoundUtil.speak("Incorrect. The correct answer was: " + _bracket + " " + _question, _speed, a);
 				submit_button.setVisible(false);
 				audio_replay_button.setDisable(true);
 				back_button.setDisable(false);
@@ -262,7 +195,7 @@ public class PractiseAnswerController implements Initializable {
 		_question = question.split(",")[0];
 		_bracket = bracket;
 		_hint = "Hint: " + gethint(_question);
-		speak(_answer);
+		SoundUtil.speak(_answer, _speed, a);
 	}
 
 	/**

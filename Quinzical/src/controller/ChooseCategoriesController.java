@@ -139,7 +139,7 @@ public class ChooseCategoriesController implements Initializable {
 	 */
 	public void onMainMenuPushed(ActionEvent event) {
 		try {
-			Parent viewParent = FXMLLoader.load(getClass().getResource("../view/MainMenu.fxml"));
+			Parent viewParent = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
@@ -168,7 +168,7 @@ public class ChooseCategoriesController implements Initializable {
 		}
 		ClueGridController.setCheckBoxes(selectedcbs);
 		try {
-			Parent viewParent = FXMLLoader.load(getClass().getResource("../view/ClueGrid.fxml"));
+			Parent viewParent = FXMLLoader.load(getClass().getResource("/view/ClueGrid.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);

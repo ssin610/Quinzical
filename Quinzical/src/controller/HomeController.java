@@ -23,7 +23,7 @@ public class HomeController {
     {
         Parent viewParent;
         try {
-            viewParent = FXMLLoader.load(getClass().getResource("../view/MainMenu.fxml"));
+            viewParent = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
             Scene viewScene = new Scene(viewParent);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(viewScene);

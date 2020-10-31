@@ -15,7 +15,7 @@ public class TextFileReader {
 	 * can be retained
 	 * @param file the name of the file to read data from
 	 */
-	public List<String> read(File file) {
+	public static List<String> read(File file) {
 		List<String> lines = new ArrayList<String>();
 		String line;
 		try {

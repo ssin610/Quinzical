@@ -1,6 +1,6 @@
 package controller;
 
-import java.io.File;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,8 +38,18 @@ public class ResetController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
         resetText.setText("You have winnings of $" + GameData.getWinnings() + "! Do you want to reset the game?");
         resetText.setFont(Font.font("System", FontWeight.BOLD, 50));
+        generateComparativeMessage();
         
-        // Generate a comparative message to the user
+        
+    }
+    
+    /**
+   	 * This method generates a comparative message to the user so
+   	 * they can compare their results with others upon completion
+   	 * of the game
+   	 */
+    public void generateComparativeMessage() {
+    	// Generate a comparative message to the user
         try {
         	double percent = (GameData.getWinnings()/ GameData.getTotalWings()) * 100;
             percent=Math.round(percent * 100.0) / 100.0;
@@ -55,35 +65,18 @@ public class ResetController implements Initializable {
         }catch (Exception e) {
         	beatenText.setText("=== Its time to start Game mode! ==="); // If no previous total wings stored
         }
-        
     }
     
     /**
-	 * Called when the user presses the confirm reset button. This method
-	 * resets all fields back to their original state and also deletes
-	 * the files containing saved data
+	 * Called when the user presses the confirm reset button. A 
+	 * method is called to reset the game data
 	 */
     public void onYesButton(ActionEvent event) {
-    	GameData.setWinnings(0);
-    	GameData.addAnsweredQuestion(null);
-    	GameData.addAddedQuestion(null);
-    	GameData.addCategory(null);
-    	GameData.setRandom(true);
-    	GameData.setInternational(false);
-        File w = new File("winnings");
-        w.delete();
-        File an = new File("answeredQuestions");
-        an.delete();
-        File ad = new File("addedQuestions");
-        ad.delete();
-        File ac = new File("addedCategories");
-        ac.delete();
-        File ib = new File("international");
-        ib.delete();
-     
+    	
+    	GameData.resetData();
 
         try {
-            Parent viewParent = FXMLLoader.load(getClass().getResource("../view/MainMenu.fxml"));
+            Parent viewParent = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
             Scene viewScene = new Scene(viewParent);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(viewScene);
@@ -107,7 +100,7 @@ public class ResetController implements Initializable {
     public void onNoButton(ActionEvent event) {
 
         try {
-            Parent viewParent = FXMLLoader.load(getClass().getResource("../view/MainMenu.fxml"));
+            Parent viewParent = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
             Scene viewScene = new Scene(viewParent);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(viewScene);

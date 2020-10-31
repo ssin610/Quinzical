@@ -30,10 +30,10 @@ public class MainMenuController {
 
 			Parent viewParent;
 			if (GameData.getRandom()) {
-				viewParent = FXMLLoader.load(getClass().getResource("../view/ChooseCategories.fxml"));
+				viewParent = FXMLLoader.load(getClass().getResource("/view/ChooseCategories.fxml"));
 			}
 			else {
-				viewParent = FXMLLoader.load(getClass().getResource("../view/ClueGrid.fxml"));
+				viewParent = FXMLLoader.load(getClass().getResource("/view/ClueGrid.fxml"));
 			}
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -56,7 +56,7 @@ public class MainMenuController {
 	 */
 	public void onPractiseModePushed(ActionEvent event) {
 		try {
-			Parent viewParent = FXMLLoader.load(getClass().getResource("../view/PractiseStart.fxml"));
+			Parent viewParent = FXMLLoader.load(getClass().getResource("/view/PractiseStart.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
@@ -80,7 +80,7 @@ public class MainMenuController {
 	public void onResetPushed(ActionEvent event){
 		Parent viewParent;
 		try {
-			viewParent = FXMLLoader.load(getClass().getResource("../view/Reset.fxml"));
+			viewParent = FXMLLoader.load(getClass().getResource("/view/Reset.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
