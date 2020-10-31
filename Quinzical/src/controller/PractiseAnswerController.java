@@ -110,7 +110,7 @@ public class PractiseAnswerController implements Initializable {
 		};
 		thread.setName("thread1");
 		thread.start();
-	
+
 	}
 	
 	/**
@@ -134,7 +134,7 @@ public class PractiseAnswerController implements Initializable {
 			window.setScene(viewScene);
 			window.setResizable(false);
 			window.show();
-		
+
 		} catch (IOException e) {
 			
 			a.setAlertType(AlertType.ERROR);

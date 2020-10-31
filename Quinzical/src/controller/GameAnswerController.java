@@ -184,7 +184,7 @@ public class GameAnswerController implements Initializable {
 		};
 		thread.setName("thread1");
 		thread.start();
-	
+
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public class GameAnswerController implements Initializable {
 			window.setScene(viewScene);
 			window.setResizable(false);
 			window.show();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			a.setAlertType(AlertType.ERROR);
@@ -380,7 +380,6 @@ public class GameAnswerController implements Initializable {
 				Thread.sleep(1000);
 				total_time--;
 			}
-			// TODO Auto-generated method stub
 			return null;
 		}
 		@Override
@@ -401,7 +400,6 @@ public class GameAnswerController implements Initializable {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
 			
-			// TODO Auto-generated method stub
 			if("progress"==evt.getPropertyName()){			// During the progress update the GUI
 				
                 int progress = (Integer)evt.getNewValue();
