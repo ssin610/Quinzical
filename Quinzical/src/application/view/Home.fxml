@@ -5,14 +5,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #1f1f1f; -fx-border-color: #ffa31a; -fx-border-width: 8;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #1f1f1f; -fx-border-color: #ffa31a; -fx-border-width: 8;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
    <children>
-      <Text fill="#45ccca" layoutX="214.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quinzical">
+      <Text fill="#45ccca" layoutX="287.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quinzical">
          <font>
             <Font name="Dyuthi Regular" size="180.0" />
          </font>
       </Text>
-      <Button fx:id="playButton" layoutX="367.0" layoutY="382.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="157.0" prefWidth="365.0" style="-fx-background-color: #ffc100; -fx-background-radius: 20;" text="Play">
+      <Button fx:id="playButton" layoutX="468.0" layoutY="379.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="157.0" prefWidth="365.0" style="-fx-background-color: #ffc100; -fx-background-radius: 20;" text="Play">
          <font>
             <Font name="System Bold" size="85.0" />
          </font>

@@ -29,6 +29,7 @@ public class Main extends Application {
 	private static ArrayList<String> addedCategories = new ArrayList<String>();
 	private static boolean random = true;
 	private static int _totalWin=0;
+	private static boolean international = false;
 	
 	Alert a = new Alert(AlertType.NONE); // Use for warning display
 	
@@ -37,7 +38,7 @@ public class Main extends Application {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("view/Home.fxml"));
 			primaryStage.setTitle("Quinzical");
-			primaryStage.setScene(new Scene(root, 1100, 700));
+			primaryStage.setScene(new Scene(root, 1300, 700));
 			primaryStage.setResizable(false);
 			primaryStage.show();
 			TextFileReader reader = new TextFileReader();
@@ -62,6 +63,12 @@ public class Main extends Application {
 				addedCategories = (ArrayList<String>) reader.read(ac); // if answered questions have previously been
 																		// saved, read from this file
 			}
+			File ib = new File("international");
+			if (ib.exists()) {
+				international = Boolean.valueOf(reader.read(ib).get(0)); // if answered questions have previously been
+																		// saved, read from this file
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -81,9 +88,10 @@ public class Main extends Application {
 		ArrayList<String> temp = new ArrayList<String>();
 		temp.add(Integer.toString(winnings));
 		temp.add(Integer.toString(_totalWin));
-		System.out.println(_totalWin);
+	
 		if (addedCategories.size() != 0) {
-			TextFileWriter.write("winnings", winnings, null);
+			TextFileWriter.write("winnings", String.valueOf(winnings), null);
+			TextFileWriter.write("international", String.valueOf(international), null);
 			TextFileWriter.write("winnings", null, temp);// save winngs to winnings and total winnings as the second line
 			TextFileWriter.write("answeredQuestions", null, answeredQuestions);
 			TextFileWriter.write("addedQuestions", null, addedQuestions);
@@ -164,6 +172,14 @@ public class Main extends Application {
 
 	public static boolean getRandom() {
 		return random;
+	}
+	
+	public static boolean getInternational() {
+		return international;
+	}
+	
+	public static void setInternational(Boolean bool) {
+		international = bool;
 	}
 
 	public static ArrayList<String> getAddedQuestions() {

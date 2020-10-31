@@ -11,25 +11,25 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #1f1f1f; -fx-border-width: 8; -fx-border-color: #ffa31a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameAnswerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #1f1f1f; -fx-border-width: 8; -fx-border-color: #ffa31a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameAnswerController">
    <children>
-      <Label fx:id="question_label" alignment="CENTER" layoutX="77.0" layoutY="145.0" prefHeight="107.0" prefWidth="947.0" text="1111111111111111111111111111111111111111111111111111111111111111111111111111" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
+      <Label fx:id="question_label" alignment="CENTER" layoutX="83.0" layoutY="145.0" prefHeight="107.0" prefWidth="1164.0" text="1111111111111111111111111111111111111111111111111111111111111111111111111111" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
          <font>
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <Button fx:id="submit_button" layoutX="454.0" layoutY="386.0" mnemonicParsing="false" onAction="#onSubmitButtonPushed" prefHeight="69.0" prefWidth="178.0" style="-fx-background-color: #ffa31a;" text="Submit">
+      <Button fx:id="submit_button" layoutX="547.0" layoutY="390.0" mnemonicParsing="false" onAction="#onSubmitButtonPushed" prefHeight="69.0" prefWidth="178.0" style="-fx-background-color: #ffa31a;" text="Submit">
          <font>
             <Font name="System Bold" size="33.0" />
          </font>
       </Button>
-      <Label fx:id="bracketLabel" layoutX="409.0" layoutY="240.0" prefHeight="25.0" prefWidth="271.0" text="Enter your answer below:" textFill="WHITE">
+      <Label fx:id="bracketLabel" layoutX="502.0" layoutY="244.0" prefHeight="25.0" prefWidth="271.0" text="Enter your answer below:" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="user_input" layoutX="411.0" layoutY="280.0" prefHeight="39.0" prefWidth="263.0" />
-      <Label fx:id="hint_label" alignment="CENTER" layoutX="47.0" layoutY="336.0" prefHeight="28.0" prefWidth="991.0" text="HINT" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" visible="false" wrapText="true">
+      <TextField fx:id="user_input" layoutX="504.0" layoutY="284.0" prefHeight="39.0" prefWidth="263.0" />
+      <Label fx:id="hint_label" alignment="CENTER" layoutX="60.0" layoutY="336.0" prefHeight="28.0" prefWidth="1200.0" text="HINT" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" visible="false" wrapText="true">
          <font>
             <Font name="Comic Sans MS Bold" size="20.0" />
          </font>
@@ -39,33 +39,33 @@
             <Font name="System Bold" size="25.0" />
          </font>
       </Label>
-      <Slider fx:id="volume_slider" layoutX="930.0" layoutY="604.0" max="100.0" min="-100.0" opacity="0.73" prefHeight="14.0" prefWidth="131.0" value="0.0" />
-      <Label layoutX="840.0" layoutY="598.0" prefHeight="28.0" prefWidth="92.0" text="Audio Speed:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true" />
-      <Button fx:id="audio_replay_button" layoutX="835.0" layoutY="559.0" mnemonicParsing="false" onAction="#replay" prefHeight="39.0" prefWidth="112.0" style="-fx-background-radius: 100;" text="Audio Replay">
+      <Slider fx:id="volume_slider" layoutX="1071.0" layoutY="600.0" max="100.0" min="-100.0" opacity="0.73" prefHeight="14.0" prefWidth="131.0" value="0.0" />
+      <Label layoutX="981.0" layoutY="594.0" prefHeight="28.0" prefWidth="92.0" text="Audio Speed:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true" />
+      <Button fx:id="audio_replay_button" layoutX="976.0" layoutY="555.0" mnemonicParsing="false" onAction="#replay" prefHeight="39.0" prefWidth="112.0" style="-fx-background-radius: 100;" text="Audio Replay">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
       <ProgressBar fx:id="reading_bar" layoutX="833.0" layoutY="564.0" prefHeight="14.0" prefWidth="131.0" progress="0.0" visible="false" />
-      <Button fx:id="back_button" layoutX="477.0" layoutY="547.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="62.0" prefWidth="131.0" text="Clue Grid" visible="false">
+      <Button fx:id="back_button" layoutX="571.0" layoutY="547.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="62.0" prefWidth="131.0" text="Clue Grid" visible="false">
          <font>
             <Font name="System Bold Italic" size="19.0" />
          </font></Button>
-      <Label layoutX="927.0" layoutY="620.0" prefHeight="28.0" prefWidth="30.0" text="-100" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+      <Label layoutX="1068.0" layoutY="616.0" prefHeight="28.0" prefWidth="30.0" text="-100" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
-      <Label layoutX="1050.0" layoutY="620.0" prefHeight="28.0" prefWidth="22.0" text="100" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+      <Label layoutX="1191.0" layoutY="616.0" prefHeight="28.0" prefWidth="22.0" text="100" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="984.0" layoutY="620.0" prefHeight="28.0" prefWidth="22.0" text="0" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+      <Label alignment="CENTER" layoutX="1125.0" layoutY="616.0" prefHeight="28.0" prefWidth="22.0" text="0" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
-      <Button fx:id="dontknow_button" layoutX="474.0" layoutY="474.0" mnemonicParsing="false" onAction="#onDontKnowPushed" prefHeight="47.0" prefWidth="137.0" style="-fx-background-color: #ffa31a;" text="I Don't Know">
+      <Button fx:id="dontknow_button" layoutX="567.0" layoutY="478.0" mnemonicParsing="false" onAction="#onDontKnowPushed" prefHeight="47.0" prefWidth="137.0" style="-fx-background-color: #ffa31a;" text="I Don't Know">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -75,25 +75,25 @@
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Button>
-      <Text fill="#d8dbdc" layoutX="260.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game">
+      <Text fill="#d8dbdc" layoutX="364.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game">
          <font>
             <Font name="System Bold" size="88.0" />
          </font>
       </Text>
-      <Text fill="#ffa31a" layoutX="569.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mode">
+      <Text fill="#ffa31a" layoutX="673.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mode">
          <font>
             <Font name="System Bold" size="88.0" />
          </font>
       </Text>
-      <Line endX="100.0" layoutX="138.0" layoutY="104.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
-      <Line endX="100.0" layoutX="838.0" layoutY="104.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
-      <ProgressBar fx:id="bar" layoutX="370.0" layoutY="668.0" prefHeight="14.0" prefWidth="345.0" progress="1.0" />
-      <Label fx:id="time" alignment="BOTTOM_CENTER" layoutX="370.0" layoutY="634.0" prefHeight="28.0" prefWidth="345.0" text="Time  Left:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+      <Line endX="100.0" layoutX="242.0" layoutY="102.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
+      <Line endX="100.0" layoutX="942.0" layoutY="102.0" startX="15.666671752929688" startY="-7.62939453125E-6" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="8.0" />
+      <ProgressBar fx:id="bar" layoutX="463.0" layoutY="672.0" prefHeight="14.0" prefWidth="345.0" progress="1.0" />
+      <Label fx:id="time" alignment="BOTTOM_CENTER" layoutX="463.0" layoutY="638.0" prefHeight="28.0" prefWidth="345.0" text="Time  Left:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true">
          <font>
             <Font name="Dyuthi Regular" size="26.0" />
          </font>
       </Label>
-      <ImageView fx:id="gif" fitHeight="331.0" fitWidth="359.0" layoutX="34.0" layoutY="174.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" visible="false" />
-      <ImageView fx:id="gif2" fitHeight="331.0" fitWidth="359.0" layoutX="702.0" layoutY="169.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <ImageView fx:id="gif" fitHeight="331.0" fitWidth="359.0" layoutX="96.0" layoutY="174.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <ImageView fx:id="gif2" fitHeight="331.0" fitWidth="415.0" layoutX="823.0" layoutY="169.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" visible="false" />
    </children>
 </AnchorPane>

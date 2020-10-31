@@ -13,7 +13,7 @@ import java.util.ArrayList;
 // helper class to write to files when exiting game
 public class TextFileWriter {
 
-    public static void write(String filename, Integer balance, ArrayList<String> answeredQuestions) throws IOException {
+    public static void write(String filename, String balance, ArrayList<String> answeredQuestions) throws IOException {
 
         File file = new File(filename);
         // if the file doesn't exist, create it

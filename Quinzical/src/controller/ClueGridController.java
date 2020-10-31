@@ -27,6 +27,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -66,7 +67,7 @@ public class ClueGridController implements Initializable {
 	String bracket;
 	Alert a = new Alert(AlertType.NONE);
 
-	private static Boolean internationalBool = false;
+	
 
 	private int sumValues;
 
@@ -99,16 +100,18 @@ public class ClueGridController implements Initializable {
 			a.setContentText("Please check the file arrangment");
 		}
 
-		if (completedCategoryCounter == 2 && internationalBool == false) { // when the international section has been unlocked
+		if (completedCategoryCounter == 2 && Main.getInternational() == false) { // when the international section has been unlocked
 			// show alert
 			a.setAlertType(AlertType.INFORMATION);
-			// show the dialog
-			a.show();
 			a.setHeaderText("Congratulations!");
 			a.setContentText("You have unlocked the international question section!");
-			a.setWidth(400);
-			a.setHeight(200);
-			internationalBool = true;
+			
+			a.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+		
+			// show the dialog
+			a.show();
+			
+			Main.setInternational(true);
 			selectedAndDisplayCluesFromCBS(categoryFolder, "International");
 
 		}

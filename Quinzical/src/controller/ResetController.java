@@ -60,6 +60,7 @@ public class ResetController implements Initializable {
         Main.addAddedQuestion(null);
         Main.addCategory(null);
         Main.setRandom(true);
+        Main.setInternational(false);
         File w = new File("winnings");
         w.delete();
         File an = new File("answeredQuestions");
@@ -68,6 +69,8 @@ public class ResetController implements Initializable {
         ad.delete();
         File ac = new File("addedCategories");
         ac.delete();
+        File ib = new File("international");
+        ib.delete();
      
 
         try {
