@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.SwingWorker;
 
+import helper.GameData;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,7 +30,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 
 import javafx.stage.Stage;
-import main.Main;
 
 public class GameAnswerController implements Initializable {
 
@@ -104,9 +104,9 @@ public class GameAnswerController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		back_button.setDisable(true);
 		question_label.setText(question);
-		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
+		winnings.setText("Winnings: $" + Integer.toString(GameData.getWinnings()));
 //		user_input.setPromptText(bracket);
-		Main.addAnsweredQuestion(question + " - " + category);
+		GameData.addAnsweredQuestion(question + " - " + category);
 		// Add lisenter to the slider
 		volume_slider.setOnMouseReleased(event -> {
 			int temp = (int) volume_slider.getValue();
@@ -184,7 +184,7 @@ public class GameAnswerController implements Initializable {
 		};
 		thread.setName("thread1");
 		thread.start();
-
+	
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public class GameAnswerController implements Initializable {
 			window.setScene(viewScene);
 			window.setResizable(false);
 			window.show();
-
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			a.setAlertType(AlertType.ERROR);
@@ -269,7 +269,7 @@ public class GameAnswerController implements Initializable {
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
 			speak("Correct!");
-			Main.setWinnings(value);
+			GameData.setWinnings(value);
 			submit_button.setVisible(false);
 			audio_replay_button.setDisable(true);
 			back_button.setDisable(false);
@@ -283,7 +283,7 @@ public class GameAnswerController implements Initializable {
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
 			speak("Correct!");
-			Main.setWinnings(value);
+			GameData.setWinnings(value);
 			submit_button.setVisible(false);
 			audio_replay_button.setDisable(true);
 			back_button.setDisable(false);
@@ -294,7 +294,7 @@ public class GameAnswerController implements Initializable {
 			hint_label.setVisible(true);
 			hint_label.setText("Incorrect. The correct answer was: " + bracket + " " + answer);
 			speak("Incorrect. The correct answer was: " + bracket + " " + answer);
-			Main.setWinnings(-value);
+			GameData.setWinnings(-value);
 			submit_button.setVisible(false);
 			audio_replay_button.setDisable(true);
 			back_button.setDisable(false);
@@ -303,7 +303,7 @@ public class GameAnswerController implements Initializable {
 			textshow_button.setDisable(true);
 		
 		}
-		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
+		winnings.setText("Winnings: $" + Integer.toString(GameData.getWinnings()));
 		worker.cancel(true); //Stop count down
 		
 	}
@@ -318,13 +318,13 @@ public class GameAnswerController implements Initializable {
 		hint_label.setVisible(true);
 		hint_label.setText("The correct answer was: " + bracket + " " + answer);
 		speak("The correct answer was: " + bracket + " " + answer);
-		Main.setWinnings(-value);
+		GameData.setWinnings(-value);
 		submit_button.setVisible(false);
 		dontknow_button.setVisible(false);
 		audio_replay_button.setDisable(true);
 		back_button.setDisable(false);
 		back_button.setVisible(true);
-		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
+		winnings.setText("Winnings: $" + Integer.toString(GameData.getWinnings()));
 		textshow_button.setDisable(true);
 		worker.cancel(true); //Stop count down
 	}
@@ -380,6 +380,7 @@ public class GameAnswerController implements Initializable {
 				Thread.sleep(1000);
 				total_time--;
 			}
+			// TODO Auto-generated method stub
 			return null;
 		}
 		@Override
@@ -400,6 +401,7 @@ public class GameAnswerController implements Initializable {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
 			
+			// TODO Auto-generated method stub
 			if("progress"==evt.getPropertyName()){			// During the progress update the GUI
 				
                 int progress = (Integer)evt.getNewValue();

@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 
+import helper.GameData;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import main.Main;
+
 
 
 public class MainMenuController {
@@ -28,7 +29,7 @@ public class MainMenuController {
 		try {
 
 			Parent viewParent;
-			if (Main.getRandom()) {
+			if (GameData.getRandom()) {
 				viewParent = FXMLLoader.load(getClass().getResource("../view/ChooseCategories.fxml"));
 			}
 			else {

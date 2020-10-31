@@ -16,7 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-import main.Main;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -32,6 +32,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.event.EventHandler;
+import helper.GameData;
 import helper.TextFileReader;
 
 public class ClueGridController implements Initializable {
@@ -75,17 +76,17 @@ public class ClueGridController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		resetText.setVisible(false);
 		reset.setVisible(false);
-		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
+		winnings.setText("Winnings: $" + Integer.toString(GameData.getWinnings()));
 
 		File dir = new File("cat"); // get location of categories folder
 		File[] categoryFolder = dir.listFiles();
 		if (categoryFolder != null) {
-			if (Main.getRandom()) {
+			if (GameData.getRandom()) {
 				for (CheckBox cb : cbs) { // iterate through each category
 					selectedAndDisplayCluesFromCBS(categoryFolder, cb.getText());
 				}
-				Main.setTotalWings(sumValues); // Set and to be used in RestController
-				Main.setRandom(false); // as the categories and clues have been randomly selected, they do not need to
+				GameData.setTotalWings(sumValues); // Set and to be used in RestController
+				GameData.setRandom(false); // as the categories and clues have been randomly selected, they do not need to
 				// be randomly selected again
 			} else {
 				selectAndDisplayCluesFromFile();
@@ -101,7 +102,7 @@ public class ClueGridController implements Initializable {
 			a.setContentText("Please check the file arrangment");
 		}
 
-		if (completedCategoryCounter == 2 && Main.getInternational() == false) { // when the international section has been unlocked
+		if (completedCategoryCounter == 2 && GameData.getInternational() == false) { // when the international section has been unlocked
 			// show alert
 			a.setAlertType(AlertType.INFORMATION);
 			a.setHeaderText("Congratulations!");
@@ -112,7 +113,7 @@ public class ClueGridController implements Initializable {
 			// show the dialog
 			a.show();
 			
-			Main.setInternational(true);
+			GameData.setInternational(true);
 			selectedAndDisplayCluesFromCBS(categoryFolder, "International");
 
 		}
@@ -137,7 +138,7 @@ public class ClueGridController implements Initializable {
 		ArrayList<Integer> addedIndex = new ArrayList<Integer>();
 		ArrayList<String> values = new ArrayList<String>();
 		ArrayList<String> questions = new ArrayList<String>();
-		Main.addCategory(category);
+		GameData.addCategory(category);
 		index_y = 0;
 		Text categoryName = new Text(category.toUpperCase());
 		categoryName.setFont(Font.font("System", FontWeight.BOLD, 20));
@@ -183,12 +184,12 @@ public class ClueGridController implements Initializable {
 
 			// make sure the user can only click the lowest money value for each category
 			if (index_y == 1) {
-				Main.addAddedQuestion(questions.get(k));
+				GameData.addAddedQuestion(questions.get(k));
 				trimString(questions.get(k));
 				addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), true, showtext,
 						answer, bracket, category); // add it to the board
 			} else {
-				Main.addAddedQuestion(questions.get(k));
+				GameData.addAddedQuestion(questions.get(k));
 				trimString(questions.get(k));
 				addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), false, showtext,
 						answer, bracket, category); // add it to the board
@@ -210,7 +211,7 @@ public class ClueGridController implements Initializable {
 	 */
 	public void selectAndDisplayCluesFromFile() {
 
-		for (String category : Main.getAddedCategories()) {
+		for (String category : GameData.getAddedCategories()) {
 			Text categoryName = new Text(category.toUpperCase());
 			categoryName.setFont(Font.font("System", FontWeight.BOLD, 23));
 			categoryName.setFill(Color.LIGHTSKYBLUE);
@@ -227,25 +228,25 @@ public class ClueGridController implements Initializable {
 
 		// iterate through each of the selected questions and add them to the
 		// grid if they haven't been answered yet
-		for (int i = 0; i < Main.getAddedQuestions().size(); i++) {
-			trimString(Main.getAddedQuestions().get(i));
+		for (int i = 0; i < GameData.getAddedQuestions().size(); i++) {
+			trimString(GameData.getAddedQuestions().get(i));
 
-			if (!(Main.getAnsweredQuestions().contains(showtext + " - " + Main.getAddedCategories().get(i/5)))) {
+			if (!(GameData.getAnsweredQuestions().contains(showtext + " - " + GameData.getAddedCategories().get(i/5)))) {
 				index_y++;
-				trimString(Main.getAddedQuestions().get(i));
+				trimString(GameData.getAddedQuestions().get(i));
 				// increment array as this is a valid question (hasn't been answered yet)
 				validQuestionArray[k] = validQuestionArray[k] + 1;
 				// make sure the user can only click the lowest money value for each category
 				if (index_y == 1) {
 					addButton(
-							Main.getAddedQuestions().get(i)
-							.substring(Main.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
-							true, showtext, answer, bracket, Main.getAddedCategories().get(i/5)); // add it to the board
+							GameData.getAddedQuestions().get(i)
+							.substring(GameData.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
+							true, showtext, answer, bracket, GameData.getAddedCategories().get(i/5)); // add it to the board
 				} else {
 					addButton(
-							Main.getAddedQuestions().get(i)
-							.substring(Main.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
-							false, showtext, answer, bracket, Main.getAddedCategories().get(i/5)); // add it to the board
+							GameData.getAddedQuestions().get(i)
+							.substring(GameData.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
+							false, showtext, answer, bracket, GameData.getAddedCategories().get(i/5)); // add it to the board
 				}
 			}
 
@@ -304,7 +305,7 @@ public class ClueGridController implements Initializable {
 	 * @param category the category the clue belongs to
 	 */
 	public void addButton(String value, Boolean lowest, String question, String answer, String bracket, String category) {
-		Button button = new Button(value);
+		Button button = new Button("$" + value);
 		button.setPrefSize(190, 80);
 		button.setFont(Font.font("System", FontWeight.BOLD, 25));
 		button.setStyle("-fx-background-color: #ffc100; ");
