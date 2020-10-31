@@ -19,8 +19,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class PracticeAnswerController implements Initializable {
@@ -95,7 +93,7 @@ public class PracticeAnswerController implements Initializable {
 				String cmd = "spd-say --wait -r" + _speed + " \"" + sentence + "\"";
 				ProcessBuilder ttsBuilder = new ProcessBuilder("bash", "-c", cmd);
 				try {
-					Process ttsProcess = ttsBuilder.start();
+					ttsBuilder.start();
 				} catch (IOException e) {
 					e.printStackTrace();
 					a.setAlertType(AlertType.ERROR);

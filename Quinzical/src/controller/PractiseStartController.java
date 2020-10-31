@@ -12,7 +12,6 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,9 +22,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
-public class PracStartController implements Initializable {
+public class PractiseStartController implements Initializable {
 
 	// arrays to store categories and questions
 	private List<String> cats = new ArrayList<String>();
@@ -35,7 +33,7 @@ public class PracStartController implements Initializable {
 	Button start_prac_button;
 
 	@FXML
-	ChoiceBox cat_choice;
+	ChoiceBox<String> cat_choice;
 
 	// store the different parts of a question
 	String showtext;
@@ -110,7 +108,7 @@ public class PracStartController implements Initializable {
 	 */
 	public void readSelectedfile() throws IOException {
 
-		String selected_cat = (String) cat_choice.getSelectionModel().getSelectedItem();
+		String selected_cat = cat_choice.getSelectionModel().getSelectedItem();
 		String currentpath = System.getProperty("user.dir");
 
 		File file = new File(currentpath + "/cat/" + selected_cat);

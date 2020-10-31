@@ -2,7 +2,6 @@ package controller;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
@@ -27,10 +26,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.control.Alert.AlertType;
 
 import javafx.stage.Stage;
@@ -127,7 +122,7 @@ public class GameAnswerController implements Initializable {
 		String cmd = "./aha.sh>/dev/null 2>&1";
 		ProcessBuilder builder = new ProcessBuilder("bash", "-c", cmd);
 		try {
-			Process aha = builder.start();
+			builder.start();
 		} catch (IOException e) {
 			a.setAlertType(AlertType.ERROR);
 			// show the dialog
@@ -171,7 +166,7 @@ public class GameAnswerController implements Initializable {
 				String cmd = "spd-say --wait -r" + _speed + " \"" + sentence + "\"";
 				ProcessBuilder ttsBuilder = new ProcessBuilder("bash", "-c", cmd);
 				try {
-					Process ttsProcess = ttsBuilder.start();
+					ttsBuilder.start();
 				} catch (IOException e) {
 					e.printStackTrace();
 					a.setAlertType(AlertType.ERROR);

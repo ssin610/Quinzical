@@ -101,7 +101,7 @@ public class Main extends Application {
 				String cmd = "spd-say \" \"";
 				ProcessBuilder ttsBuilder = new ProcessBuilder("bash", "-c", cmd);
 				try {
-					Process ttsProcess = ttsBuilder.start();
+					ttsBuilder.start();
 				} catch (IOException e) {
 					a.setAlertType(AlertType.ERROR);
 					a.show();
