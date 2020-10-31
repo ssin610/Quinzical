@@ -59,7 +59,6 @@ public class PracticeAnswerController implements Initializable {
 	private static String _answer = ""; // What is displayed to the user
 	private static String _hint;
 	private static String _bracket="         ";
-	private Thread _audioThread;
 	private int _chance = 3;
 	private String _speed = "0";
 	Alert a = new Alert(AlertType.NONE);
@@ -106,7 +105,7 @@ public class PracticeAnswerController implements Initializable {
 		};
 		thread.setName("thread1");
 		thread.start();
-		_audioThread=thread;
+
 	}
 
 	public void onReplayPushed(ActionEvent event) {
@@ -122,9 +121,7 @@ public class PracticeAnswerController implements Initializable {
 			window.setScene(viewScene);
 			window.setResizable(false);
 			window.show();
-			if(_audioThread != null) {
-				_audioThread.stop();//Stop aduio thread when exit
-			}
+			
 		} catch (IOException e) {
 			
 			a.setAlertType(AlertType.ERROR);

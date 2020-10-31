@@ -90,7 +90,6 @@ public class GameAnswerController implements Initializable {
 	private static String category; 
 	private static int value;
 	private int total_time;
-	private Thread _audioThread;
 	private String _speed = "0";
 	Alert a = new Alert(AlertType.NONE);
 
@@ -179,7 +178,6 @@ public class GameAnswerController implements Initializable {
 		};
 		thread.setName("thread1");
 		thread.start();
-		_audioThread=thread;
 	}
 
 	public void replay(ActionEvent event) {
@@ -198,7 +196,7 @@ public class GameAnswerController implements Initializable {
 			window.setScene(viewScene);
 			window.setResizable(false);
 			window.show();
-			_audioThread.stop(); //Stop audio playing
+//			_audioThread.stop(); //Stop audio playing
 		} catch (IOException e) {
 			e.printStackTrace();
 			a.setAlertType(AlertType.ERROR);
@@ -344,7 +342,6 @@ public class GameAnswerController implements Initializable {
 				Thread.sleep(1000);
 				total_time--;
 			}
-			// TODO Auto-generated method stub
 			return null;
 		}
 		@Override
@@ -356,6 +353,7 @@ public class GameAnswerController implements Initializable {
 		        }
 		 }
 	};
+	
 	/**
 	 * Add property change listener to the worker so that we can update the GUI
 	 */
@@ -363,7 +361,6 @@ public class GameAnswerController implements Initializable {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
 			
-			// TODO Auto-generated method stub
 			if("progress"==evt.getPropertyName()){			// During the progress update the GUI
 				
                 int progress = (Integer)evt.getNewValue();
