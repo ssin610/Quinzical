@@ -67,7 +67,11 @@ public class ClueGridController implements Initializable {
 	
 
 	private int sumValues;
-
+	
+	/**
+	 * Initialize this controller by setting the relevant FXML elements
+	 * and their values
+	 */
 	public void initialize(URL url, ResourceBundle rb) {
 		resetText.setVisible(false);
 		reset.setVisible(false);
@@ -123,7 +127,7 @@ public class ClueGridController implements Initializable {
 	 * Randomly select clues from the list of categories selected and display them on the
 	 * clue grid
 	 * @param categoryFolder the list of categories
-	 * @param category 
+	 * @param category the category for which we want to display clues
 	 */
 	public void selectedAndDisplayCluesFromCBS(File[] categoryFolder, String category) {
 
@@ -265,9 +269,9 @@ public class ClueGridController implements Initializable {
 	}
 
 	/**
-	 * Split the string into 3 parts
-	 * 
-	 * @param question the question
+	 * Split the question string into 3 parts to split the
+	 * clue, 'What/Who is' part, and answer
+	 * @param question the question that needs to be split
 	 */
 	public void trimString(String question) {
 		try {
@@ -287,9 +291,20 @@ public class ClueGridController implements Initializable {
 			a.setContentText("Please check the question format");
 		}
 	}
-
-	public void addButton(String text, Boolean lowest, String question, String answer, String bracket, String category) {
-		Button button = new Button("$" + text);
+	
+	/**
+	 * Add a button to the clue grid containing the dollar value of the clue as
+	 * text. Also set the appropriate clue fields in the game answer controller
+	 * for when each button is pressed
+	 * @param value the dollar value of the clue
+	 * @param lowest whether this clue has the lowest value
+	 * @param question the question
+	 * @param answer the answer to the question
+	 * @param bracket the 'What/Who is' part of the question
+	 * @param category the category the clue belongs to
+	 */
+	public void addButton(String value, Boolean lowest, String question, String answer, String bracket, String category) {
+		Button button = new Button(value);
 		button.setPrefSize(190, 80);
 		button.setFont(Font.font("System", FontWeight.BOLD, 25));
 		button.setStyle("-fx-background-color: #ffc100; ");
@@ -304,7 +319,7 @@ public class ClueGridController implements Initializable {
 				// set the respective fields of the question for the game answering scene
 				GameAnswerController.setQuestion(question);
 				GameAnswerController.setAnswer(answer);
-				GameAnswerController.setValue(Integer.valueOf(text));
+				GameAnswerController.setValue(Integer.valueOf(value));
 				GameAnswerController.setBracket(bracket);
 				GameAnswerController.setCategory(category);
 				onQuestionButtonPushed(event); // send the event to the buttons event handler
@@ -317,7 +332,11 @@ public class ClueGridController implements Initializable {
 	public static void setCheckBoxes(ArrayList<CheckBox> checkboxes) {
 		cbs = checkboxes;
 	}
-
+	
+	/**
+	 * Called when the user clicks one of the buttons containing a clue.
+	 * They are then taken to the answering scene for that particular clue
+	 */
 	public void onQuestionButtonPushed(ActionEvent event) {
 		Parent viewParent;
 		try {
@@ -337,7 +356,11 @@ public class ClueGridController implements Initializable {
 			a.setContentText("Please restart the game");
 		}
 	}
-
+	
+	/**
+	 * Called when the user presses the main menu button.
+	 * This method changes the scene to the main menu
+	 */
 	public void onMainMenuPushed(ActionEvent event){
 		Parent viewParent;
 		try {
@@ -358,7 +381,8 @@ public class ClueGridController implements Initializable {
 	}
 
 	/**
-	 * Called when the game is completed
+	 * Called when the game is completed and the user presses
+	 * the 'reward screen' button
 	 */
 	public void onResetPushed(ActionEvent event){
 		Parent viewParent;

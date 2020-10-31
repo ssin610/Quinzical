@@ -18,7 +18,12 @@ import main.Main;
 public class MainMenuController {
 
 	Alert a = new Alert(AlertType.NONE);
-
+	
+	/**
+	 * Called when the user presses the game mode button. Depending on whether
+	 * the user has chosen their 5 categories or not, they are directed to 
+	 * the relevant screen
+	 */
 	public void onGameModePushed(ActionEvent event) {
 		try {
 
@@ -43,10 +48,14 @@ public class MainMenuController {
 			a.setContentText("Please check the file arrangment");
 		}
 	}
-
-	public void onPracticeModePushed(ActionEvent event) {
+	
+	/**
+	 * Called when the user presses the practise mode button. The user
+	 * is then directed to the practise start scene
+	 */
+	public void onPractiseModePushed(ActionEvent event) {
 		try {
-			Parent viewParent = FXMLLoader.load(getClass().getResource("../view/PracticeStart.fxml"));
+			Parent viewParent = FXMLLoader.load(getClass().getResource("../view/PractiseStart.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
@@ -62,7 +71,11 @@ public class MainMenuController {
 			a.setContentText("Please check the file arrangment");
 		}
 	}
-
+	
+	/**
+	 * Called when the user presses the reset button. The user
+	 * is then directed to the reset scene
+	 */
 	public void onResetPushed(ActionEvent event){
 		Parent viewParent;
 		try {
@@ -81,7 +94,12 @@ public class MainMenuController {
 			a.setContentText("Please restart the game");
 		}
 	}
-
+	
+	/**
+	 * Called when the user presses the help button. A dialog box
+	 * then pops up indicating that they should read the user manual
+	 * if they have any queries about the app
+	 */
 	public void onHelpPushed(ActionEvent event){
 		// show alert
 		a.setAlertType(AlertType.INFORMATION);
@@ -94,7 +112,11 @@ public class MainMenuController {
 		// show the dialog
 		a.show();
 	}
-
+	
+	/**
+	 * Called when the user presses the exit button. This leads
+	 * to the stop method in Main
+	 */
 	public void onExit() {
 		Platform.exit();
 	}

@@ -15,6 +15,10 @@ public class HomeController {
 
     Alert a = new Alert(AlertType.NONE);
     
+    /**
+	 * Called when the user presses the play button. They
+	 * are then taken to the main menu
+	 */
     public void onMainMenuPushed(ActionEvent event) 
     {
         Parent viewParent;

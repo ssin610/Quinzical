@@ -21,7 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
-public class PracticeAnswerController implements Initializable {
+public class PractiseAnswerController implements Initializable {
 
 	@FXML
 	Button submit_button;
@@ -59,11 +59,15 @@ public class PracticeAnswerController implements Initializable {
 	private static String _answer = ""; // What is displayed to the user
 	private static String _hint;
 	private static String _bracket="         ";
-	private Thread _audioThread;
+
 	private int _chance = 3;
 	private String _speed = "0";
 	Alert a = new Alert(AlertType.NONE);
-
+	
+	/**
+	 * Initialize this controller by setting the relevant FXML elements
+	 * and their values
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		back_button.setDisable(true);
@@ -83,7 +87,7 @@ public class PracticeAnswerController implements Initializable {
 	}
 
 	/**
-	 * Use spd-say to speak & in the worker thread
+	 * Use spd-say to speak using the worker thread
 	 * @param sentence the sentence to speak
 	 */
 	public void speak(String sentence) {
@@ -106,13 +110,21 @@ public class PracticeAnswerController implements Initializable {
 		};
 		thread.setName("thread1");
 		thread.start();
-		_audioThread=thread;
+	
 	}
-
+	
+	/**
+	 * Called when the user presses the replay button.
+	 * This method speaks the clue again
+	 */
 	public void onReplayPushed(ActionEvent event) {
 		speak(_answer);
 	}
-
+	
+	/**
+	 * Called when the user presses the main menu button.
+	 * This method changes the scene to the main menu 
+	 */
 	public void onMainMenuPushed(ActionEvent event) {
 		speak(" "); // To prevent the audio keep playing after going back to the menu
 		try {
@@ -122,9 +134,7 @@ public class PracticeAnswerController implements Initializable {
 			window.setScene(viewScene);
 			window.setResizable(false);
 			window.show();
-			if(_audioThread != null) {
-				_audioThread.stop();//Stop aduio thread when exit
-			}
+		
 		} catch (IOException e) {
 			
 			a.setAlertType(AlertType.ERROR);
@@ -134,8 +144,12 @@ public class PracticeAnswerController implements Initializable {
 			a.setContentText("Please restart the game");
 		}
 	}
+	
 	/**
-	 * Replace macrons in Strings with normal letter lowercased
+	 * Replace macrons in the users answer with normal letters. This normalizes
+	 * the user input so it can be evaluated correctly taking into account macrons@
+	 * @param text the user answer to normalize
+	 * @return the normalized text
 	 */
 	public String normal(String text) {
 		String[] macrons = new String[] {"ā","ē","ī","ō","ū","Ā","Ē","Ī","Ō","Ū"};
@@ -151,10 +165,10 @@ public class PracticeAnswerController implements Initializable {
 	};
 	
 	/**
-	 * Refactor the String, so that all non alphabetic char are removed
-	 * Leading a/the/an is also removed
-	 * @param text
-	 * @return
+	 * Perform input normalization on the users answer so that all non alphabetic 
+	 * characters are removed and leading a/the/an are also removed
+	 * @param text the user answer to normalize
+	 * @return the normalized text
 	 */
 	public String refineString(String text) {
 		// Remove any symbols but not /
@@ -173,6 +187,11 @@ public class PracticeAnswerController implements Initializable {
 		return text;
 	}
 	
+	/**
+	 * Called when the user presses the submit button.
+	 * This method normalizes and then evaluates the user answer and performs actions based on
+	 * whether the answer is correct or not
+	 */
 	public void onSubmitButtonPushed() {
 		//Normalize 2 Strings to get rid of macrons
 		String input = normal(user_input.getText().trim()).toLowerCase();
@@ -224,6 +243,10 @@ public class PracticeAnswerController implements Initializable {
 		
 	}
 	
+	/**
+	 * This method gets called when the user presses enter to submit their
+	 * question rather than pressing the submit button
+	 */
 	public void onEnterKeyPressed(ActionEvent event) {
 		if (clicked == false) {
 			onSubmitButtonPushed();
@@ -232,7 +255,7 @@ public class PracticeAnswerController implements Initializable {
 	}
 
 	/**
-	 * Set the fields which contain information about the question
+	 * Set the relevant fields which contain information about the question
 	 */
 	public void setStrings(String answer, String question, String bracket) {
 		_answer = answer;
@@ -243,7 +266,8 @@ public class PracticeAnswerController implements Initializable {
 	}
 
 	/**
-	 * Perform splitting and trimming to get the hint to display to the user
+	 * Perform splitting and trimming on the question string to get the hint 
+	 * to display to the user
 	 * @param hint the string to perform formatting on
 	 * @return the hint
 	 */

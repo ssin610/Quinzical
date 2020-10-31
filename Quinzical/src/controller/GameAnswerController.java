@@ -90,12 +90,16 @@ public class GameAnswerController implements Initializable {
 	private static String category; 
 	private static int value;
 	private int total_time;
-	private Thread _audioThread;
+
 	private String _speed = "0";
 	Alert a = new Alert(AlertType.NONE);
 
 	private boolean clicked=false;
-
+	
+	/**
+	 * Initialize this controller by setting the relevant FXML elements
+	 * and their values
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		back_button.setDisable(true);
@@ -116,7 +120,7 @@ public class GameAnswerController implements Initializable {
 	}
 	
 	/**
-	 * Set the sound effect and ready to be played
+	 * Play a celebratory sound when the user gets a question correct
 	 */
 	public void playSound() {
 		String cmd = "./aha.sh>/dev/null 2>&1";
@@ -133,7 +137,7 @@ public class GameAnswerController implements Initializable {
 	}
 //	
 	/**
-	 * Set the gif and ready to be show
+	 * Show the celebratory gif when the user gets a question correct
 	 */
 	public void setGif() {
 		//Set the gif 
@@ -144,9 +148,10 @@ public class GameAnswerController implements Initializable {
 	}
 	
 	/**
-	 * Including the gif and cash in sound effect as an reward if answered correctly
+	 * Show the celebratory gif and play the sound effect when the user gets
+	 * a question correct
 	 */
-	public void ahaMoment() {
+	public void reward() {
 		//Set the sound Effect
 		playSound();
 		//Start the gifs
@@ -156,7 +161,7 @@ public class GameAnswerController implements Initializable {
 	}
 
 	/**
-	 * Use spd-say to speak & in the worker thread
+	 * Use spd-say to speak the sentence using a worker thread
 	 * @param sentence the sentence to speak
 	 */
 	public void speak(String sentence) {
@@ -179,16 +184,29 @@ public class GameAnswerController implements Initializable {
 		};
 		thread.setName("thread1");
 		thread.start();
-		_audioThread=thread;
+	
 	}
-
+	
+	/**
+	 * Called when the user presses the replay button.
+	 * This method speaks the clue again
+	 */
 	public void replay(ActionEvent event) {
 		speak(question);
 	}
+	
+	/**
+	 * Called when the user presses the show text button.
+	 * A label containing the question then appears on the screen
+	 */
 	public void showText(ActionEvent event) {
 		question_label.setVisible(true);
 	}
-
+	
+	/**
+	 * Called when the user presses the main menu button.
+	 * This method changes the scene to the main menu 
+	 */
 	public void onMainMenuPushed(ActionEvent event) {
 		speak(" "); // To prevent the audio keep playing after going back to the menu
 		try {
@@ -198,7 +216,7 @@ public class GameAnswerController implements Initializable {
 			window.setScene(viewScene);
 			window.setResizable(false);
 			window.show();
-			_audioThread.stop(); //Stop audio playing
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			a.setAlertType(AlertType.ERROR);
@@ -208,11 +226,12 @@ public class GameAnswerController implements Initializable {
 			a.setContentText("Please restart the game");
 		}
 	}
+	
 	/**
-	 * Refactor the String, so that all non alphabetic char are removed
-	 * Leading a/the/an is also removed
-	 * @param text
-	 * @return
+	 * Perform input normalization on the users answer so that all non alphabetic 
+	 * characters are removed and leading a/the/an are also removed
+	 * @param text the user answer to normalize
+	 * @return the normalized text
 	 */
 	public String refineString(String text) {
 		// Remove any symbols but not /
@@ -231,6 +250,11 @@ public class GameAnswerController implements Initializable {
 		return text;
 	}
 	
+	/**
+	 * Called when the user presses the submit button.
+	 * This method normalizes and then evaluates the user answer and performs actions based on
+	 * whether the answer is correct or not
+	 */
 	@FXML
 	public void onSubmitButtonPushed() {
 		clicked=true;
@@ -241,7 +265,7 @@ public class GameAnswerController implements Initializable {
 		
 		// Only allow when equal or input contains answer
 		if (input.equalsIgnoreCase(normalizedanswer) || input.contains(normalizedanswer)) {
-			ahaMoment();
+			reward();
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
 			speak("Correct!");
@@ -255,7 +279,7 @@ public class GameAnswerController implements Initializable {
 			
 		// If answer has multiple answer which is not expected
 		}else if (answer.contains("/") && normalizedanswer.contains(input) && input!="" ) { 
-			ahaMoment();
+			reward();
 			hint_label.setVisible(true);
 			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
 			speak("Correct!");
@@ -283,7 +307,12 @@ public class GameAnswerController implements Initializable {
 		worker.cancel(true); //Stop count down
 		
 	}
-
+	
+	/**
+	 * Called when the user presses the don't know button.
+	 * This counts as getting the question wrong, so the 
+	 * appropriate actions are taken
+	 */
 	public void onDontKnowPushed(ActionEvent event) {
 		clicked=true;
 		hint_label.setVisible(true);
@@ -300,6 +329,10 @@ public class GameAnswerController implements Initializable {
 		worker.cancel(true); //Stop count down
 	}
 	
+	/**
+	 * This method gets called when the user presses enter to submit their
+	 * question rather than pressing the submit button
+	 */
 	public void onEnterKeyPressed(ActionEvent event) {
 		if (clicked == false) {
 			onSubmitButtonPushed();
@@ -308,7 +341,7 @@ public class GameAnswerController implements Initializable {
 	}
 	
 	/**
-	 * Begin the count down
+	 * Begin the timer count down for the question
 	 */
 	public void countdown() {
 		total_time=40;
@@ -317,7 +350,10 @@ public class GameAnswerController implements Initializable {
 	}
 	
 	/**
-	 * Replace macrons in Strings with normal letter lowercased
+	 * Replace macrons in the users answer with normal letters. This normalizes
+	 * the user input so it can be evaluated correctly taking into account macrons
+	 * @param text the user answer to normalize
+	 * @return the normalized text
 	 */
 	public String normal(String text) {
 		String[] macrons = new String[] {"ā","ē","ī","ō","ū","Ā","Ē","Ī","Ō","Ū"};
@@ -333,7 +369,7 @@ public class GameAnswerController implements Initializable {
 	};
 	
 	/**
-	 * Create a swing worker to do the count down
+	 * Create a swing worker to do the count down for each question
 	 */
 	SwingWorker<Integer,Integer> worker = new SwingWorker<Integer,Integer>(){
 		@Override
@@ -356,8 +392,10 @@ public class GameAnswerController implements Initializable {
 		        }
 		 }
 	};
+	
 	/**
-	 * Add property change listener to the worker so that we can update the GUI
+	 * Add property change listener to the worker so that the GUI can be updated
+	 * according to the timer
 	 */
 	PropertyChangeListener listener = new PropertyChangeListener() {
 		@Override
@@ -406,22 +444,37 @@ public class GameAnswerController implements Initializable {
 		}
 	};
 	
+	/**
+	 * Set the question
+	 */
 	public static void setQuestion(String questionString) {
 		question = questionString;
 	}
-
+	
+	/**
+	 * Set the answer to the question
+	 */
 	public static void setAnswer(String answerString) {
 		answer = answerString;
 	}
 
+	/**
+	 * Set the dollar value of the clue
+	 */
 	public static void setValue(int valueInt) {
 		value = valueInt;
 	}
-
+	
+	/**
+	 * Set the 'What/Who is' part of the clue
+	 */
 	public static void setBracket(String bracketString) {
 		bracket = bracketString;
 	}
 	
+	/**
+	 * Set the category the clue belongs to
+	 */
 	public static void setCategory(String categoryString) {
 		category = categoryString;
 	}

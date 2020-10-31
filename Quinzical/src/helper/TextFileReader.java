@@ -9,7 +9,12 @@ import java.util.List;
 
 // helper class to read from files when starting game
 public class TextFileReader {
-
+	
+	/**
+	 * Read from a file the saved game data so that progress
+	 * can be retained
+	 * @param file the name of the file to read data from
+	 */
 	public List<String> read(File file) {
 		List<String> lines = new ArrayList<String>();
 		String line;

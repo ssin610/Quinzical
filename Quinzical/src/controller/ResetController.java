@@ -28,7 +28,11 @@ public class ResetController implements Initializable {
     Text beatenText;
 
     Alert a = new Alert(AlertType.NONE);
-  
+    
+    /**
+	 * Initialize this controller by setting the relevant FXML elements
+	 * and their values
+	 */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         resetText.setText("You have winnings of $" + Main.getWinnings() + "! Do you want to reset the game?");
@@ -52,7 +56,12 @@ public class ResetController implements Initializable {
         }
         
     }
-
+    
+    /**
+	 * Called when the user presses the confirm reset button. This method
+	 * resets all fields back to their original state and also deletes
+	 * the files containing saved data
+	 */
     public void onYesButton(ActionEvent event) {
         Main.setWinnings(0);
         Main.addAnsweredQuestion(null);
@@ -89,11 +98,15 @@ public class ResetController implements Initializable {
         }
 
     }
-
+    
+    /**
+	 * Called when the user doesn't want to reset the game. This method
+	 * then simply returns the user back to the main menu
+	 */
     public void onNoButton(ActionEvent event) {
 
         try {
-            Parent viewParent = FXMLLoader.load(getClass().getResource("../view/Home.fxml"));
+            Parent viewParent = FXMLLoader.load(getClass().getResource("../view/MainMenu.fxml"));
             Scene viewScene = new Scene(viewParent);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(viewScene);

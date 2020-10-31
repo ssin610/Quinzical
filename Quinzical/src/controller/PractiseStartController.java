@@ -41,7 +41,11 @@ public class PractiseStartController implements Initializable {
 	String bracket;
 
 	Alert a = new Alert(AlertType.NONE);
-
+	
+	/**
+	 * Initialize this controller by setting the relevant FXML elements
+	 * and their values
+	 */
 	public void initialize(URL url, ResourceBundle rb) {
 
 		cats.clear();
@@ -63,9 +67,9 @@ public class PractiseStartController implements Initializable {
 	}
 
 	/**
-	 * Split the string into 3 parts
-	 * 
-	 * @param question the question
+	 * Split the question string into 3 parts to split the
+	 * clue, 'What/Who is' part, and answer
+	 * @param question the question that needs to be split
 	 */
 	public void trimString(String question) {
 		try {
@@ -86,24 +90,23 @@ public class PractiseStartController implements Initializable {
 	}
 
 	/**
-	 * Return name of the file
-	 * 
-	 * @param filename the file to read
+	 * Return the name of the file given as input
+	 * @param file the file to read
 	 * @return the file's name
 	 */
-	public static String getFileNameNoEx(String filename) {
-		if ((filename != null) && (filename.length() > 0)) {
-			int dot = filename.lastIndexOf('.');
-			if ((dot > -1) && (dot < (filename.length()))) {
-				return filename.substring(0, dot);
+	public static String getFileNameNoEx(String file) {
+		if ((file != null) && (file.length() > 0)) {
+			int dot = file.lastIndexOf('.');
+			if ((dot > -1) && (dot < (file.length()))) {
+				return file.substring(0, dot);
 			}
 		}
-		return filename;
+		return file;
 	}
 
 	/**
-	 * Read lines in the selected category
-	 * 
+	 * Read lines in the selected category and add this to the
+	 * questions array
 	 * @throws IOException
 	 */
 	public void readSelectedfile() throws IOException {
@@ -138,8 +141,8 @@ public class PractiseStartController implements Initializable {
 	}
 
 	/**
-	 * Read files and store to the categories list
-	 * 
+	 * This method reads files from the cat folder and then stores
+	 * them in the categories list
 	 * @throws IOException
 	 */
 	public void readfile() throws IOException {
@@ -156,7 +159,12 @@ public class PractiseStartController implements Initializable {
 		}
 
 	}
-
+	
+	/**
+	 * Called when the user presses the start practise button.
+	 * This method then switches the scene to the question answering
+	 * scene and passes the relevant question parameters to the controller
+	 */
 	public void onStartPushed(ActionEvent event) {
 		if (cat_choice.getSelectionModel().getSelectedItem() != null) {
 			// Get the current stage
@@ -174,13 +182,13 @@ public class PractiseStartController implements Initializable {
 			// Open new winodw start the game
 			try {
 				// Pass parameter across
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/PracticeAnswer.fxml"));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/PractiseAnswer.fxml"));
 				loader.load();
-				PracticeAnswerController controller = loader.getController();
+				PractiseAnswerController controller = loader.getController();
 				// Pass value to the next page
 				controller.setStrings(showtext, answer, bracket);
 				// Load GUI process
-				AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("../view/PracticeAnswer.fxml"));
+				AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("../view/PractiseAnswer.fxml"));
 				Scene scene = new Scene(root);
 				Stage secondStage = new Stage();
 				secondStage.setScene(scene);

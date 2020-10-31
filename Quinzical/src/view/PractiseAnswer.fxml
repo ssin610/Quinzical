@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #1f1f1f; -fx-border-width: 8; -fx-border-color: #ffa31a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PracticeAnswerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #1f1f1f; -fx-border-width: 8; -fx-border-color: #ffa31a;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PractiseAnswerController">
    <children>
       <Label fx:id="question_label" alignment="CENTER" layoutX="84.0" layoutY="145.0" prefHeight="107.0" prefWidth="1166.0" text="1" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>

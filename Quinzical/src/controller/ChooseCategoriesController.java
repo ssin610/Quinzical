@@ -42,7 +42,10 @@ public class ChooseCategoriesController implements Initializable {
 	ArrayList<CheckBox> cbs = new ArrayList<CheckBox>();
 	Alert a = new Alert(AlertType.NONE);
 
-
+	/**
+	 * Initialize this controller by setting the relevant FXML elements
+	 * and their values
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -66,9 +69,8 @@ public class ChooseCategoriesController implements Initializable {
 	}
 
 	/**
-	 * Randomly select categories and clues from the list and display them on the
-	 * clue grid
-	 * 
+	 * Display each category as a checkbox for the user to select.
+	 * The user must select 5 categories
 	 * @param categoryFolder the list of categories
 	 */
 	public void displayCategories(File[] categoryFolder) {
@@ -109,7 +111,11 @@ public class ChooseCategoriesController implements Initializable {
 		}
 
 	}
-
+	
+	/**
+	 * Check whether the user has selected 5 categories.
+	 * Disable/enable the checkboxes accordingly
+	 */
 	public void checkIfContinue() {
 		if (counter == 5) {
 			cont.setVisible(true);
@@ -127,6 +133,10 @@ public class ChooseCategoriesController implements Initializable {
 		}
 	}
 
+	/**
+	 * Called when the user presses the main menu button.
+	 * This method changes the scene to the main menu 
+	 */
 	public void onMainMenuPushed(ActionEvent event) {
 		try {
 			Parent viewParent = FXMLLoader.load(getClass().getResource("../view/MainMenu.fxml"));
@@ -144,7 +154,11 @@ public class ChooseCategoriesController implements Initializable {
 			a.setContentText("Please restart the game");
 		}
 	}
-
+	
+	/**
+	 * Called when the user selects 5 categories and then presses
+	 * the continue button. The scene then changes to the clue grid
+	 */
 	public void onContinuePushed(ActionEvent event) {
 		ArrayList<CheckBox> selectedcbs = new ArrayList<CheckBox>();
 		for (CheckBox cb : cbs) {
