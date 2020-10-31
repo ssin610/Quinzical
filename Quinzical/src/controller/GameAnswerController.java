@@ -27,6 +27,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.control.Alert.AlertType;
@@ -301,6 +303,13 @@ public class GameAnswerController implements Initializable {
 		winnings.setText("Winnings: $" + Integer.toString(Main.getWinnings()));
 		textshow_button.setDisable(true);
 		worker.cancel(true); //Stop count down
+	}
+	
+	public void onEnterKeyPressed(ActionEvent event) {
+		if (clicked == false) {
+			onSubmitButtonPushed();
+		}
+	
 	}
 	
 	/**

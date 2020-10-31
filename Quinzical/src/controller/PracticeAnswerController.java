@@ -19,6 +19,8 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class PracticeAnswerController implements Initializable {
@@ -52,6 +54,8 @@ public class PracticeAnswerController implements Initializable {
 
 	@FXML
 	TextField user_input;
+	
+	private boolean clicked=false;
 
 	private static String _question; // What is expected from the user
 	private static String _answer = ""; // What is displayed to the user
@@ -171,7 +175,7 @@ public class PracticeAnswerController implements Initializable {
 		return text;
 	}
 	
-	public void onSubmitButtonPushed(ActionEvent event) {
+	public void onSubmitButtonPushed() {
 		//Normalize 2 Strings to get rid of macrons
 		String input = normal(user_input.getText().trim()).toLowerCase();
 		String normalizedanswer = normal(_question.trim()).toLowerCase();
@@ -220,6 +224,13 @@ public class PracticeAnswerController implements Initializable {
 			}
 		}
 		
+	}
+	
+	public void onEnterKeyPressed(ActionEvent event) {
+		if (clicked == false) {
+			onSubmitButtonPushed();
+		}
+	
 	}
 
 	/**
