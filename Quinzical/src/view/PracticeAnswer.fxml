@@ -28,7 +28,7 @@
          </font>
       </Label>
       <TextField fx:id="user_input" layoutX="532.0" layoutY="318.0" onAction="#onEnterKeyPressed" prefHeight="39.0" prefWidth="263.0" />
-      <Label fx:id="hint_label" alignment="CENTER" layoutX="60.0" layoutY="382.0" prefHeight="28.0" prefWidth="991.0" text="HINT" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" visible="false" wrapText="true">
+      <Label fx:id="hint_label" alignment="CENTER" layoutX="60.0" layoutY="382.0" prefHeight="28.0" prefWidth="1202.0" text="HINT" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" visible="false" wrapText="true">
          <font>
             <Font name="Comic Sans MS Bold" size="20.0" />
          </font>

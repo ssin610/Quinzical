@@ -18,8 +18,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-
-import application.Main;
+import main.Main;
 
 public class ResetController implements Initializable {
 
@@ -74,7 +73,7 @@ public class ResetController implements Initializable {
      
 
         try {
-            Parent viewParent = FXMLLoader.load(getClass().getResource("view/MainMenu.fxml"));
+            Parent viewParent = FXMLLoader.load(getClass().getResource("../view/MainMenu.fxml"));
             Scene viewScene = new Scene(viewParent);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(viewScene);
@@ -94,7 +93,7 @@ public class ResetController implements Initializable {
     public void onNoButton(ActionEvent event) {
 
         try {
-            Parent viewParent = FXMLLoader.load(getClass().getResource("view/Home.fxml"));
+            Parent viewParent = FXMLLoader.load(getClass().getResource("../view/Home.fxml"));
             Scene viewScene = new Scene(viewParent);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(viewScene);

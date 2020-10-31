@@ -176,13 +176,13 @@ public class PracStartController implements Initializable {
 			// Open new winodw start the game
 			try {
 				// Pass parameter across
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("view/PracticeAnswer.fxml"));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/PracticeAnswer.fxml"));
 				loader.load();
 				PracticeAnswerController controller = loader.getController();
 				// Pass value to the next page
 				controller.setStrings(showtext, answer, bracket);
 				// Load GUI process
-				AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("view/PracticeAnswer.fxml"));
+				AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("../view/PracticeAnswer.fxml"));
 				Scene scene = new Scene(root);
 				Stage secondStage = new Stage();
 				secondStage.setScene(scene);

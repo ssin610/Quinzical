@@ -34,7 +34,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.control.Alert.AlertType;
 
 import javafx.stage.Stage;
-import application.Main;
+import main.Main;
 
 public class GameAnswerController implements Initializable {
 
@@ -197,7 +197,7 @@ public class GameAnswerController implements Initializable {
 	public void onMainMenuPushed(ActionEvent event) {
 		speak(" "); // To prevent the audio keep playing after going back to the menu
 		try {
-			Parent viewParent = FXMLLoader.load(getClass().getResource("view/ClueGrid.fxml"));
+			Parent viewParent = FXMLLoader.load(getClass().getResource("../view/ClueGrid.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);

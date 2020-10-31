@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 
-import application.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import main.Main;
 
 
 public class MainMenuController {
@@ -23,10 +23,10 @@ public class MainMenuController {
 
 			Parent viewParent;
 			if (Main.getRandom()) {
-				viewParent = FXMLLoader.load(getClass().getResource("view/ChooseCategories.fxml"));
+				viewParent = FXMLLoader.load(getClass().getResource("../view/ChooseCategories.fxml"));
 			}
 			else {
-				viewParent = FXMLLoader.load(getClass().getResource("view/ClueGrid.fxml"));
+				viewParent = FXMLLoader.load(getClass().getResource("../view/ClueGrid.fxml"));
 			}
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -45,7 +45,7 @@ public class MainMenuController {
 
 	public void onPracticeModePushed(ActionEvent event) {
 		try {
-			Parent viewParent = FXMLLoader.load(getClass().getResource("view/PracticeStart.fxml"));
+			Parent viewParent = FXMLLoader.load(getClass().getResource("../view/PracticeStart.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
@@ -65,7 +65,7 @@ public class MainMenuController {
 	public void onResetPushed(ActionEvent event){
 		Parent viewParent;
 		try {
-			viewParent = FXMLLoader.load(getClass().getResource("view/Reset.fxml"));
+			viewParent = FXMLLoader.load(getClass().getResource("../view/Reset.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);

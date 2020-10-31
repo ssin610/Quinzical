@@ -1,15 +1,11 @@
-package application;
+package main;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Set;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -36,7 +32,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("view/Home.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("../view/Home.fxml"));
 			primaryStage.setTitle("Quinzical");
 			primaryStage.setScene(new Scene(root, 1300, 700));
 			primaryStage.setResizable(false);
