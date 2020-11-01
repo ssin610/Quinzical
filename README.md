@@ -1,41 +1,40 @@
 	   
 # Run the game (You can choose any method to excute)
-(Recommanded: 1) Open the terminal and type the following line:
+(1) Open the terminal in the SE206 Project folder and type the following line:
 			./run
 
 (2) Go into the Quinzical/ folder and then excute the run.sh
 	Please type ./run.sh in the terminal in Quinzical/
 
 # Important
-In your first play, the game will lag a little bit, due to setting resources and file readings.
-We Thank you for your paitient!	
-
-
+In your first play through, the game may lag a little due to setting resources and reading files.
+We thank you for your patience!
 
 # File setup
 
-assignment-3-and-project-team-01/
+SE206 Project/
 
-	--- README.md 	(Instructions about the game, PLEASE READ IT !!!)
+	--- User Manual.pdf 	(Instructions about the game, PLEASE READ IT !!!)
 	
-	--- run	(To excute the game, run this bash script)
+	--- README.md 	
+	
+	--- run	(To start the app, run this bash script)
 	
 	--- Quinzical/ (The main game source folder, PLEASE DO NOT DELETE ANY FILE IN HERE!!!)
-		----- backup/		(All question files as backup)
- 	   	----- bin/
- 	   	----- cat/ 		(Please Put all question txt files in this folder, following the same formate as the original files)
+ 	   	----- cat/ 		(Please put all question txt files in this folder, following the same format as the original files. Ensure there is an 'International' file)
  	   	----- src/		(All project code is in this folder)
- 	   	----- build.fxbuild	
- 	   	----- run.sh 		(Run this script can excute the game)
+ 	   	----- run.sh 		(Run this script to execute the game)
+		----- aha.sh 		(Sound effect used in the game)
+		----- Quinzical.jar (Contains the app which gets executed by the script)
  	   	----- (All other files generated during the game are not recommanded to be modified)
 
  	   
-# Troubleshoot
+# Troubleshooting
 
 - Error Messeage: bash: ./run: Permission denied
 	Please open the terminal and type: chmod +x run
 
-- If the game cannot start properly, please open the run.sh in Qunzical/ and do the following:
+- If the game cannot start properly, please open the run.sh in Quinzical/ and do the following:
 	Change the following line:
 		java --module-path /usr/share/java/lib --add-modules javafx.controls,javafx.media,javafx.base,javafx.fxml -jar Quinzical.jar
 	To 
@@ -45,7 +44,7 @@ assignment-3-and-project-team-01/
  - Audio(spd-say) issue:
  	Run command: "sudo apt-get install speech-dispatcher" in the terminal to install spd-say
  	
- - Nothing display (or No response) during the game:
+ - Nothing displayed (or No response) during the game:
  	Please close the game and delete the following files and start the game again
  		Quinzical/addedCategories.txt, 
  		Quinzical/addedQuestions.txt, 
