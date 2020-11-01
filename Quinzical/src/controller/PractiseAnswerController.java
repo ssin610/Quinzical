@@ -2,11 +2,8 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
-import helper.InputNormalization;
-import helper.SoundUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +20,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
+import helper.InputNormalization;
+import helper.SoundUtil;
+
+/**
+ * Controller for the PractiseAnswer scene
+ */
 public class PractiseAnswerController implements Initializable {
 
 	@FXML
@@ -42,7 +45,7 @@ public class PractiseAnswerController implements Initializable {
 
 	@FXML
 	Label hint_label;
-	
+
 	@FXML
 	Label bracketLabel;
 
@@ -54,57 +57,57 @@ public class PractiseAnswerController implements Initializable {
 
 	@FXML
 	TextField user_input;
-	
-	private boolean clicked=false;
 
-	private static String _question; // What is expected from the user
-	private static String _answer = ""; // What is displayed to the user
-	private static String _hint;
-	private static String _bracket="         ";
+	private static String question; // What is expected from the user
+	private static String answer = ""; // What is displayed to the user
+	private static String hint;
+	private static String bracket="         ";
 
-	private int _chance = 3;
-	private String _speed = "0";
-	Alert a = new Alert(AlertType.NONE);
-	
+	private String speed = "0";
+	private int chances = 3;
+	private boolean submitted = false; // track whether the user has pressed the submit button
+
+	private Alert a = new Alert(AlertType.NONE);
+
 	/**
 	 * Initialize this controller by setting the relevant FXML elements
 	 * and their values
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+
 		back_button.setDisable(true);
-		question_label.setText(_answer);
-		chance_left.setText(Integer.toString(_chance));
-//		user_input.setPromptText(_bracket);
-		// Add lisenter to the slider
+		question_label.setText(answer);
+		chance_left.setText(Integer.toString(chances));
+
+		// Add listener to the slider
 		volume_slider.setOnMouseReleased(event -> {
 			int temp = (int) volume_slider.getValue();
-			_speed = Integer.toString(temp);
+			speed = Integer.toString(temp);
 		});
-		
-		int tempendIndex = (_bracket.trim().length())-1;
+
+		int tempendIndex = (bracket.trim().length())-1;
 		if (tempendIndex>=0) {
-			bracketLabel.setText(_bracket.trim().substring(1, tempendIndex)+":");
+			bracketLabel.setText(bracket.trim().substring(1, tempendIndex)+":");
 		}
-		
 	}
 
-	
-	
 	/**
 	 * Called when the user presses the replay button.
 	 * This method speaks the clue again
 	 */
-	public void onReplayPushed(ActionEvent event) {
-		SoundUtil.speak(_answer, _speed, a);
+	public void onReplayPushed() {
+		SoundUtil.speak(answer, speed, a);
 	}
-	
+
 	/**
 	 * Called when the user presses the main menu button.
 	 * This method changes the scene to the main menu 
 	 */
 	public void onMainMenuPushed(ActionEvent event) {
-		SoundUtil.speak(" ", _speed, a); // To prevent the audio keep playing after going back to the menu
+
+		SoundUtil.speak(" ", speed, a); // Prevents the audio from playing after going back to menu
+
 		try {
 			Parent viewParent = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
 			Scene viewScene = new Scene(viewParent);
@@ -112,90 +115,86 @@ public class PractiseAnswerController implements Initializable {
 			window.setScene(viewScene);
 			window.setResizable(false);
 			window.show();
-		
 		} catch (IOException e) {
-			
+			e.printStackTrace();
+
 			a.setAlertType(AlertType.ERROR);
-			// show the dialog
 			a.show();
 			a.setHeaderText("Fatal Error");
 			a.setContentText("Please restart the game");
 		}
 	}
-	
 
-	
-
-	
 	/**
 	 * Called when the user presses the submit button.
 	 * This method normalizes and then evaluates the user answer and performs actions based on
 	 * whether the answer is correct or not
 	 */
 	public void onSubmitButtonPushed() {
-		//Normalize 2 Strings to get rid of macrons
-		String input = InputNormalization.normal(user_input.getText().trim()).toLowerCase();
-		String normalizedanswer = InputNormalization.normal(_question.trim()).toLowerCase();
-		normalizedanswer = InputNormalization.refineString(normalizedanswer); //Refactor the answer
+
 		
-		// If answer has multiple answer which is not expected
-		if (input.equalsIgnoreCase(normalizedanswer) || input.contains(normalizedanswer) || (_question.contains("/") && normalizedanswer.contains(input))) {
+		//Normalize strings to get rid of macrons
+		String input = InputNormalization.normal(user_input.getText().trim()).toLowerCase();
+		String normalizedanswer = InputNormalization.normal(question.trim()).toLowerCase();
+		normalizedanswer = InputNormalization.refineString(normalizedanswer); // refine the string further
+
+		// If answer has multiple answers
+		if (input.equalsIgnoreCase(normalizedanswer) || input.contains(normalizedanswer) || 
+				(question.contains("/") && normalizedanswer.contains(input))) {
 			hint_label.setVisible(true);
-			hint_label.setText("Correct! The answer was: " + _bracket + " " + _question);
-			SoundUtil.speak("Correct! The answer was: " + _bracket + " " + _question, _speed, a);
+			hint_label.setText("Correct! The answer was: " + bracket + " " + question);
+			SoundUtil.speak("Correct! The answer was: " + bracket + " " + question, speed, a);
 			submit_button.setVisible(false);
 			audio_replay_button.setDisable(true);
 			back_button.setDisable(false);
 			back_button.setVisible(true);
-		
-		
+			submitted = true;
 		} else {
-		
+
 			// IF input is not correct
-			_chance = _chance - 1;
-			chance_left.setText(Integer.toString(_chance));
+			chances = chances - 1;
+			chance_left.setText(Integer.toString(chances));
 			hint_label.setVisible(true);
 			hint_label.setText("Sorry, incorrect!");
 
 			// Compare the chance to see whether finished or show hint
-			if (_chance == 0) { // Game over
+			if (chances == 0) { // Game over
+				submitted = true;
 				hint_label.setVisible(true);
-				hint_label.setText("Incorrect. The correct answer was: " + _bracket + " " + _question);
-				SoundUtil.speak("Incorrect. The correct answer was: " + _bracket + " " + _question, _speed, a);
+				hint_label.setText("Incorrect. The correct answer was: " + bracket + " " + question);
+				SoundUtil.speak("Incorrect. The correct answer was: " + bracket + " " + question, speed, a);
 				submit_button.setVisible(false);
 				audio_replay_button.setDisable(true);
 				back_button.setDisable(false);
 				back_button.setVisible(true);
-				user_input.setText(_question.trim());
+				user_input.setText(question.trim());
 
-			} else if (_chance == 1) { // Show hint
+			} else if (chances == 1) { // Show hint
 				hint_label.setVisible(true);
-				hint_label.setText(_hint);
+				hint_label.setText(hint);
 			}
 		}
-		
 	}
-	
+
 	/**
 	 * This method gets called when the user presses enter to submit their
 	 * question rather than pressing the submit button
 	 */
-	public void onEnterKeyPressed(ActionEvent event) {
-		if (clicked == false) {
+	public void onEnterKeyPressed() {
+		if (submitted == false) {
 			onSubmitButtonPushed();
 		}
-	
 	}
 
 	/**
 	 * Set the relevant fields which contain information about the question
 	 */
-	public void setStrings(String answer, String question, String bracket) {
-		_answer = answer;
-		_question = question.split(",")[0];
-		_bracket = bracket;
-		_hint = "Hint: " + gethint(_question);
-		SoundUtil.speak(_answer, _speed, a);
+	public void setStrings(String answerString, String clue, String bracketString) {
+		answer = answerString;
+		question = clue.split(",")[0];
+		bracket = bracketString;
+		hint = "Hint: " + getHint(question);
+		SoundUtil.speak(answer, speed, a);
 	}
 
 	/**
@@ -204,7 +203,8 @@ public class PractiseAnswerController implements Initializable {
 	 * @param hint the string to perform formatting on
 	 * @return the hint
 	 */
-	public String gethint(String hint) {
+	public String getHint(String hint) {
+
 		String leading = hint.trim().split(" ")[0];
 		if (leading.equalsIgnoreCase("the") || leading.equalsIgnoreCase("a") || leading.equalsIgnoreCase("an")) {
 			String temp = leading + " ";

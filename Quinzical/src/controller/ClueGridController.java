@@ -16,7 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -32,9 +31,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.event.EventHandler;
+
 import helper.GameData;
 import helper.TextFileReader;
 
+/**
+ * Controller for the ClueGrid scene
+ */
 public class ClueGridController implements Initializable {
 
 	@FXML
@@ -49,31 +52,32 @@ public class ClueGridController implements Initializable {
 	@FXML
 	Text resetText;
 
-	// track the x and y positions within the gridpane
-	int index_y = 0;
-	int index_x = 0;
-
-	// track the progress of the game
-	int completedCategoryCounter = 0;
-
 	// store the selected categories
-	private static ArrayList<CheckBox> cbs = new ArrayList<CheckBox>();
+	private static ArrayList<CheckBox> categories = new ArrayList<CheckBox>();
 
 	// store the different parts of a question
-	String showtext;
-	String answer;
-	String bracket;
-	Alert a = new Alert(AlertType.NONE);
+	private String question;
+	private String answer;
+	private String bracket;
 
+	// track the x and y positions within the gridpane
+	private int index_y = 0;
+	private int index_x = 0;
+
+	// track the progress of the game
+	private int completedCategoryCounter = 0;
 	
-
+	// track the max possible score a player can achieve
 	private int sumValues;
-	
+
+	private Alert a = new Alert(AlertType.NONE);
+
 	/**
 	 * Initialize this controller by setting the relevant FXML elements
 	 * and their values
 	 */
 	public void initialize(URL url, ResourceBundle rb) {
+
 		resetText.setVisible(false);
 		reset.setVisible(false);
 		winnings.setText("Winnings: $" + Integer.toString(GameData.getWinnings()));
@@ -81,44 +85,44 @@ public class ClueGridController implements Initializable {
 		File dir = new File("cat"); // get location of categories folder
 		File[] categoryFolder = dir.listFiles();
 		if (categoryFolder != null) {
-			if (GameData.getRandom()) {
-				for (CheckBox cb : cbs) { // iterate through each category
-					selectedAndDisplayCluesFromCBS(categoryFolder, cb.getText());
+			if (GameData.getCatSelected()) {
+				
+				for (CheckBox category : categories) { // iterate through each category, randomly generating and displaying clues
+					selectAndDisplayCluesRandomly(categoryFolder, category.getText());
 				}
-				GameData.setTotalWings(sumValues); // Set and to be used in RestController
-				GameData.setRandom(false); // as the categories and clues have been randomly selected, they do not need to
-				// be randomly selected again
+				
+				GameData.setTotalWinnings(sumValues); 
+				GameData.setCatSelected(false); // as 5 categories have been selected, they do not need to
+												// be selected again
 			} else {
+				// read data from file
 				selectAndDisplayCluesFromFile();
 			}
 
 		} else {
+
 			// the case when the category folder is not found
-			// show alert
 			a.setAlertType(AlertType.ERROR);
-			// show the dialog
 			a.show();
 			a.setHeaderText("File Reading Error");
 			a.setContentText("Please check the file arrangment");
 		}
-
-		if (completedCategoryCounter == 2 && GameData.getInternational() == false) { // when the international section has been unlocked
-			// show alert
+		
+		// when the international section has been unlocked
+		if (completedCategoryCounter == 2 && GameData.getInternational() == false) { 
+	
 			a.setAlertType(AlertType.INFORMATION);
 			a.setHeaderText("Congratulations!");
 			a.setContentText("You have unlocked the international question section!");
-			
 			a.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-		
-			// show the dialog
 			a.show();
-			
-			GameData.setInternational(true);
-			selectedAndDisplayCluesFromCBS(categoryFolder, "International");
 
+			GameData.setInternational(true); // indicate that the international section has been unlocked
+			selectAndDisplayCluesRandomly(categoryFolder, "International"); // add the international section to the list of categories
 		}
-
-		if (completedCategoryCounter == 6) { // when the game has been completed
+		
+		// when the game has been completed
+		if (completedCategoryCounter == 6) { 
 			resetText.setVisible(true);
 			reset.setVisible(true);
 		}
@@ -130,39 +134,43 @@ public class ClueGridController implements Initializable {
 	 * @param categoryFolder the list of categories
 	 * @param category the category for which we want to display clues
 	 */
-	public void selectedAndDisplayCluesFromCBS(File[] categoryFolder, String category) {
-
+	public void selectAndDisplayCluesRandomly(File[] categoryFolder, String category) {
 
 		// arraylist's to store and keep track of which questions have
 		// been randomly selected
 		ArrayList<Integer> addedIndex = new ArrayList<Integer>();
 		ArrayList<String> values = new ArrayList<String>();
 		ArrayList<String> questions = new ArrayList<String>();
-		GameData.addCategory(category);
 		index_y = 0;
+		
+		GameData.addCategory(category);
+		
+		// display the name of the category on the grid
 		Text categoryName = new Text(category.toUpperCase());
 		categoryName.setFont(Font.font("System", FontWeight.BOLD, 20));
 		categoryName.setFill(Color.LIGHTSKYBLUE);
 		grid.add(categoryName, index_x, index_y);
 		GridPane.setHalignment(categoryName, HPos.CENTER);
+		
 		File categoryFile = null;
+		// get the category file corresponding to the category string
 		for (File file : categoryFolder) {
 			if (file.getName().equals(category)) {
 				categoryFile = file;
 			}
 		}
 
-		TextFileReader reader = new TextFileReader();
-		List<String> lines = reader.read(categoryFile);
+		List<String> lines = TextFileReader.read(categoryFile);
 
-		for (int j = 0; j < 5; j++) { // select 5 questions from the category and parse the results,
-			// forming the respective fields
+		for (int j = 0; j < 5; j++) { // randomly select 5 clue from the category and parse the results,
+									// forming the respective fields
 			int randomIndex = ThreadLocalRandom.current().nextInt(0, lines.size());
 
 			while (addedIndex.contains(randomIndex)) { // if the question has already been selected previously
 				randomIndex = ThreadLocalRandom.current().nextInt(0, lines.size());
 			}
-
+			
+			// add the clue and its data to the respective fields
 			String value = lines.get(randomIndex).substring(lines.get(randomIndex).lastIndexOf(',') + 1).trim();
 			values.add(value);
 			questions.add(lines.get(randomIndex));
@@ -178,31 +186,30 @@ public class ClueGridController implements Initializable {
 			}
 		});
 
-		// add each question to the grid under the respective category
+		// add each clue to the grid under the respective category
 		for (int k = 0; k < 5; k++) {
+			
 			index_y++;
-
 			// make sure the user can only click the lowest money value for each category
+			// and then add a button for that clue
 			if (index_y == 1) {
-				GameData.addAddedQuestion(questions.get(k));
+				GameData.addQuestion(questions.get(k));
 				trimString(questions.get(k));
-				addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), true, showtext,
+				addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), true, question,
 						answer, bracket, category); // add it to the board
 			} else {
-				GameData.addAddedQuestion(questions.get(k));
+				GameData.addQuestion(questions.get(k));
 				trimString(questions.get(k));
-				addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), false, showtext,
+				addButton(questions.get(k).substring(questions.get(k).lastIndexOf(',') + 1).trim(), false, question,
 						answer, bracket, category); // add it to the board
 			}
 		}
 		index_x++;
+		
 		// Get the max possible value for a complete game
 		for (String e: values) {
-			int temp = Integer.parseInt(e);
-			sumValues=sumValues+temp;
+			sumValues = sumValues + Integer.parseInt(e);
 		}
-
-
 	}
 
 	/**
@@ -210,7 +217,8 @@ public class ClueGridController implements Initializable {
 	 * display them on the clue grid
 	 */
 	public void selectAndDisplayCluesFromFile() {
-
+		
+		// display the name of the category on the grid
 		for (String category : GameData.getAddedCategories()) {
 			Text categoryName = new Text(category.toUpperCase());
 			categoryName.setFont(Font.font("System", FontWeight.BOLD, 23));
@@ -219,40 +227,47 @@ public class ClueGridController implements Initializable {
 			GridPane.setHalignment(categoryName, HPos.CENTER);
 			index_x++;
 		}
-
+		
 		index_x = 0;
-		// track the amount of valid questions for each of the 5 categories
+		
+		// track the amount of valid questions for each of the categories
 		int[] validQuestionArray = new int[] { 0, 0, 0, 0, 0, 0 };
+		
 		// index counter for the valid question array
 		int k = 0;
 
 		// iterate through each of the selected questions and add them to the
 		// grid if they haven't been answered yet
 		for (int i = 0; i < GameData.getAddedQuestions().size(); i++) {
+			
 			trimString(GameData.getAddedQuestions().get(i));
-
-			if (!(GameData.getAnsweredQuestions().contains(showtext + " - " + GameData.getAddedCategories().get(i/5)))) {
+			if (!(GameData.getAnsweredQuestions().contains(question + " - " + GameData.getAddedCategories().get(i/5)))) {
+				
 				index_y++;
 				trimString(GameData.getAddedQuestions().get(i));
+				
 				// increment array as this is a valid question (hasn't been answered yet)
 				validQuestionArray[k] = validQuestionArray[k] + 1;
+				
 				// make sure the user can only click the lowest money value for each category
 				if (index_y == 1) {
 					addButton(
 							GameData.getAddedQuestions().get(i)
 							.substring(GameData.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
-							true, showtext, answer, bracket, GameData.getAddedCategories().get(i/5)); // add it to the board
+							true, question, answer, bracket, GameData.getAddedCategories().get(i/5)); // add it to the board
 				} else {
 					addButton(
 							GameData.getAddedQuestions().get(i)
 							.substring(GameData.getAddedQuestions().get(i).lastIndexOf(',') + 1).trim(),
-							false, showtext, answer, bracket, GameData.getAddedCategories().get(i/5)); // add it to the board
+							false, question, answer, bracket, GameData.getAddedCategories().get(i/5)); // add it to the board
 				}
 			}
 
 			// after each category's questions have been iterated through, determine whether
-			// that category has a valid question or not
+			// that category has any valid questions or not (every time 'i' reaches a mulitple of 5)
 			if (i == 4 || i == 9 || i == 14 || i == 19 || i == 24 || i == 29) {
+				
+				// show that the category has been completed
 				if (validQuestionArray[k] == 0) {
 					Text complete = new Text("Category complete!");
 					complete.setFont(Font.font("System", FontWeight.BOLD, 25));
@@ -270,15 +285,15 @@ public class ClueGridController implements Initializable {
 	}
 
 	/**
-	 * Split the question string into 3 parts to split the
-	 * clue, 'What/Who is' part, and answer
-	 * @param question the question that needs to be split
+	 * Split the clue string into 3 parts: The question, the 'What/Who is' 
+	 * part, and the answer
+	 * @param clue the clue that needs to be split
 	 */
-	public void trimString(String question) {
+	public void trimString(String clue) {
 		try {
 
-			String temp[] = question.split("\\(");
-			showtext = temp[0].substring(0, temp[0].length() - 2);
+			String temp[] = clue.split("\\(");
+			question = temp[0].substring(0, temp[0].length() - 2);
 			String temp2[] = temp[1].split("\\)");
 			bracket = "(" + temp2[0].trim() + ")";
 			answer = temp2[1].trim().split(",")[0];
@@ -286,13 +301,12 @@ public class ClueGridController implements Initializable {
 		} catch (Exception e) {
 
 			a.setAlertType(AlertType.ERROR);
-			// show the dialog
 			a.show();
 			a.setHeaderText("Question Reading Error");
 			a.setContentText("Please check the question format");
 		}
 	}
-	
+
 	/**
 	 * Add a button to the clue grid containing the dollar value of the clue as
 	 * text. Also set the appropriate clue fields in the game answer controller
@@ -305,43 +319,39 @@ public class ClueGridController implements Initializable {
 	 * @param category the category the clue belongs to
 	 */
 	public void addButton(String value, Boolean lowest, String question, String answer, String bracket, String category) {
+		
 		Button button = new Button("$" + value);
 		button.setPrefSize(190, 80);
 		button.setFont(Font.font("System", FontWeight.BOLD, 25));
 		button.setStyle("-fx-background-color: #ffc100; ");
-		// if the money value isn't the lowest for the category
+		
+		// if the money value isn't the lowest for the category, disable the button
 		if (!lowest) {
 			button.setDisable(true);
 			button.setStyle("-fx-background-color: #ACACAC; ");
 		}
+		
 		button.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) { // when the player selections a clue
-				// set the respective fields of the question for the game answering scene
-				GameAnswerController.setQuestion(question);
-				GameAnswerController.setAnswer(answer);
-				GameAnswerController.setValue(Integer.valueOf(value));
-				GameAnswerController.setBracket(bracket);
-				GameAnswerController.setCategory(category);
+													// set the respective fields of the question for the game answering scene
+				GameAnswerController.setFields(question, answer, bracket, category, Integer.valueOf(value));
 				onQuestionButtonPushed(event); // send the event to the buttons event handler
 			}
 		});
+		
 		grid.add(button, index_x, index_y);
 		GridPane.setHalignment(button, HPos.CENTER);
 	}
 
-	public static void setCheckBoxes(ArrayList<CheckBox> checkboxes) {
-		cbs = checkboxes;
-	}
-	
 	/**
 	 * Called when the user clicks one of the buttons containing a clue.
 	 * They are then taken to the answering scene for that particular clue
 	 */
 	public void onQuestionButtonPushed(ActionEvent event) {
-		Parent viewParent;
+	
 		try {
-			viewParent = FXMLLoader.load(getClass().getResource("/view/GameAnswer.fxml"));
+			Parent viewParent = FXMLLoader.load(getClass().getResource("/view/GameAnswer.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
@@ -350,22 +360,22 @@ public class ClueGridController implements Initializable {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			
 			a.setAlertType(AlertType.ERROR);
-			// show the dialog
 			a.show();
 			a.setHeaderText("Fatal Error");
 			a.setContentText("Please restart the game");
 		}
 	}
-	
+
 	/**
 	 * Called when the user presses the main menu button.
 	 * This method changes the scene to the main menu
 	 */
 	public void onMainMenuPushed(ActionEvent event){
-		Parent viewParent;
+		
 		try {
-			viewParent = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
+			Parent viewParent = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
@@ -373,8 +383,8 @@ public class ClueGridController implements Initializable {
 			window.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+			
 			a.setAlertType(AlertType.ERROR);
-			// show the dialog
 			a.show();
 			a.setHeaderText("Fatal Error");
 			a.setContentText("Please restart the game");
@@ -386,9 +396,9 @@ public class ClueGridController implements Initializable {
 	 * the 'reward screen' button
 	 */
 	public void onResetPushed(ActionEvent event){
-		Parent viewParent;
+
 		try {
-			viewParent = FXMLLoader.load(getClass().getResource("/view/Reset.fxml"));
+			Parent viewParent = FXMLLoader.load(getClass().getResource("/view/Reset.fxml"));
 			Scene viewScene = new Scene(viewParent);
 			Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			window.setScene(viewScene);
@@ -396,11 +406,15 @@ public class ClueGridController implements Initializable {
 			window.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+			
 			a.setAlertType(AlertType.ERROR);
-			// show the dialog
 			a.show();
 			a.setHeaderText("Fatal Error");
 			a.setContentText("Please restart the game");
 		}
+	}
+	
+	public static void setCategories(ArrayList<CheckBox> checkboxes) {
+		categories = checkboxes;
 	}
 }

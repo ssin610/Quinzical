@@ -22,14 +22,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-
 import javafx.stage.Stage;
 
+/**
+ * Controller for the PractiseStart scene
+ */
 public class PractiseStartController implements Initializable {
-
-	// arrays to store categories and questions
-	private List<String> cats = new ArrayList<String>();
-	private List<String> questionsSelected = new ArrayList<String>();
 
 	@FXML
 	Button start_prac_button;
@@ -37,31 +35,34 @@ public class PractiseStartController implements Initializable {
 	@FXML
 	ChoiceBox<String> cat_choice;
 
-	// store the different parts of a question
-	String showtext;
-	String answer;
-	String bracket;
+	// arrays to store categories and questions
+	private List<String> categories = new ArrayList<String>();
+	private List<String> questions = new ArrayList<String>();
 
-	Alert a = new Alert(AlertType.NONE);
+	// store the different parts of a clue
+	private String question;
+	private String answer;
+	private String bracket;
+
+	private Alert a = new Alert(AlertType.NONE);
 
 	/**
 	 * Initialize this controller by setting the relevant FXML elements
 	 * and their values
 	 */
 	public void initialize(URL url, ResourceBundle rb) {
-
-		cats.clear();
-		questionsSelected.clear();
+		
+		categories.clear();
+		questions.clear();
 
 		try {
 			readfile();
-			cat_choice.setItems(FXCollections.observableList(cats));
+			cat_choice.setItems(FXCollections.observableList(categories));
 			cat_choice.setStyle("-fx-font: 18px \"Serif\";");
 		} catch (IOException e) {
 			e.printStackTrace();
-			// Show alert
+
 			a.setAlertType(AlertType.ERROR);
-			// show the dialog
 			a.show();
 			a.setHeaderText("File Reading Error");
 			a.setContentText("Please check the file arrangment");
@@ -69,22 +70,23 @@ public class PractiseStartController implements Initializable {
 	}
 
 	/**
-	 * Split the question string into 3 parts to split the
-	 * clue, 'What/Who is' part, and answer
-	 * @param question the question that needs to be split
+	 * Split the clue string into 3 parts: The question, the 'What/Who is' 
+	 * part, and the answer
+	 * @param clue the question that needs to be split
 	 */
-	public void trimString(String question) {
+	public void trimString(String clue) {
+		
 		try {
-			String temp[] = question.split("\\(");
-			showtext = temp[0].substring(0, temp[0].length() - 2);
+			String temp[] = clue.split("\\(");
+			question = temp[0].substring(0, temp[0].length() - 2);
 			String temp2[] = temp[1].split("\\)");
 			bracket = "(" + temp2[0].trim() + ")";
 			answer = temp2[1].trim();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 
 			a.setAlertType(AlertType.ERROR);
-			// show the dialog
 			a.show();
 			a.setHeaderText("Question Reading Error");
 			a.setContentText("Please check the question format");
@@ -97,30 +99,29 @@ public class PractiseStartController implements Initializable {
 	 * @throws IOException
 	 */
 	public void readSelectedfile() throws IOException {
+		
+		String selectedCat = cat_choice.getSelectionModel().getSelectedItem();
+		String currentPath = System.getProperty("user.dir");
 
-		String selected_cat = cat_choice.getSelectionModel().getSelectedItem();
-		String currentpath = System.getProperty("user.dir");
-
-		File file = new File(currentpath + "/cat/" + selected_cat);
+		File file = new File(currentPath + "/cat/" + selectedCat);
 		if (file.exists()) {
 			FileReader fileReader = new FileReader(file);
 			BufferedReader br = new BufferedReader(fileReader);
 			String lineContent = null;
 			while ((lineContent = br.readLine()) != null) {
-				questionsSelected.add(lineContent);
+				questions.add(lineContent);
 			}
 			br.close();
 			fileReader.close();
-
-
 		}
 
 		try {
-			Collections.shuffle(questionsSelected); // Shuffle the list
-			trimString(questionsSelected.get(0)); // Process the line after shuffle
-		}catch(Exception e) {
+			Collections.shuffle(questions); // Shuffle the list
+			trimString(questions.get(0)); // Process the line after shuffle
+		} catch(Exception e) {
+			e.printStackTrace();
+
 			a.setAlertType(AlertType.ERROR);
-			// show the dialog
 			a.show();
 			a.setHeaderText("File Reading Error");
 			a.setContentText("Please check the question file");
@@ -133,18 +134,17 @@ public class PractiseStartController implements Initializable {
 	 * @throws IOException
 	 */
 	public void readfile() throws IOException {
-		String currentpath = System.getProperty("user.dir");
+		
+		String currentPath = System.getProperty("user.dir");
 
-		File file = new File(currentpath + "/cat");
+		File file = new File(currentPath + "/cat");
 		File[] array = file.listFiles();
-
 		for (int i = 0; i < array.length; i++) {
 			if (array[i].isFile()) {
 				String filename = array[i].getName();
-				cats.add(filename);
+				categories.add(filename);
 			}
 		}
-
 	}
 
 	/**
@@ -153,10 +153,10 @@ public class PractiseStartController implements Initializable {
 	 * scene and passes the relevant question parameters to the controller
 	 */
 	public void onStartPushed(ActionEvent event) {
-		if (cat_choice.getSelectionModel().getSelectedItem() != null) {
-		
 
-			// Open new winodw start the game
+		// if the user has selected a category
+		if (cat_choice.getSelectionModel().getSelectedItem() != null) {
+
 			try {
 				readSelectedfile();
 				// Pass parameter across
@@ -164,8 +164,7 @@ public class PractiseStartController implements Initializable {
 				loader.load();
 				PractiseAnswerController controller = loader.getController();
 				// Pass value to the next page
-				controller.setStrings(showtext, answer, bracket);
-
+				controller.setStrings(question, answer, bracket);
 
 				Parent viewParent = FXMLLoader.load(getClass().getResource("/view/PractiseAnswer.fxml"));
 				Scene viewScene = new Scene(viewParent);
@@ -173,11 +172,11 @@ public class PractiseStartController implements Initializable {
 				window.setScene(viewScene);
 				window.setResizable(false);
 				window.show();
-				//				
+				
 			} catch (Exception e) {
 				e.printStackTrace();
+				
 				a.setAlertType(AlertType.ERROR);
-				// show the dialog
 				a.show();
 				a.setHeaderText("File Reading Error");
 				a.setContentText("Please check the file arrangment");
@@ -186,12 +185,9 @@ public class PractiseStartController implements Initializable {
 		} else {
 			// If no category is selected
 			a.setAlertType(AlertType.WARNING);
-			// show the dialog
 			a.show();
 			a.setHeaderText("Selection required");
 			a.setContentText("You have to select a category");
 		}
-
 	}
-
 }

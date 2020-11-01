@@ -28,16 +28,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Text fx:id="resetText" fill="#45ccca" strokeType="OUTSIDE" strokeWidth="0.0" text="Congratulations! You have completed all questions! Click the reward screen below to continue" textAlignment="CENTER" wrappingWidth="621.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Text fx:id="resetText" fill="#45ccca" strokeType="OUTSIDE" strokeWidth="0.0" text="Congratulations! You have completed all questions! Click the reward screen below to continue" textAlignment="CENTER" wrappingWidth="853.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>
             </Text>
-            <Button fx:id="reset" mnemonicParsing="false" onAction="#onResetPushed" prefHeight="72.0" prefWidth="200.0" style="-fx-background-color: #ffc100; -fx-background-radius: 20;" text="Reward Screen" GridPane.columnIndex="2" GridPane.rowIndex="5">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Button>
          </children>
       </GridPane>
       <Button layoutX="514.0" layoutY="580.0" mnemonicParsing="false" onAction="#onMainMenuPushed" prefHeight="80.0" prefWidth="250.0" style="-fx-background-color: #ffc100;" text="Main Menu">
@@ -49,5 +44,10 @@
             <Font name="System Bold" size="25.0" />
          </font>
       </Label>
+      <Button fx:id="reset" layoutX="855.0" layoutY="584.0" mnemonicParsing="false" onAction="#onResetPushed" prefHeight="72.0" prefWidth="200.0" style="-fx-background-color: #ffc100; -fx-background-radius: 20;" text="Reward Screen" textFill="#37800f">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

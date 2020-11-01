@@ -41,7 +41,7 @@
       </Label>
       <Slider fx:id="volume_slider" layoutX="1071.0" layoutY="600.0" max="100.0" min="-100.0" opacity="0.73" prefHeight="14.0" prefWidth="131.0" value="0.0" />
       <Label layoutX="981.0" layoutY="594.0" prefHeight="28.0" prefWidth="92.0" text="Audio Speed:" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true" />
-      <Button fx:id="audio_replay_button" layoutX="976.0" layoutY="555.0" mnemonicParsing="false" onAction="#replay" prefHeight="39.0" prefWidth="112.0" style="-fx-background-radius: 100;" text="Audio Replay">
+      <Button fx:id="audio_replay_button" layoutX="976.0" layoutY="555.0" mnemonicParsing="false" onAction="#onReplayPushed" prefHeight="39.0" prefWidth="112.0" style="-fx-background-radius: 100;" text="Audio Replay">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>

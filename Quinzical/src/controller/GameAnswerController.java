@@ -4,15 +4,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.SwingWorker;
-
-import helper.GameData;
-import helper.InputNormalization;
-import helper.SoundUtil;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,9 +25,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
-
 import javafx.stage.Stage;
 
+import helper.GameData;
+import helper.InputNormalization;
+import helper.SoundUtil;
+
+/**
+ * Controller for the GameAnswer scene
+ */
 public class GameAnswerController implements Initializable {
 
 	@FXML
@@ -46,7 +47,7 @@ public class GameAnswerController implements Initializable {
 
 	@FXML
 	Button audio_replay_button;
-	
+
 	@FXML
 	Button textshow_button;
 
@@ -67,109 +68,91 @@ public class GameAnswerController implements Initializable {
 
 	@FXML
 	Label winnings;
-	
+
 	@FXML  
 	Label time;
-	
+
 	@FXML  
 	Label bracketLabel;
-	
+
 	@FXML  
 	ProgressBar bar;
-	
+
 	@FXML
 	ImageView gif;
+
 	@FXML
 	ImageView gif2;
-	
-	
 
 	// store information about the particular question
 	private static String question;
 	private static String answer;
 	private static String bracket;
-	 
 	private static String category; 
 	private static int value;
-	private int total_time;
 
-	private String _speed = "0";
-	Alert a = new Alert(AlertType.NONE);
+	private String speed = "0";
+	private int totalTime;
+	private boolean submitted = false;
 
-	private boolean clicked=false;
-	
+	private Alert a = new Alert(AlertType.NONE);
+
 	/**
 	 * Initialize this controller by setting the relevant FXML elements
 	 * and their values
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+
 		back_button.setDisable(true);
 		question_label.setText(question);
 		winnings.setText("Winnings: $" + Integer.toString(GameData.getWinnings()));
-//		user_input.setPromptText(bracket);
 		GameData.addAnsweredQuestion(question + " - " + category);
-		// Add lisenter to the slider
+
+		// Add listener to the slider
 		volume_slider.setOnMouseReleased(event -> {
 			int temp = (int) volume_slider.getValue();
-			_speed = Integer.toString(temp);
+			speed = Integer.toString(temp);
 		});
 		int tempendIndex = (bracket.trim().length())-1;
 		bracketLabel.setText(bracket.trim().substring(1, tempendIndex)+":");
-		setGif();
 		countdown();
-		SoundUtil.speak(question, _speed, a);
+		SoundUtil.speak(question, speed, a);
 	}
-	
 
-//	
-	/**
-	 * Show the celebratory gif when the user gets a question correct
-	 */
-	public void setGif() {
-		//Set the gif 
-		Image i = new Image("resources/aha.gif");
-        gif.setImage(i);
-        gif2.setImage(i);
-        
-	}
-	
 	/**
 	 * Show the celebratory gif and play the sound effect when the user gets
 	 * a question correct
 	 */
-	public void reward() {
+	public void showReward() {
+
+		//Set the gif 
+		Image i = new Image("resources/aha.gif");
+		gif.setImage(i);
+		gif2.setImage(i);
 		//Set the sound Effect
 		SoundUtil.playSound(a);
 		//Start the gifs
 		gif.setVisible(true);
 		gif2.setVisible(true);
-	
 	}
 
-	
+
 	/**
 	 * Called when the user presses the replay button.
 	 * This method speaks the clue again
 	 */
-	public void replay(ActionEvent event) {
-		SoundUtil.speak(question, _speed, a);
+	public void onReplayPushed(ActionEvent event) {
+		SoundUtil.speak(question, speed, a);
 	}
-	
-	/**
-	 * Called when the user presses the show text button.
-	 * A label containing the question then appears on the screen
-	 */
-	public void showText(ActionEvent event) {
-		question_label.setVisible(true);
-	}
-	
+
 	/**
 	 * Called when the user presses the main menu button.
 	 * This method changes the scene to the main menu 
 	 */
 	public void onMainMenuPushed(ActionEvent event) {
-		SoundUtil.speak(" ", _speed, a); // To prevent the audio keep playing after going back to the menu
+
+		SoundUtil.speak(" ", speed, a); // prevent the audio from playing after going back to main menu
 		try {
 			Parent viewParent = FXMLLoader.load(getClass().getResource("/view/ClueGrid.fxml"));
 			Scene viewScene = new Scene(viewParent);
@@ -177,19 +160,17 @@ public class GameAnswerController implements Initializable {
 			window.setScene(viewScene);
 			window.setResizable(false);
 			window.show();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
+
 			a.setAlertType(AlertType.ERROR);
-			// show the dialog
 			a.show();
 			a.setHeaderText("Fatal Error");
 			a.setContentText("Please restart the game");
 		}
 	}
-	
-	
-	
+
 	/**
 	 * Called when the user presses the submit button.
 	 * This method normalizes and then evaluates the user answer and performs actions based on
@@ -197,19 +178,20 @@ public class GameAnswerController implements Initializable {
 	 */
 	@FXML
 	public void onSubmitButtonPushed() {
-		clicked=true;
-		//Normalize 2 Strings to get rid of macrons
+
+		submitted = true;
+		//Normalize the strings to get rid of macrons
 		String input = InputNormalization.normal(user_input.getText().trim()).toLowerCase();
 		String normalizedanswer = InputNormalization.normal(answer.trim()).toLowerCase();
-		normalizedanswer = InputNormalization.refineString(normalizedanswer); //Refactor the answer
-		
-		// Only allow when equal or input contains answer
-		// If answer has multiple answer which is not expected
-		if (input.equalsIgnoreCase(normalizedanswer) || input.contains(normalizedanswer) || (answer.contains("/") && normalizedanswer.contains(input) && input!="")) {
-			reward();
+		normalizedanswer = InputNormalization.refineString(normalizedanswer); // Further refinement of strings
+
+		// If answer has multiple answers
+		if (input.equalsIgnoreCase(normalizedanswer) || input.contains(normalizedanswer) || 
+				(answer.contains("/") && normalizedanswer.contains(input) && input!="")) {
+			showReward();
 			hint_label.setVisible(true);
-			hint_label.setText("Correct! $" + value + " has been added to your winnings!");
-			SoundUtil.speak("Correct!", _speed, a);
+			hint_label.setText("Correct! $" + value + " have been added to your winnings!");
+			SoundUtil.speak("Correct! " + value + " dollars have been added to your winnings", speed, a);
 			GameData.setWinnings(value);
 			submit_button.setVisible(false);
 			audio_replay_button.setDisable(true);
@@ -217,94 +199,78 @@ public class GameAnswerController implements Initializable {
 			back_button.setVisible(true);
 			dontknow_button.setVisible(false);
 			textshow_button.setDisable(true);
-			
-	
+			winnings.setText("Winnings: $" + Integer.toString(GameData.getWinnings()));
+			worker.cancel(true); //Stop count down
+
 		}else {
-			hint_label.setVisible(true);
-			hint_label.setText("Incorrect. The correct answer was: " + bracket + " " + answer);
-			SoundUtil.speak("Incorrect. The correct answer was: " + bracket + " " + answer, _speed, a);
-			GameData.setWinnings(-value);
-			submit_button.setVisible(false);
-			audio_replay_button.setDisable(true);
-			back_button.setDisable(false);
-			back_button.setVisible(true);
-			dontknow_button.setVisible(false);
-			textshow_button.setDisable(true);
-		
+			onDontKnowPushed();
 		}
-		winnings.setText("Winnings: $" + Integer.toString(GameData.getWinnings()));
-		worker.cancel(true); //Stop count down
-		
 	}
-	
+
 	/**
-	 * Called when the user presses the don't know button.
+	 * Called when the user presses the don't know button or gets the question incorrect.
 	 * This counts as getting the question wrong, so the 
 	 * appropriate actions are taken
 	 */
-	public void onDontKnowPushed(ActionEvent event) {
-		clicked=true;
+	public void onDontKnowPushed() {
+		submitted = true;
 		hint_label.setVisible(true);
-		hint_label.setText("The correct answer was: " + bracket + " " + answer);
-		SoundUtil.speak("The correct answer was: " + bracket + " " + answer, _speed, a);
+		hint_label.setText("Sorry, the correct answer was: " + bracket + " " + answer);
+		SoundUtil.speak("Sorry, the correct answer was: " + bracket + " " + answer, speed, a);
 		GameData.setWinnings(-value);
 		submit_button.setVisible(false);
 		dontknow_button.setVisible(false);
 		audio_replay_button.setDisable(true);
 		back_button.setDisable(false);
 		back_button.setVisible(true);
-		winnings.setText("Winnings: $" + Integer.toString(GameData.getWinnings()));
 		textshow_button.setDisable(true);
+		winnings.setText("Winnings: $" + Integer.toString(GameData.getWinnings()));
 		worker.cancel(true); //Stop count down
 	}
-	
+
 	/**
 	 * This method gets called when the user presses enter to submit their
 	 * question rather than pressing the submit button
 	 */
 	public void onEnterKeyPressed(ActionEvent event) {
-		if (clicked == false) {
+		if (submitted == false) {
 			onSubmitButtonPushed();
 		}
-	
 	}
-	
+
 	/**
-	 * Begin the timer count down for the question
+	 * Called when the user presses the show text button.
+	 * A label containing the question then appears on the screen
 	 */
-	public void countdown() {
-		total_time=40;
-		worker.addPropertyChangeListener(listener); // Add a poperty change listener to the worker
-		worker.execute();
+	public void showText(ActionEvent event) {
+		question_label.setVisible(true);
 	}
-	
-	
-	
+
 	/**
 	 * Create a swing worker to do the count down for each question
 	 */
 	SwingWorker<Integer,Integer> worker = new SwingWorker<Integer,Integer>(){
 		@Override
 		protected Integer doInBackground() throws Exception {
-			total_time=40;
-			while (total_time!=0) {
-				publish(total_time); 
+			totalTime=40;
+			while (totalTime!=0) {
+				publish(totalTime); 
 				Thread.sleep(1000);
-				total_time--;
+				totalTime--;
 			}
 			// TODO Auto-generated method stub
 			return null;
 		}
 		@Override
-		 protected void process(List<Integer> chunks) { //Used to send value to the progress bar
-		        super.process(chunks);
-		        for (int i :chunks)
-		        {
-		            this.setProgress(i);
-		        }
-		 }
+		protected void process(List<Integer> chunks) { //Used to send value to the progress bar
+			super.process(chunks);
+			for (int i :chunks)
+			{
+				this.setProgress(i);
+			}
+		}
 	};
-	
+
 	/**
 	 * Add property change listener to the worker so that the GUI can be updated
 	 * according to the timer
@@ -312,82 +278,67 @@ public class GameAnswerController implements Initializable {
 	PropertyChangeListener listener = new PropertyChangeListener() {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			
+
 			// TODO Auto-generated method stub
 			if("progress"==evt.getPropertyName()){			// During the progress update the GUI
-				
-                int progress = (Integer)evt.getNewValue();
-                //When 10 seconds left, Highlight the Text and the bar
-                if (total_time==10) {
-                	Platform.runLater(new Runnable() {
-    				    @Override
-    				    public void run() {
-    				    	bar.setStyle("-fx-accent: #CF1708");
-    		                time.setStyle("-fx-text-fill: #ffa31a;");
-    				    }
-    				});
-                }
 
-                // Run Swing on JavaFx Thread to Update GUI
-                Platform.runLater(new Runnable() {
-				    @Override
-				    public void run() {
-				    	bar.setProgress(progress*0.025);//Change the progress bar
-		                time.setText("Time Left: "+progress); 
-				    }
+				int progress = (Integer)evt.getNewValue();
+				//When 10 seconds left, Highlight the Text and the bar
+				if (totalTime==10) {
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							bar.setStyle("-fx-accent: #CF1708");
+							time.setStyle("-fx-text-fill: #ffa31a;");
+						}
+					});
+				}
+
+				// Run Swing on JavaFx Thread to Update GUI
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						bar.setProgress(progress*0.025);//Change the progress bar
+						time.setText("Time Left: "+progress); 
+					}
 				});
-            }else if ("DONE"==evt.getNewValue().toString()) { //Disable buttons when the progress is finished
-            	Platform.runLater(new Runnable() {
-				    @Override
-				    public void run() {
-				    	if(clicked) {
-				    		bar.setVisible(false);		
-					    	time.setText("Done !!!"); 
-					    	time.setStyle("-fx-text-fill: #ffa31a;");
-				    	}else {
-				    		onSubmitButtonPushed();
-					    	bar.setVisible(false);		
-					    	time.setText("Done !!!"); 
-					    	time.setStyle("-fx-text-fill: #ffa31a;");
-				    	}
-				    }
+			}else if ("DONE"==evt.getNewValue().toString()) { //Disable buttons when the progress is finished
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						if(submitted) {
+							bar.setVisible(false);		
+							time.setText("Times Up!!!"); 
+							time.setStyle("-fx-text-fill: #ffa31a;");
+						}else {
+							onSubmitButtonPushed();
+							bar.setVisible(false);		
+							time.setText("Times Up!!!"); 
+							time.setStyle("-fx-text-fill: #ffa31a;");
+						}
+					}
 				});
-            }
+			}
 		}
 	};
-	
+
 	/**
-	 * Set the question
+	 * Begin the timer count down for the question
 	 */
-	public static void setQuestion(String questionString) {
-		question = questionString;
-	}
-	
-	/**
-	 * Set the answer to the question
-	 */
-	public static void setAnswer(String answerString) {
-		answer = answerString;
+	public void countdown() {
+		totalTime=40;
+		worker.addPropertyChangeListener(listener); // Add a poperty change listener to the worker
+		worker.execute();
 	}
 
 	/**
-	 * Set the dollar value of the clue
+	 * Set the relevant fields which contain information about the question
 	 */
-	public static void setValue(int valueInt) {
-		value = valueInt;
-	}
-	
-	/**
-	 * Set the 'What/Who is' part of the clue
-	 */
-	public static void setBracket(String bracketString) {
+	public static void setFields(String questionString, String answerString, String bracketString, String categoryString, int valueInt) {
+		question = questionString;
+		answer = answerString;
 		bracket = bracketString;
-	}
-	
-	/**
-	 * Set the category the clue belongs to
-	 */
-	public static void setCategory(String categoryString) {
 		category = categoryString;
+		value = valueInt;
 	}
 }
