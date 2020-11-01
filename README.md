@@ -1,6 +1,6 @@
 	   
 # Run the game (You can choose any method to excute)
-(1) Open the terminal in the SE206 Project folder and type the following line:
+(1) Open the terminal in the assignment-3-and-project-team-01-master folder and type the following line:
 			./run
 
 (2) Go into the Quinzical/ folder and then excute the run.sh
@@ -12,7 +12,7 @@ We thank you for your patience!
 
 # File setup
 
-SE206 Project/
+assignment-3-and-project-team-01-master/
 
 	--- User Manual.pdf 	(Instructions about the game, PLEASE READ IT !!!)
 	
